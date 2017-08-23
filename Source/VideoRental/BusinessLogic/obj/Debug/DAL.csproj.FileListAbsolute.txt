@@ -9,5 +9,5 @@ H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\bi
 H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\bin\Debug\DAL.pdb
 H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\obj\Debug\DAL.dll
 H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\obj\Debug\DAL.pdb
-H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\obj\Debug\DAL.Migrations.InitDatabase.resources
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\obj\Debug\DAL.Migrations.Initial.resources
 H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\BusinessLogic\obj\Debug\DAL.csproj.GenerateResource.Cache

@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL.DBContext;
+using DAL.Entities;
+namespace DAL.DataAccess
+{
+    public class UserDAO
+    {
+        private VideoRentalDBContext dbContext;
+
+        public UserDAO()
+        {
+            this.dbContext = new VideoRentalDBContext();
+        }
+
+        public User getUserByUserName(String userName)
+        {
+            return dbContext.Users.Where(x => x.UserName.Equals(userName)).SingleOrDefault();
+        }
+
+    }
+}

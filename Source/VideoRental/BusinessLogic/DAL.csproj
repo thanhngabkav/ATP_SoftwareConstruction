@@ -47,32 +47,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\UserDAO.cs" />
     <Compile Include="DBContext\VideoRentalDBContext.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Disk.cs" />
     <Compile Include="Entities\DiskTitle.cs" />
-    <Compile Include="Entities\RentalRate.cs" />
     <Compile Include="Entities\Reservation.cs" />
     <Compile Include="Entities\TransactionHistory.cs" />
     <Compile Include="Entities\TransactionHistoryDetail.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Migrations\201708220401216_Init Database.cs" />
-    <Compile Include="Migrations\201708220401216_Init Database.Designer.cs">
-      <DependentUpon>201708220401216_Init Database.cs</DependentUpon>
+    <Compile Include="Migrations\201708231440332_Initial.cs" />
+    <Compile Include="Migrations\201708231440332_Initial.Designer.cs">
+      <DependentUpon>201708231440332_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccess\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708220401216_Init Database.resx">
-      <DependentUpon>201708220401216_Init Database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708231440332_Initial.resx">
+      <DependentUpon>201708231440332_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

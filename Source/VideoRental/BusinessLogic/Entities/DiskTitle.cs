@@ -27,10 +27,9 @@ namespace DAL.Entities
         public int Quantity { set; get; }
 
         [Required]
-        public int RentalRateID { set; get; }
+        public float RentalPrice { set; get; }
 
-        [ForeignKey("RentalRateID")]
-        public virtual RentalRate RentalRate { set; get; }
+        public float LateChargePerDate { set; get; }
 
         public virtual ICollection<Disk> Disks { set; get; }
 

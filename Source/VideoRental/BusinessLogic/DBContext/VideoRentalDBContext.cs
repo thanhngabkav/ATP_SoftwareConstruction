@@ -15,8 +15,6 @@ namespace DAL.DBContext
 
         public DbSet<DiskTitle> DiskTitles { set; get; }
 
-        public DbSet<RentalRate> RentalRates { set; get; }
-
         public DbSet<TransactionHistory> TransactionHistories { set; get; }
 
         public DbSet<TransactionHistoryDetail> TransactionHistoryDetails { set; get; }
