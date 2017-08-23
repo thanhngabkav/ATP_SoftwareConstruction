@@ -7,8 +7,8 @@
     <ProjectGuid>{C537E303-7A4B-444F-B17C-F1C2AFD58791}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BusinessLogic</RootNamespace>
-    <AssemblyName>BusinessLogic</AssemblyName>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,15 +47,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBContext\VideoRentalDBContext.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Disk.cs" />
+    <Compile Include="Entities\DiskTitle.cs" />
+    <Compile Include="Entities\RentalRate.cs" />
+    <Compile Include="Entities\Reservation.cs" />
+    <Compile Include="Entities\TransactionHistory.cs" />
+    <Compile Include="Entities\TransactionHistoryDetail.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201708220401216_Init Database.cs" />
+    <Compile Include="Migrations\201708220401216_Init Database.Designer.cs">
+      <DependentUpon>201708220401216_Init Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
-    <Folder Include="Entiies\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708220401216_Init Database.resx">
+      <DependentUpon>201708220401216_Init Database.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
