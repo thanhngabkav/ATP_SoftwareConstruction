@@ -13,5 +13,9 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

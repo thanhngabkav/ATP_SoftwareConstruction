@@ -11,10 +11,5 @@ namespace WebApp.Models
         public string UserID { set; get; }
         public string UserName { set; get; }
         public string PreviusURL { set; get; }
-
-        public static implicit operator UserSession(UserSession v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

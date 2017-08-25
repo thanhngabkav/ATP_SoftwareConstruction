@@ -13,7 +13,6 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        [Authorize]
         /**
          * Show user's information
          * */
@@ -28,8 +27,7 @@ namespace WebApp.Controllers
          [HttpGet]
         public ActionResult Login()
         {
-            UserSession userSession = (UserSession)Session[UserSession.SessionName];
-            if (userSession != null)
+            if (!Request.IsAuthenticated)
             {
                 return View();
             }
@@ -48,15 +46,15 @@ namespace WebApp.Controllers
                 User user = userService.getUserByUserName(loginModel.Username);
                 UserSession userSession = new UserSession { UserID = user.UserID+"", UserName = user.UserName, PreviusURL="/Account/Login" };
                 Session.Add(UserSession.SessionName, userSession);
+                FormsAuthentication.SetAuthCookie(user.UserName, loginModel.Remember);
                 if (loginModel.Remember)
                 {
-                    HttpCookie userCookies = new HttpCookie("userAuth");
-                    userCookies.Value = loginModel.Username;
-                    userCookies.Expires = DateTime.Now.AddHours(200);
-                    Response.SetCookie(userCookies);
-                    Response.Flush();
+                    var authTicket = new FormsAuthenticationTicket(1, user.UserName, DateTime.Now, DateTime.Now.AddDays(10), true, user.Role);
+                    HttpCookie userCookies = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+                    userCookies.Expires = authTicket.Expiration;
+                    Response.Cookies.Add(userCookies);
                 }
-                return Redirect("/Home");
+                return Redirect("/Manager");
             }
             else
             {
@@ -64,6 +62,14 @@ namespace WebApp.Controllers
                 return View();
             }
             
+        }
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Request.Cookies.Clear();
+            Session.Clear();
+            return Redirect("/Home");
         }
     }
 }

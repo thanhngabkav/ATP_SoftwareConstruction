@@ -9,7 +9,11 @@ namespace WebApp.Services
 {
     public class RoleProviderCustom : RoleProvider
     {
-        public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override string ApplicationName
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
@@ -38,8 +42,8 @@ namespace WebApp.Services
 
         public override string[] GetRolesForUser(string username)
         {
-            UserDAO userDAO = new UserDAO();
-            User user = userDAO.getUserByUserName(username);
+            UserService userService = new UserService();
+            User user = userService.getUserByUserName(username); 
             if (user != null)
             {
                 return new string[] { user.Role };

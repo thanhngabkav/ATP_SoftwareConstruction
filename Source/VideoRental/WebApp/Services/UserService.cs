@@ -14,6 +14,13 @@ namespace WebApp.Services
         {
             this.userDAO = new UserDAO();
         }
+
+        /**
+         * Get User By User Name
+         * @param userName : User Name
+         * @return User or null if not found
+         * 
+         * */
         public User getUserByUserName(String userName)
         {
             return this.userDAO.getUserByUserName(userName);
