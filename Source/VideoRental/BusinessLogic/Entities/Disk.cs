@@ -15,6 +15,7 @@ namespace DAL.Entities
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DiskID { get; set; }
 
         [Required]

@@ -13,8 +13,10 @@ namespace DAL.Entities
         {
             this.Disks = new List<Disk>();
             this.Reservations = new List<Reservation>();
+            this.RentalRates = new List<RentalRate>();
         }
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TitleID { set; get; }
         
         [Required]
@@ -34,6 +36,8 @@ namespace DAL.Entities
         public virtual ICollection<Disk> Disks { set; get; }
 
         public virtual ICollection<Reservation> Reservations { set; get; }
+
+        public virtual ICollection<RentalRate> RentalRates { set; get; }
 
     }
 }
