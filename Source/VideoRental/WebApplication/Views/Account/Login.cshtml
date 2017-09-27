@@ -1,0 +1,56 @@
+﻿@model WebApp.Models.LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<style type="text/css">
+    #btn-login:hover {
+        background-color: #484545;
+        border-color: #FFF;
+    }
+
+    #btn-login {
+        background-color: #353535;
+        margin-bottom: 10px;
+        border-color: #b5b5b5;
+    }
+
+    body {
+        background: url(../../Images/world-map-description-in-resolutions-305786.jpg);
+        background-position: 20%;
+    }
+
+    .checkbox {
+        color: #FFF;
+    }
+</style>
+<div class="container" style="padding-top:70px">
+    <div class="col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-4" style="background-color: rgba(0, 0, 0, 0.4)">
+        <div class="panel-heading">
+            <h2 class="panel-title" style="color:white">Sign In</h2>
+        </div>
+        <form accept-charset="UTF-8" role="form" method="post" action="/Account/Login">
+            <div class="form-group">
+                <input class="form-control" placeholder="Username" name="Username" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="Password" name="Password" type="password">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input id="Remember" name="Remember" type="checkbox" value="True"> Remember Me
+                </label>
+            </div>
+            <div>
+                <input id="btn-login" class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+            </div>
+        </form>
+        <div>
+            <span class="text-danger">@ViewBag.LoginErrorMess</span>
+        </div>
+    </div>
+</div>
+
+
+
