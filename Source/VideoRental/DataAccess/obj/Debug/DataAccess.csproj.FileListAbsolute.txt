@@ -21,5 +21,9 @@ D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\D
 D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.xml
 D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.xml
+<<<<<<< HEAD
+=======
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+>>>>>>> 8b9882d93ca9f756ea070eb194e5a350f4223774
 D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.dll
 D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.pdb
