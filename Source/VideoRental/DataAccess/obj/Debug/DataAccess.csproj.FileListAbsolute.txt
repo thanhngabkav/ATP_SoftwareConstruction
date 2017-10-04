@@ -1,0 +1,25 @@
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll.config
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\DataAccess.pdb
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\System.Data.SqlServerCe.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.xml
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.xml
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\obj\Debug\DataAccess.dll
+H:\HocKy_1_2017\SoftWareConstruction\Project\Source\VideoRental\DataAccess\obj\Debug\DataAccess.pdb
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll.config
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.pdb
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\System.Data.SqlServerCe.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.xml
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.xml
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.dll
+D:\Documents\Software Construction\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.pdb
