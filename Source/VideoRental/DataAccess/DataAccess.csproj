@@ -54,6 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\IDisk.cs" />
+    <Compile Include="DAO\IDiskTitle.cs" />
+    <Compile Include="DAO\IReservation.cs" />
+    <Compile Include="DAO\ITransactionHistory.cs" />
+    <Compile Include="DAO\ITransactionHistoryDetail.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="DBContext\VideoRentalDBContext.cs" />
     <Compile Include="Entities\Customer.cs" />
