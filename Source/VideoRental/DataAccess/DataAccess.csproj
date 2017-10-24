@@ -69,13 +69,22 @@
     <Compile Include="Entities\TransactionHistory.cs" />
     <Compile Include="Entities\TransactionHistoryDetail.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201710240220334_Init.cs" />
+    <Compile Include="Migrations\201710240220334_Init.Designer.cs">
+      <DependentUpon>201710240220334_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710240220334_Init.resx">
+      <DependentUpon>201710240220334_Init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
