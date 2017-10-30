@@ -7,6 +7,8 @@ using DataAccess.DBContext;
 using DataAccess.Entities;
 using System.Data.Entity;
 using PagedList;
+using DataAccess.Utilities;
+
 namespace DataAccess.DAO
 {
     /// <summary>
@@ -78,6 +80,72 @@ namespace DataAccess.DAO
         public IPagedList<Customer> GetPageListCustomer(int page, int pageSize)
         {
             return dBContext.Customers.ToPagedList(page, pageSize);
+        }
+
+        /// <summary>
+        /// Get list customers have late charge
+        /// </summary>
+        /// <returns></returns>
+        /// 
+
+        public List<Customer> GetListLateFeeCustomers()
+        {
+            TranSactionDAO tranSactionDAO = new TranSactionDAO();
+            List<Customer> allCustomers = GetAllCustomer();
+            List<Customer> listLateChargeCustomers = new List<Customer>();
+            foreach (Customer customer in allCustomers)
+            {
+                bool isLateCharge = false;
+                List<TransactionHistory> customerTransactions = tranSactionDAO.GetAllCustomerTransactions(customer.CustomerID);
+                foreach (TransactionHistory transaction in customerTransactions)
+                {
+                    if (transaction.Status.Equals(TransactionStatus.DUE))
+                    {
+                        isLateCharge = true;
+                        break;
+                    }
+                    
+                }
+                if (isLateCharge)
+                {
+                    listLateChargeCustomers.Add(customer);
+                }
+            }
+            return listLateChargeCustomers;
+        }
+
+
+         /// <summary>
+         /// Get list customers have Over dues
+         /// </summary>
+         /// <returns></returns>
+        public List<Customer> GetListOverDueCustomers()
+        {
+            TranSactionDAO tranSactionDAO = new TranSactionDAO();
+            TransactionDetailsDAO transactionDetailsDAO = new TransactionDetailsDAO();
+            List<Customer> allCustomers = GetAllCustomer();
+            List<Customer> listOverDueCustomers = new List<Customer>();
+            foreach(Customer customer in allCustomers){
+                bool isOverDue = false;
+                List<TransactionHistory> customerTransactions = tranSactionDAO.GetAllCustomerTransactions(customer.CustomerID);
+                foreach(TransactionHistory transaction in customerTransactions)
+                {
+                    List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GeListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
+                    foreach(TransactionHistoryDetail transactionDetail in transactionDetails)
+                    {
+                        if(transactionDetail.Status.Equals(null))//disk was not returned
+                        {
+                            isOverDue = true;
+                            break;
+                        }
+                    }
+                    if (isOverDue)
+                        break;
+                }
+                if (isOverDue)
+                    listOverDueCustomers.Add(customer);
+            }
+            return listOverDueCustomers;
         }
 
     }

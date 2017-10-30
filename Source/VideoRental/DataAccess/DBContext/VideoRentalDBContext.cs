@@ -20,5 +20,9 @@ namespace DataAccess.DBContext
         public DbSet<TransactionHistoryDetail> TransactionHistoryDetails { set; get; }
 
         public DbSet<Disk> Disks { set; get; }
+
+        public DbSet<Reservation> Reservations { set; get; }
+
+        public DbSet<RentalRate> RentalRates { set; get; }
     }
 }
