@@ -148,5 +148,17 @@ namespace DataAccess.DAO
             return listOverDueCustomers;
         }
 
+        /// <summary>
+        /// Get list customer have 
+        /// </summary>
+        /// <param name="idorName"></param>
+        /// <returns></returns>
+        public List<Customer> FindCustomers(string idOrName)
+        {
+            return dBContext.Customers.Where((x => x.CustomerID.ToString().Contains(idOrName) || (x.FirstName + x.LastName).Contains(idOrName))).ToList();
+        }
+
+
+
     }
 }

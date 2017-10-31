@@ -66,5 +66,17 @@ namespace DataAccess.DAO
         {
             return dBContext.DiskTitles.Where(x => x.TitleID == titleId).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Get titles have id or name contain input
+        /// </summary>
+        /// <param name="idOrName"></param>
+        /// <returns></returns>
+        public List<DiskTitle> FindDiskTitles(string idOrName)
+        {
+            return dBContext.DiskTitles.Where(x => x.TitleID.ToString().Contains(idOrName) || x.Title.Contains(idOrName)).ToList();
+        }
+
+
     }
 }

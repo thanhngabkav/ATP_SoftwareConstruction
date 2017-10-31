@@ -72,5 +72,16 @@ namespace DataAccess.DAO
         {
             return dBContext.TransactionHistories.Where(x => x.CustomerID == customerId && x.Status.Equals(TransactionStatus.DUE)).ToList();
         }
+
+
+        /// <summary>
+        /// Get TransactionHistory by transaction history id
+        /// </summary>
+        /// <param name="transcationID"></param>
+        /// <returns></returns>
+        public TransactionHistory GetTransaction(int transcationID)
+        {
+            return dBContext.TransactionHistories.Where(x => x.TransactionHistoryID == transcationID).SingleOrDefault();
+        }
     }
 }

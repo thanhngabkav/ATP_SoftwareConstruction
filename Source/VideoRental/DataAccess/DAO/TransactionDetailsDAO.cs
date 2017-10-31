@@ -28,5 +28,15 @@ namespace DataAccess.DAO
         {
             return dBContext.TransactionHistoryDetails.Where(x => x.TransactionID == transactionId).ToList();
         }
+
+        /// <summary>
+        /// Get TransactionHistoryDetail by transaction details id
+        /// </summary>
+        /// <param name="transcationDetailID"></param>
+        /// <returns></returns>
+        public TransactionHistoryDetail GetTransactionDetail(int transcationDetailID)
+        {
+            return dBContext.TransactionHistoryDetails.Where(x => x.TransactionDetailID == transcationDetailID).SingleOrDefault();
+        }
     }
 }

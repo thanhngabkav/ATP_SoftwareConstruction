@@ -77,5 +77,16 @@ namespace DataAccess.DAO
         {
             return dBContext.Disks.Where(x => x.DiskID == diskId).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Get disks have DiskId contain input
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Disk> FindDisks(String id)
+        {
+            return dBContext.Disks.Where(x => x.DiskID.ToString().Contains(id)).ToList();
+        }
+
     }
 }
