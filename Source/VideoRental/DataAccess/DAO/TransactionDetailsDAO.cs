@@ -38,5 +38,26 @@ namespace DataAccess.DAO
         {
             return dBContext.TransactionHistoryDetails.Where(x => x.TransactionDetailID == transcationDetailID).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Update Transaction Detail
+        /// </summary>
+        /// <param name="detail"></param>
+        public void UpdateTransactionDetail(TransactionHistoryDetail detail)
+        {
+            dBContext.Entry(detail).State = EntityState.Modified;
+            dBContext.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Add Transaction Detail
+        /// </summary>
+        /// <param name="detail"></param>
+        public void AddTransactionDetail(TransactionHistoryDetail detail)
+        {
+            dBContext.Entry(detail).State = EntityState.Added;
+            dBContext.SaveChanges();
+        }
     }
 }
