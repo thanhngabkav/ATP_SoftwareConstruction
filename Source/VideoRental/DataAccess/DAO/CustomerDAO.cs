@@ -116,7 +116,7 @@ namespace DataAccess.DAO
 
 
          /// <summary>
-         /// Get list customers have Over dues
+         /// Get list customers have Over dues disk
          /// </summary>
          /// <returns></returns>
         public List<Customer> GetListOverDueCustomers()
@@ -130,10 +130,17 @@ namespace DataAccess.DAO
                 List<TransactionHistory> customerTransactions = tranSactionDAO.GetAllCustomerTransactions(customer.CustomerID);
                 foreach(TransactionHistory transaction in customerTransactions)
                 {
+                    RentalRateDAO rentalRateDAO = new RentalRateDAO();
+                    TitleDAO titleDAO = new TitleDAO();
+                    DiskDAO diskDAO = new DiskDAO();
                     List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GeListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
-                    foreach(TransactionHistoryDetail transactionDetail in transactionDetails)
+                    foreach (TransactionHistoryDetail transactionDetail in transactionDetails)
                     {
-                        if(transactionDetail.Status.Equals(null))//disk was not returned
+                        Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
+                        DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
+                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
+                        //disk is not returned on time
+                        if (transactionDetail.DateReturn.Equals(null) && (DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod )
                         {
                             isOverDue = true;
                             break;
