@@ -59,5 +59,31 @@ namespace DataAccess.DAO
             dBContext.Entry(detail).State = EntityState.Added;
             dBContext.SaveChanges();
         }
+
+        /// <summary>
+        /// Get the transaction detail of last retrun date
+        /// </summary>
+        /// <param name="diskID"></param>
+        /// <returns></returns>
+        public TransactionHistoryDetail getTransactionDetailFromLastRentedDate(int diskID)
+        {
+            List<TransactionHistoryDetail> listDiskTransactionDetails = new List<TransactionHistoryDetail>();
+            listDiskTransactionDetails = dBContext.TransactionHistoryDetails.Where(x => x.DiskID == diskID).ToList();
+            List<TransactionHistory> listTransactionHistory = new List<TransactionHistory>();
+            foreach(TransactionHistoryDetail transactionDetail in listDiskTransactionDetails)
+            {
+                listTransactionHistory.Add(dBContext.TransactionHistories.Where(x => x.TransactionHistoryID == transactionDetail.TransactionID).SingleOrDefault());
+            }
+            TransactionHistory transactionHistory = listTransactionHistory[0];
+            foreach(TransactionHistory transaction in listTransactionHistory)
+            {
+                if(transaction.CreatedDate > transactionHistory.CreatedDate)
+                {
+                    transactionHistory = transaction;
+                }
+            }
+            return dBContext.TransactionHistoryDetails.Where(x => x.TransactionID == transactionHistory.TransactionHistoryID &&
+                                                                x.DiskID == diskID).SingleOrDefault();
+        }
     }
 }
