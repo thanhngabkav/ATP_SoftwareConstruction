@@ -16,9 +16,21 @@ namespace WebApplication.Services
             this.rentalRateDAO = new RentalRateDAO();
         }
 
+        public void AddNewRentalRate(RentalRate rentalRate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<RentalRate> GetAllRentalRates()
+        {
+            throw new NotImplementedException();
+        }
+
         public RentalRate GetCurrentRentalRate(int diskTitleId)
         {
             return rentalRateDAO.GetCurrentRentalRate(diskTitleId);
         }
+
+
     }
 }
