@@ -41,7 +41,7 @@ namespace WebApplication.Services
                 List<LateCharge> lateCharges = new List<LateCharge>();
                 foreach(TransactionHistory transaction in customer.TransactionHistorys)
                 {                     
-                    List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GeListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
+                    List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GetListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
                     foreach(TransactionHistoryDetail transactionDetail in transactionDetails)
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
