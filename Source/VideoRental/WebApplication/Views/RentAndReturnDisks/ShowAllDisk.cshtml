@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication.Models.DiskView>
+
+@{
+    ViewBag.Title = "RetalAndReturnManagement";
+}
+
+<h2>RetalAndReturnManagement</h2>
+
+<form>
+    <div class="form-group">
+        <label for="usr">Name:</label>
+        <input type="text" class="form-control" id="usr">
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.diskID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diskTitleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prices)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.diskID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.diskTitleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prices)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+</table>
+@*/*
+<script>
+    $('input[id=usr]').change(function () {
+        var name = $('#usr').val();
+        $.ajax({
+            type: "POST",
+            url: "/Home/AjaxMethod/" + name,
+            data:,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    });
+</script>
+*/*@

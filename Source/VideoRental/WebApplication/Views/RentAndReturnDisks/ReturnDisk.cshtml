@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication.Models.DiskView>
+
+@{
+    ViewBag.Title = "ReturnDisk";
+}
+
+<h2>ReturnDisk</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.diskID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diskTitleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prices)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.diskID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diskTitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.prices)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
