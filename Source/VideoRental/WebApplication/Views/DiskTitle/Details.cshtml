@@ -1,0 +1,74 @@
+﻿@model DataAccess.Entities.DiskTitle
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>DiskTitle</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Tags)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Tags)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Image)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.RentalPrice)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RentalPrice)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.LateChargePerDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.LateChargePerDate)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TitleID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
