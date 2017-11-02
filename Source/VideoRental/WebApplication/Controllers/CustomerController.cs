@@ -109,6 +109,6 @@ namespace WebApplication.Controllers
             Customer customer = db.GetCustomerById(id);
             db.DeleteCustomer(customer);
             return RedirectToAction("Index");
-        }
+        }JFHJDSF
     }
 }
