@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebApplication.Models.TitleView>
+
+@{
+    ViewBag.Title = "ShowTitles";
+}
+
+<h2>ShowTitles</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.titleID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.titleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tag)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titleID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.titleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tag)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

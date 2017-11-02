@@ -48,5 +48,28 @@ namespace DataAccess.DAO
             dBContext.Reservations.Remove(reservation);
             dBContext.SaveChanges();
         }
+
+        /// <summary>
+        /// Get Reservation by customer id and title id
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="diskTitleId"></param>
+        /// <returns></returns>
+        public Reservation GetReservation(int customerId, int diskTitleId)
+        {
+            return dBContext.Reservations.Where(x => x.CustomerID == customerId && x.TitleID == diskTitleId).FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Get Reservation by customer id
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="diskTitleId"></param>
+        /// <returns></returns>
+        public List<Reservation> GetReservation(int customerId)
+        {
+            return dBContext.Reservations.Where(x => x.CustomerID == customerId).ToList();
+        }
     }
 }

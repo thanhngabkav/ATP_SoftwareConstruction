@@ -4,14 +4,18 @@ using System.Linq;
 using System.Web;
 using DataAccess.DAO;
 using DataAccess.Entities;
+using WebApplication.Models;
+
 namespace WebApplication.Services
 {
     public interface IReservationService
     {
+        // if not found return to length = 0
+        
         /**
          * @return : Get All Reservation
          * */
-        List<Reservation> GetReservation(string reservationID);
+        List<ReservationView> GetReservation(string customerNameOrID );
 
         /**
          * @return : Get All Customer
@@ -25,9 +29,15 @@ namespace WebApplication.Services
 
 
         /**
-         * Add a reservation
+        * Add a reservation
         * @return : 
         * */
-        void AddReservation(string[] titleName, string customerID);
+        void AddReservation(string[] titleID, string customerID);
+
+        /**
+        * Cancel a reservation,change status disk to free
+        * @return : 
+        * */
+        void CancelReservation(string titleID, string customerID);
     }
 }

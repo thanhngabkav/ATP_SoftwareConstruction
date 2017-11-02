@@ -30,8 +30,6 @@ namespace DataAccess.Entities
 
         public DateTime LastRentedDate { set; get; }
 
-        public int RentalPeriod { set; get; }
-
         public DateTime DateUpdate { get; set; }
 
         public DateTime DateCreate { set; get; }
