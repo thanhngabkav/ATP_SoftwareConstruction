@@ -59,5 +59,17 @@ namespace DataAccess.DAO
         {
             return dBContext.Reservations.Where(x => x.CustomerID == customerId && x.TitleID == diskTitleId).FirstOrDefault();
         }
+
+
+        /// <summary>
+        /// Get Reservation by customer id
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="diskTitleId"></param>
+        /// <returns></returns>
+        public List<Reservation> GetReservation(int customerId)
+        {
+            return dBContext.Reservations.Where(x => x.CustomerID == customerId).ToList();
+        }
     }
 }

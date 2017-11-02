@@ -24,7 +24,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="transactionId"></param>
         /// <returns></returns>
-        public List<TransactionHistoryDetail> GeListTransactionDetailsByTransactionId(int transactionId)
+        public List<TransactionHistoryDetail> GetListTransactionDetailsByTransactionId(int transactionId)
         {
             return dBContext.TransactionHistoryDetails.Where(x => x.TransactionID == transactionId).ToList();
         }

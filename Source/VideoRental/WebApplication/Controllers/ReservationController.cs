@@ -1,20 +1,21 @@
-﻿using System;
+﻿using DataAccess.Utilities;
+using System;
 using System.Web.Mvc;
 using WebApplication.Services;
 namespace WebApplication.Controllers
 {
     public class ReservationController : Controller
     {
-        private static string CUSTOMER_ID_SESSION = "customer";
-        private static string LIST_TITLE_SESSION = "listtitle";
-        private static string TAG = "ReservationController: ";
+        private const string CUSTOMER_ID_SESSION = "customer";
+        private const string LIST_TITLE_SESSION = "listtitle";
 
         IReservationService iReservation;
 
         [HttpGet]
-        public ActionResult ReservationManagement(string reservationID)
+        public ActionResult ReservationManagement(string customerNameOrID)
         {
-            return View(iReservation.GetReservation(reservationID));
+            TagDebug.D(GetType(), " in Action " + "ReservationManagement");
+            return View(iReservation.GetReservation(customerNameOrID));
         }
 
         /**
@@ -26,14 +27,14 @@ namespace WebApplication.Controllers
         [HttpGet]
         public ActionResult ShowTitles(string titleName)
         {
-            Console.WriteLine(TAG + " in Action " + "ShowTitles");
+            TagDebug.D(GetType(), " in Action " + "ShowTitles");
             return View(iReservation.GetTitles(titleName));
         }
 
         [HttpPost]
         public ActionResult SaveTitle(string[] titleID)
         {
-            Console.WriteLine(TAG + " in Action " + "SaveTitle");
+            TagDebug.D(GetType(), " in Action " + "SaveTitle");
             Session[LIST_TITLE_SESSION] = titleID;
             return View();
         }
@@ -42,15 +43,14 @@ namespace WebApplication.Controllers
         [HttpGet]
         public ActionResult ShowCustomers(string customerName)
         {
-            Console.WriteLine(TAG + " in Action " + "ShowCustomers");
+            TagDebug.D(GetType(), " in Action " + "ShowCustomers");
             return View(iReservation.GetCustomers(customerName));
         }
 
         [HttpPost]
         public ActionResult AddReservation(string customerID)
         {
-            Console.WriteLine(TAG + " in Action " + "AddReservation");
-
+            TagDebug.D(GetType(), " in Action " + "AddReservation");
             string[] titleID = (string[])Session[LIST_TITLE_SESSION];
             iReservation.AddReservation(titleID, customerID);
 
@@ -61,13 +61,38 @@ namespace WebApplication.Controllers
             else
             {
                 if (titleID.Length <= 0)
-                    Console.WriteLine(TAG + " List of Title Name < 0 " + "");
+                    TagDebug.D(GetType(), " List of Title Name < 0 " + "");
                 if (customerID != null)
-                    Console.WriteLine(TAG + " customerID Null " + "");
+                    TagDebug.D(GetType(), " customerID Null " + "");
                 // Handle NULL POINTER
             }
             return View();
         }
 
+        [HttpGet]
+        public ActionResult RequestCancelReservation(String titleID, String customerID)
+        {
+            TagDebug.D(GetType(), " in Action " + "RequestCancelReservation");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ConfirmReservation(String titleID, String customerID)
+        {
+            TagDebug.D(GetType(), " in Action " + "ConfirmReservation");
+            if (titleID != null && customerID != null)
+            {
+                iReservation.CancelReservation(titleID, customerID);
+            }
+            else
+            {
+                if (titleID != null)
+                    TagDebug.D(GetType(), " titleID Null ");
+                if (customerID != null)
+                    TagDebug.D(GetType(), " customerID Null ");
+                // Handle Exeption
+            }
+
+            return View();
+        }
     }
 }

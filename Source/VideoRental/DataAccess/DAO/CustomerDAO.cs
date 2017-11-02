@@ -133,7 +133,7 @@ namespace DataAccess.DAO
                     RentalRateDAO rentalRateDAO = new RentalRateDAO();
                     TitleDAO titleDAO = new TitleDAO();
                     DiskDAO diskDAO = new DiskDAO();
-                    List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GeListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
+                    List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GetListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
                     foreach (TransactionHistoryDetail transactionDetail in transactionDetails)
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
