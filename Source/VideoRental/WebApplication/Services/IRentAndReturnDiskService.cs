@@ -52,5 +52,7 @@ namespace WebApplication.Services
          * 
          * */
         IList<TransactionHistory> ShowLateCharge(string customerID);
+
+        DiskTitle getDiskTitleName(int diskTitleID);
     }
 }

@@ -34,7 +34,7 @@ namespace WebApplication.Services
 
         public IList<Disk> GetDisks(string diskName)
         {
-            throw new NotImplementedException();
+            return diskDao.FindDisks(diskName);
         }
 
         public IList<DiskPriceView> GetPriceEachDisk(string[] diskID)
@@ -145,6 +145,9 @@ namespace WebApplication.Services
             }
         }
 
-
+        public DiskTitle getDiskTitleName(int diskTitleID)
+        {
+            return titleDAO.GetTitleById(diskTitleID);
+        }
     }
 }

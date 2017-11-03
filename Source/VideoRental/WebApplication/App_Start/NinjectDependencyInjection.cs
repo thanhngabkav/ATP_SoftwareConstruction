@@ -8,14 +8,14 @@ using WebApplication.Services;
 
 namespace WebApplication.App_Start
 {
-    public class NinjectDependencyInjection : IDependencyResolver
+    public class NinjectDependencyResolver : IDependencyResolver
     {
         private IKernel kernel;
 
-        public NinjectDependencyInjection(IKernel kernel)
+        public NinjectDependencyResolver(IKernel kernel)
         {
             this.kernel = kernel;
-
+            AddBindings();
         }
 
         public object GetService(Type serviceType)
@@ -28,9 +28,9 @@ namespace WebApplication.App_Start
             return kernel.GetAll(serviceType);
         }
 
-        private void Addbinding(IKernel kernel)
+        private void AddBindings()
         {
-            kernel.Bind<IReservationService>().To<ReservationService>();
+            kernel.Bind<IRentAndReturnDiskService>().To<RentAndReturnDiskService>();
         }
     }
 }

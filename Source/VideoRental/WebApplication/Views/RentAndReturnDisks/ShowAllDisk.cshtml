@@ -3,29 +3,45 @@
 @{
     ViewBag.Title = "RetalAndReturnManagement";
 }
+<link href="~/CSS/alice-min-bundle-checkout-d4abccf615.css" rel="stylesheet" />
+<h2>All Disk</h2>
 
-<h2>RetalAndReturnManagement</h2>
+<div class="checkout-header _container " style=" margin-bottom: 20px;">
+    <div class="checkout-header _progress-bar">
+        <ol class="step-breadcrumb _list">
+            <li class="step-breadcrumb _item -current">
+                <span class="step-breadcrumb _text">1. Chọn Đĩa</span>
+            </li>
+            <li class="step-breadcrumb _item">
+                <span class="step-breadcrumb _text">2. Chọn Khách Hàng</span>
+            </li>
+        </ol>
+    </div>
+</div>
 
-<form>
-    <div class="form-group">
-        <label for="usr">Name:</label>
-        <input type="text" class="form-control" id="usr">
+<form class="form-group" method="get">
+    <div class="form-inline">
+        <label for="usr">DiskID:</label>
+        <input type="text" class="form-control" name="diskName">
+        <input type="submit" class="btn btn-success" value="Search" />
     </div>
 </form>
+
+
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.diskID)
+            @Html.DisplayNameFor(model => model.DiskID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.diskTitleName)
+            @Html.DisplayNameFor(model => model.DiskTitleName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.prices)
+            @Html.DisplayNameFor(model => model.Prices)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.status)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th></th>
     </tr>
@@ -34,45 +50,48 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.diskID)
+                @Html.DisplayFor(modelItem => item.DiskID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.diskTitleName)
+                @Html.DisplayFor(modelItem => item.DiskTitleName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.prices)
+                @Html.DisplayFor(modelItem => item.Prices)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.status)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <div class="btn btn-default disk" id=@item.DiskID>Đặt</div>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
     }
+
 </table>
-@*/*
+<form method="POST" action="/RentAndReturnDisks/SaveListDisk" class="form-group" id="form-diskid">
+    <input type='text' name='diskID' value='' hidden />
+    <input class="btn btn-success form-control" type="submit" value="Thue" />
+</form>
 <script>
-    $('input[id=usr]').change(function () {
-        var name = $('#usr').val();
-        $.ajax({
-            type: "POST",
-            url: "/Home/AjaxMethod/" + name,
-            data:,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-            }
-        });
+    var data = "";
+    $(".disk").click(function () {
+        data = $(this).attr('id');
+        if ($(".disk").text() == 'Đặt') {
+            $(this).toggleClass('btn-default btn-warning');
+            $("#form-diskid").append("<input type='text' name='diskID'  value='" + data + "'/>");
+            $(".disk").html('Hủy');
+        } else {
+            $(this).toggleClass('btn-warning btn-default');
+            $(".disk").html('Đặt');
+            $("input[value='" + data + "']").remove();
+        }
     });
 </script>
-*/*@
+<style>
+    .checkout-header {
+        left: 0;
+    }
+</style>

@@ -6,15 +6,20 @@ using System.Web.Mvc;
 using WebApplication.Services;
 using DataAccess.Entities;
 using DataAccess.Utilities;
+using WebApplication.Models;
+using System.Web.Security;
 
 namespace WebApplication.Controllers
 {
+
+   // [Authorize(Roles = "Manager")]
     public class RentAndReturnDisksController : Controller
     {
         private static string RENTING_SESSION = "renting";
         private static string CUSTOMER_SESSION = "customerid";
         private static string RETURNDISK_SESSION = "returndisk";
-        IRentAndReturnDiskService iRentAndReturnDiskService;
+
+        IRentAndReturnDiskService iRentAndReturnDiskService = new RentAndReturnDiskService();
         // GET: RentAndReturnDisks
 
         [HttpGet]
@@ -29,28 +34,47 @@ namespace WebApplication.Controllers
         public ActionResult ShowAllDisk(string diskName)
         {
             TagDebug.D(GetType(), " in Action " + "ShowAllDisk");
-            return View(iRentAndReturnDiskService.GetDisks(diskName));
+            if (diskName == null) diskName = "";
+            IList<Disk> disks = iRentAndReturnDiskService.GetDisks(diskName);
+            IList<DiskView> diskViews = new List<DiskView>();
+
+            foreach (Disk aDisk in disks)
+            {
+                DiskTitle diskTitle = iRentAndReturnDiskService.getDiskTitleName(aDisk.TitleID);
+
+                diskViews.Add(new DiskView(aDisk.DiskID, diskTitle.Title, aDisk.PurchasePrice, "", aDisk.Status));
+            }
+            return View(diskViews);
         }
 
         [HttpPost]
         public ActionResult SaveListDisk(string[] diskID)
         {
             TagDebug.D(GetType(), " in Action " + "SaveListDisk");
+            foreach (string a in diskID)
+                TagDebug.D(GetType(), "DIsk ID = " + a);
+
             Session[RENTING_SESSION] = diskID;
-            return View(iRentAndReturnDiskService.GetDisks(""));
+            return RedirectToAction("ShowAllCustomer");
         }
 
         [HttpGet]
         public ActionResult ShowAllCustomer(string customerName)
         {
-            TagDebug.D(GetType(), " in Action " + "ShowAllCustomer");
-            return View(iRentAndReturnDiskService.GetCustomers(customerName));
+            TagDebug.D(GetType(), "in Action " + "ShowAllCustomer");
+            if (customerName == null) customerName = "";
+            IList<Customer> customers = iRentAndReturnDiskService.GetCustomers(customerName);
+            IList<CustomerView> customerViews = new List<CustomerView>();
+            foreach (Customer aCustomer in customers)
+                customerViews.Add(new CustomerView(aCustomer.CustomerID, aCustomer.FirstName, aCustomer.LastName, aCustomer.Address));
+
+            return View(customerViews);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult PaymentDisk(string customerID)
         {
-            TagDebug.D(GetType(), " in Action " + "PaymentDisk");
+            TagDebug.D(GetType(), " in Action " + "PaymentDisk" + customerID);
             string[] diskID = (string[])Session[RENTING_SESSION];
             Session[CUSTOMER_SESSION] = customerID;
 
