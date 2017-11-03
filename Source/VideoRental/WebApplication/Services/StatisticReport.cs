@@ -5,6 +5,8 @@ using System.Web;
 using WebApplication.Models;
 using DataAccess.Entities;
 using DataAccess.DAO;
+using DataAccess.Utilities;
+
 namespace WebApplication.Services
 {
     public class StatisticReport : IStatisticReport
@@ -29,9 +31,32 @@ namespace WebApplication.Services
                 int rented = 0;
                 int booked = 0;
                 List<Disk> listDisk = new List<Disk>();
-                //foreach list disk of it'title. 
-                //
-                //foreach get
+                listDisk = diskDAO.GetAllDiskByTitleID(title.TitleID);
+                //set number of copies with each status
+                foreach(Disk disk in listDisk)
+                {
+                    if (disk.Status.Equals(DiskStatus.RENTABLE))
+                    {
+                        rentable++;
+                    }
+                    else
+                    {
+                        if(disk.Status.Equals(DiskStatus.BOOKED))
+                        {
+                            booked++;
+                        }
+                        else
+                        {
+                            rented++;
+                        }
+                    }
+                }
+                titleModel.Total = rented + booked + rentable;
+                titleModel.NumberOfInStock = rentable;
+                titleModel.NumberOfOnHold = booked;
+                titleModel.NumberOfRentedOut = rented;
+                //set number of reservation
+                titleModel.NumberOfReservation = title.Reservations.Count;
             }
 
             return listResult;
