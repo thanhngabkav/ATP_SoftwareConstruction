@@ -75,10 +75,8 @@ namespace DataAccess.Migrations
                     TitleID = c.Int(nullable: false, identity: true),
                     Title = c.String(nullable: false),
                     Tags = c.String(),
-                    Image = c.Binary(),
+                    ImageLink = c.String(),
                     Quantity = c.Int(nullable: false),
-                    RentalPrice = c.Single(nullable: false),
-                    LateChargePerDate = c.Single(nullable: false),
                 })
                 .PrimaryKey(t => t.TitleID);
 
@@ -148,9 +146,6 @@ namespace DataAccess.Migrations
                 .Index(t => t.CustomerID);
 
         }
-
-
-
 
         public override void Down()
         {

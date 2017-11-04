@@ -24,14 +24,9 @@ namespace DataAccess.Entities
 
         public String Tags { set; get; }
 
-        public byte[] Image { set; get; }
+        public String ImageLink { set; get; }
 
         public int Quantity { set; get; }
-
-        [Required]
-        public float RentalPrice { set; get; }
-
-        public float LateChargePerDate { set; get; }
 
         public virtual ICollection<Disk> Disks { set; get; }
 
