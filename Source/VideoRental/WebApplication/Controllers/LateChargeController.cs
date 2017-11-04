@@ -13,6 +13,7 @@ namespace WebApplication.Controllers
     {
 
         ILateChargesServices iLateChargesServices;
+
         private string currentCustomerID;
         // GET: LateCharge
         // Show customer has late charge
