@@ -9,13 +9,16 @@ using DataAccess.Utilities;
 
 namespace WebApplication.Services
 {
-    public class StatisticReport : IStatisticReport
+    public class StatisticReportService : IStatisticReportService
     {
         private DiskDAO diskDAO;
         private TitleDAO titleDAO;
         private ReservationDAO reservationDAO;
-        public StatisticReport()
+        public StatisticReportService()
         {
+            this.diskDAO = new DiskDAO();
+            this.titleDAO = new TitleDAO();
+            this.reservationDAO = new ReservationDAO();
         }
 
         public List<TitleReportModel> Report_Title()

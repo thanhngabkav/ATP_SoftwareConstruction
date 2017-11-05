@@ -13,6 +13,8 @@ namespace WebApplication.Models
 
         public int Quantity { set; get; }
 
+        public String ImageLink { set; get; }
+
         //public float RentalPrice { set; get; }
 
         //public float LateChargePerDate { set; get; }

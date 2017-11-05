@@ -12,6 +12,10 @@ namespace WebApplication.Services
     public class TitleManagementService : ITitleManagementService
     {
         TitleDAO titleDAO;
+        public TitleManagementService()
+        {
+            this.titleDAO = new TitleDAO();
+        }
         public TitleInfoModel GetInfomationTitle(int titleID)
         {
             DiskTitle title = titleDAO.GetTitleById(titleID);
@@ -19,6 +23,7 @@ namespace WebApplication.Services
             result.TitleID = title.TitleID;
             result.Title = title.Title;
             result.Quantity = title.Quantity;
+            result.ImageLink = title.ImageLink;
             //result.RentalPrice = title.RentalPrice;
             //result.LateChargePerDate = title.LateChargePerDate;
             int rentable = 0;
