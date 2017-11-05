@@ -43,14 +43,7 @@ namespace DataAccess.Entities
         public DateTime DateUpdate { set; get; }
 
         [Required]
-        public int CreatedUser { get; set; }
-
-        [Required]
         public int UpdatedUser { get; set; }
-
-
-        [ForeignKey("CreatedUser")]
-        public virtual User Created_User { set; get; }
 
         [ForeignKey("UpdatedUser")]
         public virtual User Updated_User { set; get; }

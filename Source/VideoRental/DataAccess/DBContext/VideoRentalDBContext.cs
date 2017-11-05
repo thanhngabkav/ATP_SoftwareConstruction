@@ -9,6 +9,10 @@ namespace DataAccess.DBContext
 {
     public class VideoRentalDBContext : DbContext
     {
+        public VideoRentalDBContext()
+        {
+           
+        }
         public DbSet<User> Users { set; get; }
 
         public DbSet<Customer> Customers { set; get; }
