@@ -140,7 +140,7 @@ namespace DataAccess.DAO
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
                         RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
                         //disk is not returned on time
-                        if (transactionDetail.DateReturn.Equals(null) && (new DateTime(2017,11,05) - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod )
+                        if (transactionDetail.DateReturn.Equals(null) && (DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod )
                         {
                             isOverDue = true;
                             break;
