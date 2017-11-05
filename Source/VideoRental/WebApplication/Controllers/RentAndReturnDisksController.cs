@@ -12,15 +12,20 @@ using System.Web.Security;
 namespace WebApplication.Controllers
 {
 
-   // [Authorize(Roles = "Manager")]
+    // [Authorize(Roles = "Manager")]
     public class RentAndReturnDisksController : Controller
     {
         private static string RENTING_SESSION = "renting";
         private static string CUSTOMER_SESSION = "customerid";
         private static string RETURNDISK_SESSION = "returndisk";
 
-        IRentAndReturnDiskService iRentAndReturnDiskService = new RentAndReturnDiskService();
+        IRentAndReturnDiskService iRentAndReturnDiskService;
         // GET: RentAndReturnDisks
+
+        public RentAndReturnDisksController(IRentAndReturnDiskService iRentAndReturnDiskService)
+        {
+            this.iRentAndReturnDiskService = iRentAndReturnDiskService;
+        }
 
         [HttpGet]
         public ActionResult RetalAndReturnManagement()
@@ -72,13 +77,13 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult PaymentDisk(string customerID)
+        public ActionResult PaymentDisk(int? id)
         {
-            TagDebug.D(GetType(), " in Action " + "PaymentDisk" + customerID);
+            TagDebug.D(GetType(), " in Action " + "PaymentDisk" + id);
             string[] diskID = (string[])Session[RENTING_SESSION];
-            Session[CUSTOMER_SESSION] = customerID;
+            Session[CUSTOMER_SESSION] = id;
 
-            if (diskID.Length > 0 && customerID != null)
+            if (diskID.Length > 0 && id != null)
             {
                 return View(iRentAndReturnDiskService.GetPriceEachDisk(diskID));
             }
@@ -86,7 +91,7 @@ namespace WebApplication.Controllers
             {
                 if (diskID.Length <= 0)
                     TagDebug.D(GetType(), " List of Disk < 0 " + "");
-                if (customerID == null)
+                if (id == null)
                     TagDebug.D(GetType(), " customerID Null " + "");
                 // Handle NULL POINTER
             }
@@ -94,14 +99,14 @@ namespace WebApplication.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult WriteRentingDisk()
         {
             TagDebug.D(GetType(), " in Action " + "WriteRentingDisk");
             string[] diskID = (string[])Session[RENTING_SESSION];
-            string customerID = (string)Session[CUSTOMER_SESSION];
-            string userID = "";
-            if (diskID.Length > 0 && customerID != null)
+            int customerID = (int)Session[CUSTOMER_SESSION];
+            int userID = 1; // test set default = 1
+            if (diskID.Length > 0 && customerID != 0)
             {
                 iRentAndReturnDiskService.WriteRentalDisk(diskID, customerID, userID);
             }
@@ -109,18 +114,26 @@ namespace WebApplication.Controllers
             {
                 if (diskID.Length <= 0)
                     TagDebug.D(GetType(), " List of Disk < 0 ");
-                if (customerID != null)
+                if (customerID != 0)
                     TagDebug.D(GetType(), " customerID Null ");
                 // Handle Exeption
             }
-            return View();
+            return RedirectToAction("ShowAllDisk");
         }
 
         [HttpGet]
         public ActionResult ReturnDisk(string diskID)
         {
+            if (diskID == null) diskID = "";
             TagDebug.D(GetType(), " in Action " + "ReturnDisk GET");
-            return View(iRentAndReturnDiskService.GetRentedDisks(diskID));
+            List<DiskView> dv = new List<DiskView>();
+            IList<Disk> rentedDisk = iRentAndReturnDiskService.GetRentedDisks(diskID);
+            foreach(Disk d in rentedDisk)
+            {
+                DiskTitle t = iRentAndReturnDiskService.getDiskTitleName(d.TitleID);
+                dv.Add(new DiskView(d.DiskID, t.Title, d.PurchasePrice, "", d.Status));
+            }
+            return View(dv);
         }
 
         [HttpPost]

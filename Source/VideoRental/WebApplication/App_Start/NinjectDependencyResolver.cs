@@ -31,6 +31,9 @@ namespace WebApplication.App_Start
         private void AddBindings()
         {
             kernel.Bind<IRentAndReturnDiskService>().To<RentAndReturnDiskService>();
+            kernel.Bind<IReservationService>().To<ReservationService>();
+            kernel.Bind<ILateChargesServices>().To<LateChargesService>();
+            
         }
     }
 }

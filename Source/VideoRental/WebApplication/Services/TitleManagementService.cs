@@ -19,8 +19,8 @@ namespace WebApplication.Services
             result.TitleID = title.TitleID;
             result.Title = title.Title;
             result.Quantity = title.Quantity;
-            result.RentalPrice = title.RentalPrice;
-            result.LateChargePerDate = title.LateChargePerDate;
+            //result.RentalPrice = title.RentalPrice;
+            //result.LateChargePerDate = title.LateChargePerDate;
             int rentable = 0;
             foreach (Disk disk in title.Disks)
             {

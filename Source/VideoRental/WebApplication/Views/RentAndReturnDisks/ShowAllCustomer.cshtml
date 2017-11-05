@@ -59,7 +59,7 @@
                 @Html.DisplayFor(modelItem => item.address)
             </td>
             <td>
-                @Html.ActionLink("Thuê Đĩa", "PaymentDisk", new { id = item.customerID })
+                @Html.ActionLink("Thuê Đĩa", "PaymentDisk", new { id = @item.customerID })
             </td>
         </tr>
     }

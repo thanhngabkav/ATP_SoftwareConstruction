@@ -27,7 +27,7 @@ namespace DataAccess.Entities
         public float PurchasePrice { set; get; }
 
         public int RentedTime { get; set; }
-
+        [Column(TypeName = "datetime2")]
         public DateTime LastRentedDate { set; get; }
 
         public DateTime DateUpdate { get; set; }

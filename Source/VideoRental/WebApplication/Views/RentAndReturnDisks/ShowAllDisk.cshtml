@@ -72,20 +72,19 @@
 
 </table>
 <form method="POST" action="/RentAndReturnDisks/SaveListDisk" class="form-group" id="form-diskid">
-    <input type='text' name='diskID' value='' hidden />
     <input class="btn btn-success form-control" type="submit" value="Thue" />
 </form>
 <script>
     var data = "";
     $(".disk").click(function () {
         data = $(this).attr('id');
-        if ($(".disk").text() == 'Đặt') {
+        if ($(this).text() == 'Đặt') {
+            $(this).html('Hủy');
             $(this).toggleClass('btn-default btn-warning');
             $("#form-diskid").append("<input type='text' name='diskID'  value='" + data + "'/>");
-            $(".disk").html('Hủy');
         } else {
             $(this).toggleClass('btn-warning btn-default');
-            $(".disk").html('Đặt');
+            $(this).html('Đặt');
             $("input[value='" + data + "']").remove();
         }
     });

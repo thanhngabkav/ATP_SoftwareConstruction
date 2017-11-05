@@ -6,20 +6,28 @@
 
 <h2>ReturnDisk</h2>
 
+<form class="form-group" method="get">
+    <div class="form-inline">
+        <label for="usr">DiskID:</label>
+        <input type="text" class="form-control" name="diskID">
+        <input type="submit" class="btn btn-success" value="Search" />
+    </div>
+</form>
+
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.diskID)
+            @Html.DisplayNameFor(model => model.DiskID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.diskTitleName)
+            @Html.DisplayNameFor(model => model.DiskTitleName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.prices)
+            @Html.DisplayNameFor(model => model.Prices)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.status)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th></th>
     </tr>
@@ -27,21 +35,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.diskID)
+            @Html.DisplayFor(modelItem => item.DiskID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.diskTitleName)
+            @Html.DisplayFor(modelItem => item.DiskTitleName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.prices)
+            @Html.DisplayFor(modelItem => item.Prices)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.status)
+            @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id=item.DiskID }) |
         </td>
     </tr>
 }

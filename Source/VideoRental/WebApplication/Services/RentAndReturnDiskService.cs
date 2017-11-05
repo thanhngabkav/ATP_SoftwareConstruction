@@ -53,7 +53,7 @@ namespace WebApplication.Services
         public IList<Disk> GetRentedDisks(string diskID)
         {
             TagDebug.D(GetType(), "in GetRentedDisks class");
-            return diskDao.GetRentedDisks(10);
+            return diskDao.GetRentedDisks(diskID);
         }
 
         public void ReturnDisks(string[] diskID)
@@ -107,7 +107,7 @@ namespace WebApplication.Services
             return null;
         }
 
-        public void WriteRentalDisk(string[] diskID, string customerID, string userID)
+        public void WriteRentalDisk(string[] diskID, int customerID, int userID)
         {
             TagDebug.D(GetType(), "in WriteRentalDisk class");
             TransactionHistory transactionHistory = AddTransactionHistory(customerID, userID, diskID);
@@ -115,12 +115,14 @@ namespace WebApplication.Services
             //
         }
 
-        private TransactionHistory AddTransactionHistory(string customerID, string userID, string[] diskID)
+        private TransactionHistory AddTransactionHistory(int customerID, int userID, string[] diskID)
         {
             TagDebug.D(GetType(), "in AddTransactionHistory class");
             TransactionHistory transaction = new TransactionHistory();
-            transaction.ClerkID = Int32.Parse(userID);
-            transaction.CustomerID = Int32.Parse(customerID);
+            transaction.CreatedDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
+            transaction.Status = TransactionStatus.CANCELED;
+            transaction.ClerkID = userID;
+            transaction.CustomerID = customerID;
             transaction.TotalPurchaseCost = CalculateCost(diskID);
             tranSactionDAO.AddnewTransaction(transaction);
             return transaction;
@@ -140,7 +142,10 @@ namespace WebApplication.Services
             foreach (string aDiskID in diskID)
             {
                 TransactionHistoryDetail transactionHistoryDetail = new TransactionHistoryDetail();
+                transactionHistoryDetail.DateReturn = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
                 transactionHistoryDetail.DiskID = Int32.Parse(aDiskID);
+                transactionHistoryDetail.Status = TransactionStatus.CANCELED;
+                transactionHistoryDetail.TransactionID = transactionID;
                 transactionDetailsDAO.AddTransactionDetail(transactionHistoryDetail);
             }
         }
