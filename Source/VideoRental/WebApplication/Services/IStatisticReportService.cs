@@ -5,7 +5,7 @@ using System.Web;
 using WebApplication.Models;
 namespace WebApplication.Services
 {
-    public interface IStatisticReport
+    public interface IStatisticReportService
     {
         List<TitleReportModel> Report_Title();
     }

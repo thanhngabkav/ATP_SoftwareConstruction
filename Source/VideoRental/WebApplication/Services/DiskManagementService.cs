@@ -13,6 +13,13 @@ namespace WebApplication.Services
         private DiskDAO diskDAO;
         private TitleDAO titleDAO;
         private RentalRateDAO rentalRateDAO;
+        public DiskManagementService()
+        {
+            this.diskDAO = new DiskDAO();
+            this.titleDAO = new TitleDAO();
+            this.rentalRateDAO = new RentalRateDAO();
+        }
+
         public DiskStatusInfoModel GetDiskStatus(int diskId)
         {
             DiskStatusInfoModel diskStatusInfo = new DiskStatusInfoModel();

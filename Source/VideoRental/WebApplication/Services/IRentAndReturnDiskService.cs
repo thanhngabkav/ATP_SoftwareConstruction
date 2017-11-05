@@ -33,7 +33,7 @@ namespace WebApplication.Services
          * Write Transaction to Database
          * @return : 
          * */
-        void WriteRentalDisk(string[] diskID, string customerID, string userID);
+        void WriteRentalDisk(string[] diskID, int customerID, int userID);
 
         /**
          * @return : get All disk that the status has been rented
