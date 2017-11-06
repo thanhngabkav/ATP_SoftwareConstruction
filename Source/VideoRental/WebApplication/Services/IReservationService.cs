@@ -20,12 +20,12 @@ namespace WebApplication.Services
         /**
          * @return : Get All Customer
          * */
-        List<Customer> GetCustomers(string customerName);
+        IList<CustomerView> GetCustomers(string customerName);
 
         /**
          * @return : Get All Title
          * */
-        List<DiskTitle> GetTitles(string titleName);
+        IList<TitleView> GetTitles(string titleName);
 
 
         /**
@@ -38,6 +38,6 @@ namespace WebApplication.Services
         * Cancel a reservation,change status disk to free
         * @return : 
         * */
-        void CancelReservation(string titleID, string customerID);
+        void CancelReservation(int titleID, int customerID);
     }
 }

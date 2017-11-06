@@ -11,6 +11,11 @@ namespace WebApplication.Controllers
 
         IReservationService iReservation;
 
+        public ReservationController(IReservationService iReservation)
+        {
+            this.iReservation = iReservation;
+        }
+
         [HttpGet]
         public ActionResult ReservationManagement(string customerNameOrID)
         {
@@ -36,7 +41,7 @@ namespace WebApplication.Controllers
         {
             TagDebug.D(GetType(), " in Action " + "SaveTitle");
             Session[LIST_TITLE_SESSION] = titleID;
-            return View();
+            return RedirectToAction("ShowCustomers");
         }
 
 
@@ -47,12 +52,11 @@ namespace WebApplication.Controllers
             return View(iReservation.GetCustomers(customerName));
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult AddReservation(string customerID)
         {
             TagDebug.D(GetType(), " in Action " + "AddReservation");
             string[] titleID = (string[])Session[LIST_TITLE_SESSION];
-            iReservation.AddReservation(titleID, customerID);
 
             if (titleID.Length > 0 && customerID != null)
             {
@@ -70,29 +74,29 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult RequestCancelReservation(String titleID, String customerID)
+        public ActionResult RequestCancelReservation(int titleID, int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "RequestCancelReservation");
             return View();
         }
-        [HttpPost]
-        public ActionResult ConfirmReservation(String titleID, String customerID)
+        [HttpGet]
+        public ActionResult ConfirmReservation(int titleID, int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "ConfirmReservation");
-            if (titleID != null && customerID != null)
+            if (titleID != 0 && customerID != 0)
             {
                 iReservation.CancelReservation(titleID, customerID);
             }
             else
             {
-                if (titleID != null)
+                if (titleID != 0)
                     TagDebug.D(GetType(), " titleID Null ");
-                if (customerID != null)
+                if (customerID != 0)
                     TagDebug.D(GetType(), " customerID Null ");
                 // Handle Exeption
             }
 
-            return View();
+            return RedirectToAction("ReservationManagement");
         }
     }
 }

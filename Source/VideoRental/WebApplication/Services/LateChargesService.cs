@@ -32,25 +32,22 @@ namespace WebApplication.Services
         }
 
 
-        public void CancelLateCharge(string customerID, int numberCancel)
+        public void CancelLateCharge(int transactionHistoryID)
         {
             TagDebug.D(GetType(), "in CancelLateCharge class");
-            IList<TransactionHistory> transactionHistory = transactionDao.GetCustomerLateChargeTransactions(Int32.Parse(customerID));
+            TransactionHistory transactionHistory = transactionDao.GetTransaction(transactionHistoryID);
+            transactionHistory.Status = TransactionStatus.CANCELED;
+            transactionDao.UpdateTransaction(transactionHistory);
 
-            // cancel top n number
-            for (int i = 0; i < numberCancel; ++i)
-            {
-                transactionHistory[i].Status = TransactionStatus.CANCELED;
-                UpdateCancelTransactionDetail(transactionHistory[i]);
-            }
+            UpdateCancelTransactionDetail(transactionHistory);
         }
 
         private void UpdateCancelTransactionDetail(TransactionHistory transactionHistory)
         {
             IList<TransactionHistoryDetail> details = transactionDetailsDao.GetListTransactionDetailsByTransactionId(transactionHistory.TransactionHistoryID);
-            foreach(TransactionHistoryDetail aDetail in details)
+            foreach (TransactionHistoryDetail aDetail in details)
             {
-                aDetail.Status = TransactionStatus.PAID;
+                aDetail.Status = TransactionDetailStatus.PAID;
                 transactionDetailsDao.UpdateTransactionDetail(aDetail);
             }
 
@@ -68,17 +65,22 @@ namespace WebApplication.Services
             return customerViews;
         }
 
-        public IList<TransactionHistory> GetAllLateChargeOfCustomer(string customerID)
+        public IList<TransactionHistoryView> GetAllLateChargeOfCustomer(int customerID)
         {
             TagDebug.D(GetType(), "in GetAllLateChargeOfCustomer class");
-            throw new NotImplementedException();
+
+            IList<TransactionHistory> transactions = transactionDao.GetCustomerLateChargeTransactions(customerID);
+            IList<TransactionHistoryView> transactionHistoryViews = new List<TransactionHistoryView>();
+            foreach (TransactionHistory a in transactions)
+                transactionHistoryViews.Add(new TransactionHistoryView(a.TransactionHistoryID, a.CreatedDate, a.Status, a.CustomerID, a.Customer.FirstName));
+            return transactionHistoryViews;
         }
 
-        public void RecordLateCharge(string customerId, int numberLateCharges)
+        public void RecordLateCharge(int customerId, int numberLateCharges)
         {
             TagDebug.D(GetType(), "in RecordLateCharge class");
             // need find TransactionDetail by transactionHistoryDetailID
-            IList<TransactionHistory> transactionHistories = transactionDao.GetCustomerLateChargeTransactions(Int32.Parse(customerId));
+            IList<TransactionHistory> transactionHistories = transactionDao.GetCustomerLateChargeTransactions(customerId);
 
             int numb = numberLateCharges;
             foreach (TransactionHistory hi in transactionHistories)
@@ -86,15 +88,19 @@ namespace WebApplication.Services
                 List<TransactionHistoryDetail> transactionHistoryDetails = transactionDetailsDao.GetListTransactionDetailsByTransactionId(hi.TransactionHistoryID);
                 foreach (TransactionHistoryDetail de in transactionHistoryDetails)
                 {
-                    de.Status = TransactionStatus.PAID;
-                    transactionDetailsDao.UpdateTransactionDetail(de);
-                    if (--numb <= 0)
-                        break;
+                    if(numb-- > 0)
+                    {
+                        de.Status = TransactionStatus.PAID;
+                        transactionDetailsDao.UpdateTransactionDetail(de);
+                    }
                 }
-                hi.Status = TransactionStatus.PAID;
-                transactionDao.UpdateTransaction(hi);
-                if (--numb <= 0)
+                if (numb < 0)
                     break;
+                else
+                {
+                    hi.Status = TransactionStatus.PAID;
+                    transactionDao.UpdateTransaction(hi);
+                }
 
             }
         }
@@ -103,6 +109,23 @@ namespace WebApplication.Services
         {
             // not use
             throw new NotImplementedException();
+        }
+
+        public int GetNumberOfLateCharge(int customerID)
+        {
+            int number = 0;
+            IList<TransactionHistory> transactionHistories = transactionDao.GetCustomerLateChargeTransactions(customerID);
+            foreach (TransactionHistory hi in transactionHistories)
+            {
+                List<TransactionHistoryDetail> transactionHistoryDetails = transactionDetailsDao.GetListTransactionDetailsByTransactionId(hi.TransactionHistoryID);
+                foreach (TransactionHistoryDetail de in transactionHistoryDetails)
+                {
+                    if (de.Status == null) break;
+                    if (de.Status == TransactionDetailStatus.DUE) ;
+                    number++;
+                }
+            }
+            return number;
         }
     }
 }

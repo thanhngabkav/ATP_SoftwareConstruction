@@ -6,6 +6,26 @@
 
 <h2>ShowTitles</h2>
 
+<div class="checkout-header _container " style=" margin-bottom: 20px;">
+    <div class="checkout-header _progress-bar">
+        <ol class="step-breadcrumb _list">
+            <li class="step-breadcrumb _item -current">
+                <span class="step-breadcrumb _text">1. Chọn Tiêu Đề</span>
+            </li>
+            <li class="step-breadcrumb _item">
+                <span class="step-breadcrumb _text">2. Chọn Khách Hàng</span>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<form class="form-group" method="get">
+    <div class="form-inline">
+        <label for="usr">DiskID:</label>
+        <input type="text" class="form-control" name="titleName">
+        <input type="submit" class="btn btn-success" value="Search" />
+    </div>
+</form>
 
 <table class="table">
     <tr>
@@ -40,11 +60,32 @@
             @Html.DisplayFor(modelItem => item.quantity)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <div class="btn btn-default disk" id=@item.titleID>Đặt Trước</div>
         </td>
     </tr>
 }
-
 </table>
+
+<form method="POST" action="/Reservation/SaveTitle" class="form-group" id="form-titleID">
+    <input class="btn btn-success form-control" type="submit" value="Đặt" />
+</form>
+<script>
+    var data = "";
+    $(".disk").click(function () {
+        data = $(this).attr('id');
+        if ($(this).text() == 'Đặt Trước') {
+            $(this).html('Hủy');
+            $(this).toggleClass('btn-default btn-warning');
+            $("#form-titleID").append("<input type='text' name='titleID'  value='" + data + "'/>");
+        } else {
+            $(this).toggleClass('btn-warning btn-default');
+            $(this).html('Đặt Trước');
+            $("input[value='" + data + "']").remove();
+        }
+    });
+</script>
+<style>
+    .checkout-header {
+        left: 0;
+    }
+</style>

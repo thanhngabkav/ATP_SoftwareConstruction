@@ -26,14 +26,14 @@ namespace WebApplication.Services
          * @param no param
          * @return : a Pair include Disk Name And Its price.
          * */
-        IList<DiskPriceView> GetPriceEachDisk(string[] diskID);
+        IList<DiskPriceView> GetPriceEachDisk(int[] diskID);
 
         /**
          * Occurs after the customer completes the rental in View
          * Write Transaction to Database
          * @return : 
          * */
-        void WriteRentalDisk(string[] diskID, int customerID, int userID);
+        void WriteRentalDisk(int[] diskID, int customerID, int userID);
 
         /**
          * @return : get All disk that the status has been rented
@@ -45,7 +45,7 @@ namespace WebApplication.Services
          * @return : Change status of  list disk to free
          * 
          * */
-        void ReturnDisks(string[] diskID);
+        void ReturnDisks(int diskID);
 
         /**
          * @return :List latecharge of customer

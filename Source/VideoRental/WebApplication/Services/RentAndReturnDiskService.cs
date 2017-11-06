@@ -12,12 +12,13 @@ namespace WebApplication.Services
 
     public class RentAndReturnDiskService : IRentAndReturnDiskService
     {
-        private static string TAG = "RentAndReturnDiskService: ";
         CustomerDAO customerDao;
         DiskDAO diskDao;
         TitleDAO titleDAO;
         TranSactionDAO tranSactionDAO;
         TransactionDetailsDAO transactionDetailsDAO;
+        RentalRateDAO rentalRateDAO;
+        ReservationDAO reservationDAO;
         public RentAndReturnDiskService()
         {
             customerDao = new CustomerDAO();
@@ -25,6 +26,8 @@ namespace WebApplication.Services
             titleDAO = new TitleDAO();
             tranSactionDAO = new TranSactionDAO();
             transactionDetailsDAO = new TransactionDetailsDAO();
+            rentalRateDAO = new RentalRateDAO();
+            reservationDAO = new ReservationDAO();
         }
         public IList<Customer> GetCustomers(string customerID)
         {
@@ -37,15 +40,16 @@ namespace WebApplication.Services
             return diskDao.FindDisks(diskName);
         }
 
-        public IList<DiskPriceView> GetPriceEachDisk(string[] diskID)
+        public IList<DiskPriceView> GetPriceEachDisk(int[] diskID)
         {
             TagDebug.D(GetType(), "in GetPriceEachDisk class");
             IList<DiskPriceView> diskPriceViews = new List<DiskPriceView>();
-            foreach (string d in diskID)
+            foreach (int d in diskID)
             {
-                Disk disk = diskDao.GetDiskById(Int32.Parse(d));
+                Disk disk = diskDao.GetDiskById(d);
                 DiskTitle diskTitle = titleDAO.GetTitleById(disk.TitleID);
-                diskPriceViews.Add(new DiskPriceView(d, diskTitle.Title, disk.PurchasePrice));
+                RentalRate price = rentalRateDAO.GetCurrentRentalRate(diskTitle.TitleID);
+                diskPriceViews.Add(new DiskPriceView(d, diskTitle.Title, price.RentalPrice));
             }
             return diskPriceViews;
         }
@@ -56,31 +60,51 @@ namespace WebApplication.Services
             return diskDao.GetRentedDisks(diskID);
         }
 
-        public void ReturnDisks(string[] diskID)
+        public void ReturnDisks(int diskID)
         {
             TagDebug.D(GetType(), "in ReturnDisks class");
             DateTime today = DateTime.Today;
-            foreach (string aDisk in diskID)
-                ReturnASpecificDisk(today, aDisk);
-
+            ReturnASpecificDisk(today, diskID);
         }
 
-        private void ReturnASpecificDisk(DateTime today, string aDisk)
+        private void ReturnASpecificDisk(DateTime today, int aDisk)
         {
             TagDebug.D(GetType(), "in ReturnASpecificDisk class");
-            Disk disk = diskDao.GetDiskById(Int32.Parse(aDisk));
-            int rangeDay = today.Subtract(disk.LastRentedDate).Days;
-            if (isLateCharge(rangeDay, disk.RentedTime))
-                addSpecificLateCharge(disk);
-            disk.Status = DiskStatus.RENTABLE;
+            Disk disk = diskDao.GetDiskById(aDisk);
+            UpdateDiskStatus(disk, today);
+            UpdateLateCharge(disk, today);
+            
         }
 
-        private bool isLateCharge(int rangeDay, int rentedTime)
+        private void UpdateDiskStatus(Disk disk, DateTime today)
+        {
+            if (HasReservationForTitle(disk))
+                disk.Status = DiskStatus.BOOKED;
+            else
+                disk.Status = DiskStatus.RENTABLE;
+            diskDao.UpdateDisk(disk);
+        }
+
+        private bool HasReservationForTitle(Disk disk)
+        {
+            return reservationDAO.GetNumberReservationByTitleID(disk.TitleID) > 0;
+        }
+
+        private void UpdateLateCharge(Disk disk, DateTime today)
+        {
+            DateTime lastRented = disk.LastRentedDate.Value;     // conver DateTime? to DateTime
+            RentalRate rentedTime = rentalRateDAO.GetCurrentRentalRate(disk.TitleID);
+            int rangeDay = today.Subtract(lastRented).Days;
+            if (IsLateCharge(rangeDay, rentedTime.RentalPeriod))
+                AddSpecificLateCharge(disk);
+        }
+
+        private bool IsLateCharge(int rangeDay, int rentedTime)
         {
             return rangeDay > rentedTime ? true : false;
         }
 
-        private void addSpecificLateCharge(Disk disk)
+        private void AddSpecificLateCharge(Disk disk)
         {
             TagDebug.D(GetType(), "in addSpecificLateCharge class");
             TransactionHistoryDetail transactionDetails = transactionDetailsDAO.getTransactionDetailFromLastRentedDate(disk.DiskID);
@@ -107,7 +131,7 @@ namespace WebApplication.Services
             return null;
         }
 
-        public void WriteRentalDisk(string[] diskID, int customerID, int userID)
+        public void WriteRentalDisk(int[] diskID, int customerID, int userID)
         {
             TagDebug.D(GetType(), "in WriteRentalDisk class");
             TransactionHistory transactionHistory = AddTransactionHistory(customerID, userID, diskID);
@@ -115,19 +139,18 @@ namespace WebApplication.Services
             //
         }
 
-        private TransactionHistory AddTransactionHistory(int customerID, int userID, string[] diskID)
+        private TransactionHistory AddTransactionHistory(int customerID, int userID, int[] diskID)
         {
             TagDebug.D(GetType(), "in AddTransactionHistory class");
             TransactionHistory transaction = new TransactionHistory();
             transaction.CreatedDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
-            transaction.Status = TransactionStatus.CANCELED;
             transaction.ClerkID = userID;
             transaction.CustomerID = customerID;
             transaction.TotalPurchaseCost = CalculateCost(diskID);
             tranSactionDAO.AddnewTransaction(transaction);
             return transaction;
         }
-        private float CalculateCost(string[] diskID)
+        private float CalculateCost(int[] diskID)
         {
             float cost = 0;
             IList<DiskPriceView> listPriceDisk = GetPriceEachDisk(diskID);
@@ -136,18 +159,27 @@ namespace WebApplication.Services
             return cost;
         }
 
-        private void AddTransactionDetail(string[] diskID, int transactionID)
+        private void AddTransactionDetail(int[] diskID, int transactionID)
         {
             TagDebug.D(GetType(), "in AddTransactionDetail class");
-            foreach (string aDiskID in diskID)
+            foreach (int aDiskID in diskID)
             {
                 TransactionHistoryDetail transactionHistoryDetail = new TransactionHistoryDetail();
                 transactionHistoryDetail.DateReturn = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
-                transactionHistoryDetail.DiskID = Int32.Parse(aDiskID);
-                transactionHistoryDetail.Status = TransactionStatus.CANCELED;
+                transactionHistoryDetail.DiskID = aDiskID;
                 transactionHistoryDetail.TransactionID = transactionID;
                 transactionDetailsDAO.AddTransactionDetail(transactionHistoryDetail);
+
+                ChangeStatusCurrentDisk(aDiskID);
             }
+        }
+
+        private void ChangeStatusCurrentDisk(int aDiskID)
+        {
+            Disk disk = diskDao.GetDiskById(aDiskID);
+            disk.Status = DiskStatus.RENTED;
+            disk.LastRentedDate = DateTime.Now;
+            diskDao.UpdateDisk(disk);
         }
 
         public DiskTitle getDiskTitleName(int diskTitleID)

@@ -6,9 +6,28 @@
 
 <h2>ShowCustomers</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="checkout-header _container " style=" margin-bottom: 20px;">
+    <div class="checkout-header _progress-bar">
+        <ol class="step-breadcrumb _list">
+            <li class="step-breadcrumb _item -current">
+                <span class="step-breadcrumb _text">1. Chọn Đĩa</span>
+            </li>
+            <li class="step-breadcrumb _item">
+                <span class="step-breadcrumb _text">2. Chọn Khách Hàng</span>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<form class="form-group">
+    <div class="form-inline">
+        <label for="usr">Customer Name:</label>
+        <input type="text" class="form-control" name="customerName">
+        <input type="submit" class="btn btn-success" value="Search" />
+    </div>
+</form>
+
+
 <table class="table">
     <tr>
         <th>
@@ -26,26 +45,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.customerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.customerFirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.customerLastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.address)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerFirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.ActionLink("Đặt Tiêu Đề", "AddReservation", new { customerID = @item.customerID })
+            </td>
+        </tr>
+    }
 
 </table>
+<style>
+    .checkout-header {
+        left: 0;
+    }
+</style>
