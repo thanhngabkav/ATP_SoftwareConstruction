@@ -10,7 +10,7 @@ namespace WebApplication.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Ninject.Web.Common.WebHost;
+  //  using Ninject.Web.Common.WebHost;
 
     public static class NinjectWebCommon 
     {

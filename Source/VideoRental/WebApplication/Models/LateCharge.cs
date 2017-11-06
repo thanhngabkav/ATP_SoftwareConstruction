@@ -15,7 +15,7 @@ namespace WebApplication.Models
         //Ngày phải trả
         public DateTime DateReturn { set; get; }
         //Ngày trả thực
-        public DateTime DateActuallyReturn { set; get; }
+        public DateTime? DateActuallyReturn { set; get; }
         public float Cost { set; get; }
     }
 }
