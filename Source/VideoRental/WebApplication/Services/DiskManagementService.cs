@@ -49,11 +49,12 @@ namespace WebApplication.Services
                 // if disk booked, who did book? => set for whom booked
                 if (disk.Status.Equals(DiskStatus.BOOKED))
                 {
-                    
+                    diskStatusInfo.DueTime = null;
                 }
                 else // disk in stock, toWhom and when over due
                 {
-                    diskStatusInfo.Whom = null; 
+                    diskStatusInfo.Whom = null;
+                    diskStatusInfo.DueTime = null;
                 }
             }
             return diskStatusInfo;
