@@ -2,51 +2,42 @@ namespace DataAccess.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Init : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-              "dbo.Customers",
-              c => new
-              {
-                  CustomerID = c.Int(nullable: false, identity: true),
-                  FirstName = c.String(nullable: false),
-                  LastName = c.String(nullable: false),
-                  Address = c.String(nullable: false),
-                  PhoneNumber = c.String(nullable: false),
-                  DateOfBirth = c.DateTime(nullable: false),
-                  DateCreate = c.DateTime(nullable: false),
-                  DateUpdate = c.DateTime(nullable: false),
-                  CreatedUser = c.Int(nullable: false),
-                  UpdatedUser = c.Int(nullable: false),
-                  User_UserID = c.Int(),
-                  User_UserID1 = c.Int(),
-              })
-              .PrimaryKey(t => t.CustomerID)
-              .ForeignKey("dbo.Users", t => t.User_UserID)
-              .ForeignKey("dbo.Users", t => t.User_UserID1)
-              .ForeignKey("dbo.Users", t => t.CreatedUser, cascadeDelete: false)
-              .ForeignKey("dbo.Users", t => t.UpdatedUser, cascadeDelete: false)
-              .Index(t => t.CreatedUser)
-              .Index(t => t.UpdatedUser)
-              .Index(t => t.User_UserID)
-              .Index(t => t.User_UserID1);
-
-            CreateTable(
-                "dbo.Users",
+                "dbo.Customers",
                 c => new
                 {
-                    UserID = c.Int(nullable: false, identity: true),
-                    UserName = c.String(nullable: false, maxLength: 200),
-                    Password = c.String(nullable: false, maxLength: 200),
+                    CustomerID = c.Int(nullable: false, identity: true),
+                    FirstName = c.String(nullable: false),
+                    LastName = c.String(nullable: false),
                     Address = c.String(nullable: false),
                     PhoneNumber = c.String(nullable: false),
-                    Email = c.String(),
-                    Role = c.String(maxLength: 50),
+                    DateOfBirth = c.DateTime(nullable: false),
+                    DateCreate = c.DateTime(nullable: false),
+                    DateUpdate = c.DateTime(nullable: false),
+                    UpdatedUser = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.UserID);
+                .PrimaryKey(t => t.CustomerID)
+                .ForeignKey("dbo.Users", t => t.UpdatedUser, cascadeDelete: false)
+                .Index(t => t.UpdatedUser);
+
+            CreateTable(
+               "dbo.Users",
+               c => new
+               {
+                   UserID = c.Int(nullable: false, identity: true),
+                   UserName = c.String(nullable: false, maxLength: 200),
+                   Password = c.String(nullable: false, maxLength: 200),
+                   Address = c.String(nullable: false),
+                   PhoneNumber = c.String(nullable: false),
+                   Email = c.String(),
+                   Role = c.String(maxLength: 50),
+               })
+               .PrimaryKey(t => t.UserID);
 
             CreateTable(
                 "dbo.Disks",
@@ -57,16 +48,16 @@ namespace DataAccess.Migrations
                     Status = c.String(nullable: false),
                     PurchasePrice = c.Single(nullable: false),
                     RentedTime = c.Int(nullable: false),
-                    LastRentedDate = c.DateTime(nullable: false),
+                    LastRentedDate = c.DateTime(),
                     DateUpdate = c.DateTime(nullable: false),
                     DateCreate = c.DateTime(nullable: false),
-                    CreatedUser = c.Int(nullable: false),
+                    UpdatedUser = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.DiskID)
-                .ForeignKey("dbo.Users", t => t.CreatedUser, cascadeDelete: false)
+                .ForeignKey("dbo.Users", t => t.UpdatedUser, cascadeDelete: false)
                 .ForeignKey("dbo.DiskTitles", t => t.TitleID, cascadeDelete: false)
                 .Index(t => t.TitleID)
-                .Index(t => t.CreatedUser);
+                .Index(t => t.UpdatedUser);
 
             CreateTable(
                 "dbo.DiskTitles",
@@ -75,10 +66,8 @@ namespace DataAccess.Migrations
                     TitleID = c.Int(nullable: false, identity: true),
                     Title = c.String(nullable: false),
                     Tags = c.String(),
-                    Image = c.Binary(),
+                    ImageLink = c.String(),
                     Quantity = c.Int(nullable: false),
-                    RentalPrice = c.Single(nullable: false),
-                    LateChargePerDate = c.Single(nullable: false),
                 })
                 .PrimaryKey(t => t.TitleID);
 
@@ -86,14 +75,14 @@ namespace DataAccess.Migrations
                 "dbo.RentalRates",
                 c => new
                 {
-                    RentalRaateId = c.Int(nullable: false, identity: true),
+                    RentalRateId = c.Int(nullable: false, identity: true),
                     RentalPrice = c.Single(nullable: false),
                     LateCharge = c.Single(nullable: false),
                     RentalPeriod = c.Int(nullable: false),
                     CreatedDate = c.DateTime(nullable: false),
                     TitleID = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.RentalRaateId)
+                .PrimaryKey(t => t.RentalRateId)
                 .ForeignKey("dbo.DiskTitles", t => t.TitleID, cascadeDelete: true)
                 .Index(t => t.TitleID);
 
@@ -119,7 +108,7 @@ namespace DataAccess.Migrations
                     TransactionID = c.Int(nullable: false),
                     Status = c.String(maxLength: 50),
                     DiskID = c.Int(nullable: false),
-                    DateReturn = c.DateTime(nullable: false),
+                    DateReturn = c.DateTime(),
                     IncurreCost = c.Single(nullable: false),
                     Note = c.String(),
                 })
@@ -136,7 +125,7 @@ namespace DataAccess.Migrations
                     TransactionHistoryID = c.Int(nullable: false, identity: true),
                     CreatedDate = c.DateTime(nullable: false),
                     TotalPurchaseCost = c.Single(nullable: false),
-                    Status = c.String(nullable: false, maxLength: 50),
+                    Status = c.String(maxLength: 50),
                     Note = c.String(),
                     ClerkID = c.Int(nullable: false),
                     CustomerID = c.Int(nullable: false),
@@ -148,8 +137,6 @@ namespace DataAccess.Migrations
                 .Index(t => t.CustomerID);
 
         }
-
-
 
 
         public override void Down()

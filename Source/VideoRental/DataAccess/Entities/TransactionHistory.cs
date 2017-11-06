@@ -17,6 +17,7 @@ namespace DataAccess.Entities
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionHistoryID { get; set; }
 
         [Required]
@@ -24,7 +25,6 @@ namespace DataAccess.Entities
         [Required]
         public float TotalPurchaseCost { get; set; }
 
-        [Required]
         [MaxLength(50, ErrorMessage = "Tên Trạng Thái Không Quá 50 Ký Tự")]
         public String Status { get; set; }
 

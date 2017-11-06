@@ -12,6 +12,7 @@ namespace DataAccess.Entities
     public class TransactionHistoryDetail
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionDetailID { set; get; }
 
         [Required]
@@ -23,7 +24,7 @@ namespace DataAccess.Entities
         [Required]
         public int DiskID { set; get; }
 
-        public DateTime DateReturn { set; get; }
+        public DateTime? DateReturn { set; get; }
 
         public float IncurreCost { set; get; }
 

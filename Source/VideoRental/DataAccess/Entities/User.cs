@@ -12,7 +12,6 @@ namespace DataAccess.Entities
     {
         public User()
         {
-            this.CreatedCustomers = new List<Customer>();
             this.UpdatedCustomers = new List<Customer>();
             this.TransactionHistorys = new List<TransactionHistory>();
             this.Disks = new List<Disk>();
@@ -42,8 +41,6 @@ namespace DataAccess.Entities
 
         [MaxLength(50, ErrorMessage = "Tên Quyền Không Quá 50 Ký Tự")]
         public String Role { set; get; }
-
-        public virtual ICollection<Customer> CreatedCustomers { set; get; }
 
         public virtual ICollection<Customer> UpdatedCustomers { set; get; }
 

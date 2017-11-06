@@ -24,9 +24,9 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public List<Disk> GetRentedDisks(int num)
+        public List<Disk> GetRentedDisks(string idOrName)
         {
-            return dBContext.Disks.Where(x => x.Status.Equals(DiskStatus.RENTED)).Take(num).ToList();
+            return dBContext.Disks.Where(x => x.Status.Equals(DiskStatus.RENTED) && (x.DiskID.ToString().Contains(idOrName) || x.DiskTitle.Title.ToString().Contains(idOrName))).ToList();
         }
 
         /// <summary>

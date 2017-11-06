@@ -12,7 +12,7 @@ namespace DataAccess.Entities
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RentalRaateId { set; get; }
+        public int RentalRateId { set; get; }
 
         public float RentalPrice { set; get; }
 

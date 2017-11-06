@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebApplication.Models.DiskPriceView>
+
+@{
+    ViewBag.Title = "PaymentDisk";
+}
+
+<h2>PaymentDisk</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.diskID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diskTitleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.diskID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diskTitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+    </tr>
+}
+    <p class="btn btn-info">
+        @Html.ActionLink("Thanh Toán", "WriteRentingDisk")
+    </p>
+</table>

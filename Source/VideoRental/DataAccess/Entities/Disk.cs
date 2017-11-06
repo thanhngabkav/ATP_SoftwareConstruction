@@ -28,16 +28,16 @@ namespace DataAccess.Entities
 
         public int RentedTime { get; set; }
 
-        public DateTime LastRentedDate { set; get; }
+        public DateTime? LastRentedDate { set; get; }
 
         public DateTime DateUpdate { get; set; }
 
         public DateTime DateCreate { set; get; }
 
-        public int CreatedUser { set; get; }
+        public int UpdatedUser { set; get; }
 
-        [ForeignKey("CreatedUser")]
-        public virtual User Created_User { set; get; }
+        [ForeignKey("UpdatedUser")]
+        public virtual User Update_User { set; get; }
 
         [ForeignKey("TitleID")]
         public virtual DiskTitle DiskTitle { set; get; }
