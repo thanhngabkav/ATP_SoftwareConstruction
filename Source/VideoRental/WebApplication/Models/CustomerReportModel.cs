@@ -7,6 +7,11 @@ namespace WebApplication.Models
 {
     public class CustomerReportModel
     {
+        public CustomerReportModel()
+        {
+            this.LateCharges = new List<LateCharge>();
+            this.DiskOverDues = new List<DiskOverDueModel>();
+        }
         public int CustomerID { set; get; }
         public string CustomerName { set; get; }
         public string Address { set; get; }

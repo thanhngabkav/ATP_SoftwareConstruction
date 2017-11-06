@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebApplication.Models.TitleReportModel>
+
+@{
+    ViewBag.Title = "Report_Title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Report_Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfRentedOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfInStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfOnHold)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfReservation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfRentedOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfInStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfOnHold)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfReservation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,60 @@
+﻿@model WebApplication.Models.TitleInfoModel
+
+@{
+    ViewBag.Title = "GetTitleInfomation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetTitleInfomation</h2>
+
+<div>
+    <h4>TitleInfoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           
+            @Html.HiddenFor(model => model.TitleID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageLink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfDiskRentable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfDiskRentable)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
