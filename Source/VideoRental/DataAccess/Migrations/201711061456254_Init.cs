@@ -93,6 +93,7 @@ namespace DataAccess.Migrations
                     TitleID = c.Int(nullable: false),
                     CustomerID = c.Int(nullable: false),
                     ReservationDate = c.DateTime(nullable: false),
+                    Status = c.String(nullable: false, maxLength: 50)
                 })
                 .PrimaryKey(t => new { t.TitleID, t.CustomerID })
                 .ForeignKey("dbo.Customers", t => t.CustomerID, cascadeDelete: true)
