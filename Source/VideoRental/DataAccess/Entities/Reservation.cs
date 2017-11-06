@@ -19,6 +19,9 @@ namespace DataAccess.Entities
 
         public DateTime ReservationDate { set; get; }
 
+        [MaxLength(50, ErrorMessage = "Tên Trạng Thái Không Quá 50 Ký Tự")]
+        public String Status { set; get; }
+
         [ForeignKey("TitleID")]
         public virtual DiskTitle DiskTitle { set; get; }
 

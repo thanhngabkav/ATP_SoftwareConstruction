@@ -18,12 +18,12 @@ namespace WebApplication.Services
 
         public void AddNewRentalRate(RentalRate rentalRate)
         {
-            throw new NotImplementedException();
+            rentalRateDAO.AddNewRentalRate(rentalRate);
         }
 
         public List<RentalRate> GetAllRentalRates()
         {
-            throw new NotImplementedException();
+            return rentalRateDAO.GetAllRentalRates();
         }
 
         public RentalRate GetCurrentRentalRate(int diskTitleId)

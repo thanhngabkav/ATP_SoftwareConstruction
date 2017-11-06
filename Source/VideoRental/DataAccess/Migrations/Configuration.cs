@@ -35,8 +35,8 @@
                 {
                     UserID = 1,
                     UserName = "manager",
-                      //password is manager and have encoded by sha256 algorithm
-                      Password = "6ee4a469cd4e91053847f5d3fcb61dbcc91e8f0ef10be7748da4c4a1ba382d17",
+                    //password is manager and have encoded by sha256 algorithm
+                    Password = "6ee4a469cd4e91053847f5d3fcb61dbcc91e8f0ef10be7748da4c4a1ba382d17",
                     Address = "Hồ Chí Minh",
                     PhoneNumber = "096281084",
                     Email = "manager01@gmail.com",
@@ -47,8 +47,8 @@
                 {
                     UserID = 2,
                     UserName = "clerk",
-                      //password is clerk and have encoded by sha256 algorithm
-                      Password = "c40dc72b0228e5850d8b173ff861a48acfb4a15b37b2849cbb6584bbadbc7907",
+                    //password is clerk and have encoded by sha256 algorithm
+                    Password = "c40dc72b0228e5850d8b173ff861a48acfb4a15b37b2849cbb6584bbadbc7907",
                     Address = "Hồ Chí Minh",
                     PhoneNumber = "0985468764",
                     Email = "clerk01@gmail.com",
@@ -69,7 +69,7 @@
                   DateCreate = DateTime.Now,
                   DateUpdate = DateTime.Now,
                   UpdatedUser = 2  //clerk Id
-                },
+              },
 
               new Customer
               {
@@ -82,7 +82,7 @@
                   DateCreate = DateTime.Now,
                   DateUpdate = DateTime.Now,
                   UpdatedUser = 2  //clerk Id
-                }
+              }
           );
 
             context.DiskTitles.AddOrUpdate(
@@ -113,73 +113,73 @@
                 {
                     DiskID = 1,
                     TitleID = 1, //title id
-                      Status = DiskStatus.RENTABLE,
+                    Status = DiskStatus.RENTABLE,
                     PurchasePrice = 200000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  },
+                },
                 //disk 2, title 1 (disk id is 2)
                 new Disk
                 {
                     DiskID = 2,
                     TitleID = 1, //title id
-                      Status = DiskStatus.BOOKED,
+                    Status = DiskStatus.BOOKED,
                     PurchasePrice = 200000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  },
+                },
                 //disk 3, title 1 (disk id is 3)
                 new Disk
                 {
                     DiskID = 3,
                     TitleID = 1, //title id
-                      Status = DiskStatus.RENTED,
+                    Status = DiskStatus.RENTED,
                     PurchasePrice = 200000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  },
+                },
                 //disk 1, title 2 (disk id is 4)
                 new Disk
                 {
                     DiskID = 4,
                     TitleID = 2, //title id
-                      Status = DiskStatus.RENTABLE,
+                    Status = DiskStatus.RENTABLE,
                     PurchasePrice = 400000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  },
+                },
                 //disk 2, title 2 (disk id is 5)
                 new Disk
                 {
                     DiskID = 5,
                     TitleID = 2, //title id
-                      Status = DiskStatus.BOOKED,
+                    Status = DiskStatus.BOOKED,
                     PurchasePrice = 400000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  },
+                },
                 //disk 3, title 2 (disk id is 6)
                 new Disk
                 {
                     DiskID = 6,
                     TitleID = 2, //title id
-                      Status = DiskStatus.RENTED,
+                    Status = DiskStatus.RENTED,
                     PurchasePrice = 400000,
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     UpdatedUser = 1 //manager
-                  }
+                }
             );
 
             context.RentalRates.AddOrUpdate(
@@ -259,7 +259,7 @@
                     TransactionID = 1,
                 },
 
-               // Transaction detail 1 of transaction 2
+                // Transaction detail 1 of transaction 2
                 new TransactionHistoryDetail
                 {
                     TransactionDetailID = 2,
@@ -275,7 +275,8 @@
                 {
                     TitleID = 1,
                     CustomerID = 1,
-                    ReservationDate = DateTime.Now
+                    ReservationDate = DateTime.Now,
+                    Status = ReservationStatus.ON_HOLD
                 },
 
                 //Reservation of title 2, customer 2
@@ -283,7 +284,8 @@
                 {
                     TitleID = 2,
                     CustomerID = 2,
-                    ReservationDate = DateTime.Now
+                    ReservationDate = DateTime.Now,
+                    Status = ReservationStatus.ON_HOLD
                 }
             );
 
