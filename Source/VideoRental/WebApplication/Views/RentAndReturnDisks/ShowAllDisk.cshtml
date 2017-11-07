@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "RetalAndReturnManagement";
 }
-<link href="~/CSS/alice-min-bundle-checkout-d4abccf615.css" rel="stylesheet" />
+
 <h2>All Disk</h2>
 
 <div class="checkout-header _container " style=" margin-bottom: 20px;">
@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <div class="btn btn-default disk" id=@item.DiskID>Đặt</div>
+                <div class="btn btn-default disk" id=@item.DiskID>Thuê</div>
                 @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
@@ -72,19 +72,19 @@
 
 </table>
 <form method="POST" action="/RentAndReturnDisks/SaveListDisk" class="form-group" id="form-diskid">
-    <input class="btn btn-success form-control" type="submit" value="Thue" />
+    <input class="btn btn-success form-control" type="submit" value="Thuê" />
 </form>
 <script>
     var data = "";
     $(".disk").click(function () {
         data = $(this).attr('id');
-        if ($(this).text() == 'Đặt') {
+        if ($(this).text() == 'Thuê') {
             $(this).html('Hủy');
             $(this).toggleClass('btn-default btn-warning');
             $("#form-diskid").append("<input type='text' name='diskID'  value='" + data + "'/>");
         } else {
             $(this).toggleClass('btn-warning btn-default');
-            $(this).html('Đặt');
+            $(this).html('Thuê');
             $("input[value='" + data + "']").remove();
         }
     });

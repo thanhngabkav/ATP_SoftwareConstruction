@@ -21,13 +21,13 @@ namespace WebApplication.Services
          * @param userName : 
          * @return : Get All Late Charge Of A Customer, unless return to length = 0
          * */
-        IList<TransactionHistory> GetAllLateChargeOfCustomer(String customerID);
+        IList<TransactionHistoryView> GetAllLateChargeOfCustomer(int customerID);
 
         /*
            * Record top n LateCharge 
            * @param: number of top latechage
            */
-        void RecordLateCharge(string customerId, int numberLateCharges);
+        void RecordLateCharge(int customerId, int numberLateCharges);
 
         /**
          * @return :List latecharge of customer
@@ -40,7 +40,7 @@ namespace WebApplication.Services
          * @return :
          * 
          * */
-        void CancelLateCharge(string customerID, int numberCancel);
+        void CancelLateCharge(int transactionHistoryID);
 
 
         /**
@@ -50,6 +50,9 @@ namespace WebApplication.Services
          * */
         void AddLateCharge(string transactionHistoryDetailID);
 
-
+        /*
+         * Count Number of Customer's LateCharge 
+         */
+        int GetNumberOfLateCharge(int customerID);
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using DataAccess.Entities;
 using DataAccess.DAO;
 using WebApplication.Models;
+using DataAccess.Utilities;
 
 namespace WebApplication.Services
 {
@@ -22,6 +23,7 @@ namespace WebApplication.Services
 
         public void AddReservation(string[] titleID, string customerID)
         {
+            TagDebug.D(GetType(), "in AddReservation Services");
             foreach (string atitle in titleID)
             {
                 Reservation reservation = new Reservation
@@ -34,19 +36,28 @@ namespace WebApplication.Services
             }
         }
 
-        public void CancelReservation(string titleID, string customerID)
+        public void CancelReservation(int titleID, int customerID)
         {
-            Reservation reservation = reservationDAO.GetReservation(Int32.Parse(titleID), Int32.Parse(customerID));
+            TagDebug.D(GetType(), "in CancelReservation Services");
+            Reservation reservation = reservationDAO.GetReservation(titleID, customerID);
             reservationDAO.RemoveReservation(reservation);
         }
 
-        public List<Customer> GetCustomers(string customerName)
+        public IList<CustomerView> GetCustomers(string customerName)
         {
-            return customerDAO.FindCustomers(customerName);
+            TagDebug.D(GetType(), "in GetCustomers Services");
+            if (customerName == null) customerName = "";
+            IList<Customer> customers = customerDAO.FindCustomers(customerName);
+            IList<CustomerView> customerViews = new List<CustomerView>();
+            foreach (Customer aCustomer in customers)
+                customerViews.Add(new CustomerView(aCustomer.CustomerID, aCustomer.FirstName, aCustomer.LastName, aCustomer.Address));
+            return customerViews;
         }
 
         public List<ReservationView> GetReservation(string customerNameOrID)
         {
+            TagDebug.D(GetType(), "in GetReservation Services");
+            if (customerNameOrID == null) customerNameOrID = "";
             List<ReservationView> reservationViews = new List<ReservationView>();
             List<Customer> customers = customerDAO.FindCustomers(customerNameOrID);
 
@@ -64,9 +75,15 @@ namespace WebApplication.Services
             return reservationViews;
         }
 
-        public List<DiskTitle> GetTitles(string titleName)
+        public IList<TitleView> GetTitles(string titleName)
         {
-            return titleDAO.FindDiskTitles(titleName);
+            TagDebug.D(GetType(), "in GetTitles Services");
+            if (titleName == null) titleName = "";
+            IList<DiskTitle> diskTitles = titleDAO.FindDiskTitles(titleName);
+            IList<TitleView> titleViews = new List<TitleView>();
+            foreach (DiskTitle title in diskTitles)
+                titleViews.Add(new TitleView(title.TitleID, title.Title, title.Tags, title.ImageLink, title.Quantity));
+            return titleViews;
         }
     }
 }

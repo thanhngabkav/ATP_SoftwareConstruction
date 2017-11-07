@@ -5,6 +5,16 @@
 }
 
 <h2>ReservationManagement</h2>
+<div class="form-group">
+    @Html.ActionLink("Đặt Đĩa", "ShowTitles", null, new { @class = "btn btn-info" })
+</div>
+<form class="form-group" method="get">
+    <div class="form-inline">
+        <label for="usr">Customer </label>
+        <input type="text" class="form-control" name="customerNameOrID">
+        <input type="submit" class="btn btn-success" value="Search" />
+    </div>
+</form>
 
 <table class="table">
     <tr>
@@ -13,6 +23,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.diskNameTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.customerID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.customerName)
@@ -32,15 +45,16 @@
             @Html.DisplayFor(modelItem => item.diskNameTitle)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.customerID)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.customerName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.dateReservate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Hủy Đặt Trước", "ConfirmReservation", new { titleID = item.titleID, customerID = item.customerID }, new { @class="btn btn-warning" })
         </td>
     </tr>
 }

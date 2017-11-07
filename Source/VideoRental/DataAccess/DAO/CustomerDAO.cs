@@ -99,6 +99,7 @@ namespace DataAccess.DAO
                 List<TransactionHistory> customerTransactions = tranSactionDAO.GetAllCustomerTransactions(customer.CustomerID);
                 foreach (TransactionHistory transaction in customerTransactions)
                 {
+                    if (transaction.Status == null) break;
                     if (transaction.Status.Equals(TransactionStatus.DUE))
                     {
                         isLateCharge = true;

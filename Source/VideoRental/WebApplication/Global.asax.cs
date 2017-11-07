@@ -15,7 +15,7 @@ namespace WebApplication
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            Database.SetInitializer<VideoRentalDBContext>(null);
+          //  Database.SetInitializer<VideoRentalDBContext>(null);
         }
     }
 }

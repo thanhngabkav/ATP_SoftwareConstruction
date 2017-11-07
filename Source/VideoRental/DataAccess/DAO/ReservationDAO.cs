@@ -40,6 +40,26 @@ namespace DataAccess.DAO
         }
 
         /// <summary>
+        /// Get Reservation by title id And Sort by date
+        /// </summary>
+        /// <param name="titleID"></param>
+        /// <returns></returns>
+        public Reservation GetReservationByTitleID(int titleID)
+        {
+            return dBContext.Reservations.Where(x => x.TitleID == titleID).OrderBy(x=>x.ReservationDate).FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Get number Reservation by title id And Sort by date
+        /// </summary>
+        /// <param name="titleID"></param>
+        /// <returns></returns>
+        public int GetNumberReservationByTitleID(int titleID)
+        {
+            return dBContext.Reservations.Where(x => x.TitleID == titleID).Count();
+        }
+        /// <summary>
         /// Remove a reservation from database
         /// </summary>
         /// <param name="reservation"></param>
@@ -55,7 +75,7 @@ namespace DataAccess.DAO
         /// <param name="customerId"></param>
         /// <param name="diskTitleId"></param>
         /// <returns></returns>
-        public Reservation GetReservation(int customerId, int diskTitleId)
+        public Reservation GetReservation(int diskTitleId, int customerId)
         {
             return dBContext.Reservations.Where(x => x.CustomerID == customerId && x.TitleID == diskTitleId).FirstOrDefault();
         }
