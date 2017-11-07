@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                     userCookies.Expires = authTicket.Expiration;
                     Response.Cookies.Add(userCookies);
                 }
-                return Redirect("/Manager");
+                return Redirect("/Home");
             }
             else
             {
@@ -68,6 +68,7 @@ namespace WebApp.Controllers
         {
             FormsAuthentication.SignOut();
             Request.Cookies.Clear();
+            Session[UserSession.SessionName] = null;
             Session.Clear();
             return Redirect("/Home");
         }

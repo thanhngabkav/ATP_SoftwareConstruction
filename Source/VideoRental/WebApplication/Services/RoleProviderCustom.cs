@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using DataAccess.DAO;
 using DataAccess.Entities;
-namespace WebApp.Services
+namespace WebApplication.Services
 {
     public class RoleProviderCustom : RoleProvider
     {
