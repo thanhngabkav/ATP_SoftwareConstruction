@@ -73,14 +73,16 @@ namespace WebApplication.Services
             Disk disk = diskDao.GetDiskById(aDisk);
             UpdateDiskStatus(disk, today);
             UpdateLateCharge(disk, today);
-            
+
         }
 
         private void UpdateDiskStatus(Disk disk, DateTime today)
         {
             if (HasReservationForTitle(disk))
+            {
                 disk.Status = DiskStatus.BOOKED;
-            else
+                UpdateReservationOnHold(disk);
+            }else
                 disk.Status = DiskStatus.RENTABLE;
             diskDao.UpdateDisk(disk);
         }
@@ -89,6 +91,14 @@ namespace WebApplication.Services
         {
             return reservationDAO.GetNumberReservationByTitleID(disk.TitleID) > 0;
         }
+
+        private void UpdateReservationOnHold(Disk disk)
+        {
+            Reservation res = reservationDAO.GetReservationByTitleID(disk.TitleID);
+            res.Status = ReservationStatus.ON_HOLD;
+            reservationDAO.UpDateReservation(res);
+        }
+
 
         private void UpdateLateCharge(Disk disk, DateTime today)
         {

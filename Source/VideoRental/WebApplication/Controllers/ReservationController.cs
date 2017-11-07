@@ -74,12 +74,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult RequestCancelReservation(int titleID, int customerID)
-        {
-            TagDebug.D(GetType(), " in Action " + "RequestCancelReservation");
-            return View();
-        }
-        [HttpGet]
         public ActionResult ConfirmReservation(int titleID, int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "ConfirmReservation");

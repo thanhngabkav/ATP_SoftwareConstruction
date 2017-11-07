@@ -57,7 +57,7 @@ namespace DataAccess.DAO
         /// <returns></returns>
         public int GetNumberReservationByTitleID(int titleID)
         {
-            return dBContext.Reservations.Where(x => x.TitleID == titleID).Count();
+            return dBContext.Reservations.Where(x => x.TitleID == titleID && x.Status == ReservationStatus.IN_QUEUE).Count();
         }
         /// <summary>
         /// Remove a reservation from database
@@ -90,6 +90,12 @@ namespace DataAccess.DAO
         public List<Reservation> GetReservation(int customerId)
         {
             return dBContext.Reservations.Where(x => x.CustomerID == customerId).ToList();
+        }
+
+        public void UpDateReservation(Reservation res)
+        {
+            dBContext.Entry(res).State = EntityState.Modified;
+            dBContext.SaveChanges();
         }
     }
 }

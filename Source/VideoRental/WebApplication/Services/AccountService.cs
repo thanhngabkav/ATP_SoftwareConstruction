@@ -6,6 +6,8 @@ using WebApp.Models;
 using DataAccess.DAO;
 using DataAccess.Entities;
 using WebApplication.Services;
+using DataAccess.Utilities;
+
 namespace WebApp.Services
 {
     public class AccountService
@@ -22,6 +24,7 @@ namespace WebApp.Services
             User user = userDAO.getUserByUserName(loginModel.Username);
             if (user != null)
             {
+                TagDebug.D(GetType(), sha2.Encode(loginModel.Password)+"");
                 return user.Password.Equals(sha2.Encode(loginModel.Password));
             }
             return false;

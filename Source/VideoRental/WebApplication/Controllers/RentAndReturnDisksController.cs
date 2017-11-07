@@ -62,9 +62,12 @@ namespace WebApplication.Controllers
             TagDebug.D(GetType(), " in Action " + "SaveListDisk");
             foreach (int a in diskID)
                 TagDebug.D(GetType(), "DIsk ID = " + a);
-            
+
             Session[RENTING_SESSION] = diskID;
-            return RedirectToAction("ShowAllCustomer");
+            if (diskID != null)
+                return RedirectToAction("ShowAllCustomer");
+            else
+                return RedirectToAction("ShowAllDisk");
         }
 
         [HttpGet]
@@ -88,7 +91,12 @@ namespace WebApplication.Controllers
 
             if (diskID.Length > 0 && id != null)
             {
-                return View(iRentAndReturnDiskService.GetPriceEachDisk(diskID));
+                IList<DiskPriceView> diskPriceViews = iRentAndReturnDiskService.GetPriceEachDisk(diskID);
+                float total = 0;
+                foreach(DiskPriceView d in diskPriceViews)
+                    total += d.price;
+                ViewBag.Total = total;
+                return View(diskPriceViews);
             }
             else
             {
@@ -131,7 +139,7 @@ namespace WebApplication.Controllers
             TagDebug.D(GetType(), " in Action " + "ReturnDisk GET");
             List<DiskView> dv = new List<DiskView>();
             IList<Disk> rentedDisk = iRentAndReturnDiskService.GetRentedDisks(diskID);
-            foreach(Disk d in rentedDisk)
+            foreach (Disk d in rentedDisk)
             {
                 DiskTitle t = iRentAndReturnDiskService.getDiskTitleName(d.TitleID);
                 dv.Add(new DiskView(d.DiskID, t.Title, d.PurchasePrice, "", d.Status));
@@ -152,7 +160,7 @@ namespace WebApplication.Controllers
                 TagDebug.D(GetType(), " diskID is Null");
                 // Handle Exeption
             }
-            return View();
+            return RedirectToAction("ShowAllDisk");
         }
 
         [HttpGet]

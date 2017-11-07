@@ -30,6 +30,7 @@ namespace WebApplication.Services
                 {
                     CustomerID = Int32.Parse(customerID),
                     TitleID = Int32.Parse(atitle),
+                    Status = ReservationStatus.IN_QUEUE,
                     ReservationDate = DateTime.Today
                 };
                 reservationDAO.AddReservation(reservation);
