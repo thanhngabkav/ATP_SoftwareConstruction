@@ -60,6 +60,7 @@ namespace WebApplication.Services
                 titleModel.NumberOfRentedOut = rented;
                 //set number of reservation
                 titleModel.NumberOfReservation = title.Reservations.Count;
+                listResult.Add(titleModel);
             }
 
             return listResult;

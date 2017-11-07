@@ -10,6 +10,11 @@ namespace WebApplication.Controllers
     public class StatisticReportController : Controller
     {
         IStatisticReportService statisticReportService;
+
+        public StatisticReportController(IStatisticReportService statisticReportService)
+        {
+            this.statisticReportService = statisticReportService;
+        }
         // GET: StatisticReport
         public ActionResult Report_Title()
         {
