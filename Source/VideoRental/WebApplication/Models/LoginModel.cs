@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApp.Models
+namespace WebApplication.Models
 {
     public class LoginModel
     {

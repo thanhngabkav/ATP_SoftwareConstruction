@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model WebApplication.Models.UserSession
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -14,12 +15,24 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @{
+                    if (Session[WebApplication.Models.UserSession.SessionName] != null)
+                    {
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            WebApplication.Models.UserSession userSession = (WebApplication.Models.UserSession)Session[WebApplication.Models.UserSession.SessionName];
+                            if(userSession.UserRole.Equals(DataAccess.Utilities.UserRole.Clerk)){
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                      
+                            }
+                        </button>
+
+
+
+                        }
+                    }
+                @Html.ActionLink("Action Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -32,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Video Rental Store</p>
         </footer>
     </div>
 

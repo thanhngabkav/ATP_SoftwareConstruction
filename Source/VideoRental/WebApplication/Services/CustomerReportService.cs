@@ -81,7 +81,7 @@ namespace WebApplication.Services
                             //Ngày phải trả
                             lateCharge.DateReturn = dateReturn;
                             //Ngày trả thực tế
-                            lateCharge.DateActuallyReturn = transactionDetail.DateReturn;
+                            lateCharge.DateActuallyReturn = (DateTime)transactionDetail.DateReturn;
                             lateCharge.Cost = curentRentalRate.LateCharge;
                             //add late charge in list
                             lateCharges.Add(lateCharge);

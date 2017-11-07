@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using DataAccess.Entities;
 using DataAccess.DAO;
-namespace WebApp.Services
+namespace WebApplication.Services
 {
     public class UserService
     {

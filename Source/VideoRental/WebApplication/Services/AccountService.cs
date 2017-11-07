@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApp.Models;
+using WebApplication.Models;
 using DataAccess.DAO;
 using DataAccess.Entities;
 using WebApplication.Services;
-namespace WebApp.Services
+namespace WebApplication.Services
 {
     public class AccountService
     {
