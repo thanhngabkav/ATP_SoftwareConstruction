@@ -57,27 +57,28 @@ namespace WebApplication.Controllers
         /// </summary>
         /// <param name="numberRequest"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public ActionResult RecordLateCharge(NumberRequestView numberRequest)
         {
             TagDebug.D(GetType(), " in Action " + "RecordLateCharge POST");
             int customerID = (int)Session[CUSTOMER_SESSION];
             int numberLatecharge = iLateChargesServices.GetNumberOfLateCharge(customerID);
 
-            if (enoughForRecordlateCharge(numberLatecharge, numberRequest))
+            if (IsEnoughForRecordlateCharge(numberLatecharge, numberRequest))
             {
                 iLateChargesServices.RecordLateCharge(customerID, numberRequest.number);
                 ViewBag.Success = "Ghi Nhận Trễ Hạn Thành công";
+                return RedirectToAction("LateChargePayment");
             }
             else
             {
                 ViewBag.Success = "Không đủ để xóa";
             }
-            ViewBag.numberLateCharge = iLateChargesServices.GetNumberOfLateCharge(currentCustomerID);
+            ViewBag.numberLateCharge = iLateChargesServices.GetNumberOfLateCharge(customerID);
             return View();
         }
 
-        private bool enoughForRecordlateCharge(int numberLatecharge, NumberRequestView numberRequest)
+        private bool IsEnoughForRecordlateCharge(int numberLatecharge, NumberRequestView numberRequest)
         {
             return numberLatecharge >= numberRequest.number && numberLatecharge > 0 ? true : false;
         }
@@ -102,6 +103,14 @@ namespace WebApplication.Controllers
             int customerID = currentCustomerID;
             iLateChargesServices.CancelLateCharge(transactionID);
             return RedirectToAction("CancelLateCharge");
+        }
+
+        [HttpPost]
+        public ActionResult LateChargePayment(NumberRequestView numberRequest)
+        {
+            int customerID = (int)Session[CUSTOMER_SESSION];
+            ViewBag.LateChargePayment = iLateChargesServices.GetTotalLateChargePrice(customerID, numberRequest.number);
+            return RedirectToAction("RecordLateCharge", numberRequest);
         }
 
     }

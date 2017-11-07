@@ -54,5 +54,9 @@ namespace WebApplication.Services
          * Count Number of Customer's LateCharge 
          */
         int GetNumberOfLateCharge(int customerID);
+        /*
+         * Get Total Pric
+         */
+        float GetTotalLateChargePrice(int customerId, int numberLateCharges);
     }
 }
