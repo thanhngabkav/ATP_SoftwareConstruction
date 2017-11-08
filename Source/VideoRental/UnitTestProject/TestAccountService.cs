@@ -15,6 +15,9 @@ namespace UnitTestProject
     [TestClass]
     public class TestAccountService
     {
+        /// <summary>
+        /// Sample Test Method
+        /// </summary>
         [TestMethod]
         public void TestLoginFail()
         {
@@ -22,6 +25,7 @@ namespace UnitTestProject
             var mockUserDAO = new Mock<UserDAO>();
             LoginModel loginModel = new LoginModel { Username = "wrong user name", Password = "fake" };
             User fakeUser = null;
+            //Mock data access layer
             mockUserDAO.Setup(x => x.getUserByUserName(loginModel.Username)).Returns(fakeUser);
 
             bool expectedResult = false;
