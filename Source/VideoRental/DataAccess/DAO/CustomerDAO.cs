@@ -26,7 +26,7 @@ namespace DataAccess.DAO
         /// Add new Customer into database
         /// </summary>
         /// <param name="customer"></param>
-        public void AddNewCustomer(Customer customer)
+        public virtual void AddNewCustomer(Customer customer)
         {
             dBContext.Customers.Add(customer);
             dBContext.SaveChanges();
@@ -36,7 +36,7 @@ namespace DataAccess.DAO
         /// Remove a customer from database
         /// </summary>
         /// <param name="customer"></param>
-        public void  DeleteCustomer(Customer customer)
+        public virtual void  DeleteCustomer(Customer customer)
         {
             dBContext.Customers.Remove(customer);
             dBContext.SaveChanges();
@@ -46,7 +46,7 @@ namespace DataAccess.DAO
         /// Update customer
         /// </summary>
         /// <param name="customer"></param>
-        public void UpdateCustomer(Customer customer)
+        public virtual void UpdateCustomer(Customer customer)
         {
             dBContext.Entry(customer).State = EntityState.Modified;
             dBContext.SaveChanges();
@@ -57,7 +57,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns>Single customer if found or null if not found</returns>
-        public Customer GetCustomerById(int customerId)
+        public virtual Customer GetCustomerById(int customerId)
         {
             return dBContext.Customers.Where(x => x.CustomerID == customerId).SingleOrDefault();
         }
@@ -66,7 +66,7 @@ namespace DataAccess.DAO
         /// Get All customers in database
         /// </summary>
         /// <returns>List Customers</returns>
-        public List<Customer> GetAllCustomer()
+        public virtual List<Customer> GetAllCustomer()
         {
             return dBContext.Customers.ToList();
         }
@@ -77,7 +77,7 @@ namespace DataAccess.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns>List customers</returns>
-        public IPagedList<Customer> GetPageListCustomer(int page, int pageSize)
+        public virtual IPagedList<Customer> GetPageListCustomer(int page, int pageSize)
         {
             return dBContext.Customers.ToPagedList(page, pageSize);
         }
@@ -88,7 +88,7 @@ namespace DataAccess.DAO
         /// <returns></returns>
         /// 
 
-        public List<Customer> GetListLateFeeCustomers()
+        public virtual List<Customer> GetListLateFeeCustomers()
         {
             TranSactionDAO tranSactionDAO = new TranSactionDAO();
             List<Customer> allCustomers = GetAllCustomer();
@@ -120,7 +120,7 @@ namespace DataAccess.DAO
          /// Get list customers have Over dues disk
          /// </summary>
          /// <returns></returns>
-        public List<Customer> GetListOverDueCustomers()
+        public virtual List<Customer> GetListOverDueCustomers()
         {
             TranSactionDAO tranSactionDAO = new TranSactionDAO();
             TransactionDetailsDAO transactionDetailsDAO = new TransactionDetailsDAO();
@@ -161,7 +161,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="idorName"></param>
         /// <returns></returns>
-        public List<Customer> FindCustomers(string idOrName)
+        public virtual List<Customer> FindCustomers(string idOrName)
         {
             return dBContext.Customers.Where((x => x.CustomerID.ToString().Contains(idOrName) || (x.FirstName + x.LastName).Contains(idOrName))).ToList();
         }

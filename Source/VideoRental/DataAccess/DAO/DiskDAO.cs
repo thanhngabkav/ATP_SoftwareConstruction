@@ -24,7 +24,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public List<Disk> GetRentedDisks(string idOrName)
+        public virtual List<Disk> GetRentedDisks(string idOrName)
         {
             return dBContext.Disks.Where(x => x.Status.Equals(DiskStatus.RENTED) && (x.DiskID.ToString().Contains(idOrName) || x.DiskTitle.Title.ToString().Contains(idOrName))).ToList();
         }
@@ -33,7 +33,7 @@ namespace DataAccess.DAO
         /// Update Disk
         /// </summary>
         /// <param name="disk"></param>
-        public void UpdateDisk(Disk disk)
+        public virtual void UpdateDisk(Disk disk)
         {
             dBContext.Entry(disk).State = EntityState.Modified;
             dBContext.SaveChanges();
@@ -43,7 +43,7 @@ namespace DataAccess.DAO
         /// Add new disk
         /// </summary>
         /// <param name="disk"></param>
-        public void AddNewDisk(Disk disk)
+        public virtual void AddNewDisk(Disk disk)
         {
             dBContext.Disks.Add(disk);
             dBContext.SaveChanges();
@@ -53,7 +53,7 @@ namespace DataAccess.DAO
         /// Delete Disk from database  (not include transaction detail)
         /// </summary>
         /// <param name="disk"></param>
-        public void DeleteDisk(Disk disk)
+        public virtual void DeleteDisk(Disk disk)
         {
             dBContext.Disks.Remove(disk);
             dBContext.SaveChanges();
@@ -63,7 +63,7 @@ namespace DataAccess.DAO
         /// Get All Disks in database
         /// </summary>
         /// <returns></returns>
-        public List<Disk> GetAllDisks()
+        public virtual List<Disk> GetAllDisks()
         {
             return dBContext.Disks.ToList();
         }   
@@ -73,7 +73,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="diskId"></param>
         /// <returns>Single disk if found or null if not found</returns>
-        public Disk GetDiskById(int diskId)
+        public virtual Disk GetDiskById(int diskId)
         {
             return dBContext.Disks.Where(x => x.DiskID == diskId).SingleOrDefault();
         }
@@ -83,7 +83,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Disk> FindDisks(String id)
+        public virtual List<Disk> FindDisks(String id)
         {
             return dBContext.Disks.Where(x => x.DiskID.ToString().Contains(id)).ToList();
         }
@@ -93,7 +93,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public List<Disk>  GetAllDiskByTitleID(int titleID)
+        public virtual List<Disk>  GetAllDiskByTitleID(int titleID)
         {
             return dBContext.Disks.Where(x => x.TitleID == titleID).ToList();
         }

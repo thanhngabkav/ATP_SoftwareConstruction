@@ -29,7 +29,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="userName"></param>
         /// <returns> User or Null if not found</returns>
-        public User getUserByUserName(String userName)
+        public virtual User getUserByUserName(String userName)
         {
             return dbContext.Users.Where(x => x.UserName.Equals(userName)).SingleOrDefault();
         }
@@ -38,7 +38,7 @@ namespace DataAccess.DAO
         /// Add new User into Database
         /// </summary>
         /// <param name="user"></param>
-        public void AddNewUser(User user)
+        public virtual void AddNewUser(User user)
         {
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
@@ -48,7 +48,7 @@ namespace DataAccess.DAO
         /// Remove a user from database
         /// </summary>
         /// <param name="user"></param>
-        public void DeleteUser(User user)
+        public virtual void DeleteUser(User user)
         {
             dbContext.Users.Remove(user);
             dbContext.SaveChanges();
@@ -58,7 +58,7 @@ namespace DataAccess.DAO
         /// Update user
         /// </summary>
         /// <param name="user"></param>
-        public void UpdateUser(User user)
+        public virtual void UpdateUser(User user)
         {
             dbContext.Entry(user).State = EntityState.Modified;
             dbContext.SaveChanges();
@@ -68,7 +68,7 @@ namespace DataAccess.DAO
         /// Get all  User is Clerk in Database
         /// </summary>
         /// <returns>List Users </returns>
-        public List<User> GetAllClerk()
+        public virtual List<User> GetAllClerk()
         {
             return dbContext.Users.Where(x => x.Role.Equals(UserRole.Clerk)).ToList();
         }
@@ -79,7 +79,7 @@ namespace DataAccess.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns>List Users</returns>
-        public IPagedList<User> GetPageListClerk(int page, int pageSize){
+        public virtual IPagedList<User> GetPageListClerk(int page, int pageSize){
             return dbContext.Users.Where(x => x.Role.Equals(UserRole.Clerk)).ToPagedList(page, pageSize);
         }
 
@@ -87,7 +87,7 @@ namespace DataAccess.DAO
         /// Get All Users is Manager
         /// </summary>
         /// <returns></returns>
-        public List<User> GetAllManager()
+        public virtual List<User> GetAllManager()
         {
             return dbContext.Users.Where(x => x.Role.Equals(UserRole.Manager)).ToList();
         }
@@ -98,7 +98,7 @@ namespace DataAccess.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<User> GetPageListManager(int page, int pageSize)
+        public virtual IPagedList<User> GetPageListManager(int page, int pageSize)
         {
             return dbContext.Users.Where(x => x.Role.Equals(UserRole.Manager)).ToPagedList(page, pageSize);
         }
@@ -109,7 +109,7 @@ namespace DataAccess.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<User> GetPagedListUser(int page, int pageSize)
+        public virtual IPagedList<User> GetPagedListUser(int page, int pageSize)
         {
             return dbContext.Users.ToPagedList(page, pageSize);
         }

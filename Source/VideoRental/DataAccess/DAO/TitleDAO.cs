@@ -23,7 +23,7 @@ namespace DataAccess.DAO
         /// Get All Titles
         /// </summary>
         /// <returns></returns>
-        public List<DiskTitle> GetAllTitles()
+        public virtual List<DiskTitle> GetAllTitles()
         {
             return dBContext.DiskTitles.ToList();
         }
@@ -32,7 +32,7 @@ namespace DataAccess.DAO
         /// Uodate title
         /// </summary>
         /// <param name="title"></param>
-        public void UpdateTitle(DiskTitle title)
+        public virtual void UpdateTitle(DiskTitle title)
         {
             dBContext.Entry(title).State = EntityState.Modified;
             dBContext.SaveChanges();
@@ -42,7 +42,7 @@ namespace DataAccess.DAO
         /// Add new title
         /// </summary>
         /// <param name="title"></param>
-        public void AddNewTitle(DiskTitle title)
+        public virtual void AddNewTitle(DiskTitle title)
         {
             dBContext.DiskTitles.Add(title);
             dBContext.SaveChanges();
@@ -52,7 +52,7 @@ namespace DataAccess.DAO
         /// Delete a title from database (not include disks)
         /// </summary>
         /// <param name="title"></param>
-        public void DeleteTitle(DiskTitle title)
+        public virtual void DeleteTitle(DiskTitle title)
         {
             dBContext.DiskTitles.Remove(title);
         }
@@ -62,7 +62,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="titleId"></param>
         /// <returns></returns>
-        public DiskTitle GetTitleById(int titleId)
+        public virtual DiskTitle GetTitleById(int titleId)
         {
             return dBContext.DiskTitles.Where(x => x.TitleID == titleId).SingleOrDefault();
         }
@@ -72,7 +72,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="idOrName"></param>
         /// <returns></returns>
-        public List<DiskTitle> FindDiskTitles(string idOrName)
+        public virtual List<DiskTitle> FindDiskTitles(string idOrName)
         {
             return dBContext.DiskTitles.Where(x => x.TitleID.ToString().Contains(idOrName) || x.Title.Contains(idOrName)).ToList();
         }
