@@ -79,7 +79,7 @@ namespace DataAccess.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns>List Users</returns>
-        public IPagedList<User> GetPageListClerkint(int page, int pageSize){
+        public IPagedList<User> GetPageListClerk(int page, int pageSize){
             return dbContext.Users.Where(x => x.Role.Equals(UserRole.Clerk)).ToPagedList(page, pageSize);
         }
 

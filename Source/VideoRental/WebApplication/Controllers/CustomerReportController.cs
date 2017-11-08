@@ -11,6 +11,12 @@ namespace WebApplication.Controllers
     public class CustomerReportController : Controller
     {
         ICustomerReportService customerReportService;
+
+        public CustomerReportController(ICustomerReportService customerReportService)
+        {
+            this.customerReportService = customerReportService;
+        }
+
         // GET: All Customer Report
         public ActionResult Report_AllCustomer()
         {
