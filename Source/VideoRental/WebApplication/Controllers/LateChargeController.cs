@@ -20,6 +20,7 @@ namespace WebApplication.Controllers
             this.iLateChargesServices = iLateChargesServices;
         }
 
+        
         private const string CUSTOMER_SESSION = "currentCustomerID";
 
         // Show customer has late charge
@@ -27,6 +28,7 @@ namespace WebApplication.Controllers
         /// LateChargeManagement
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Index(string status)
         {
             ViewBag.status = status;
@@ -35,6 +37,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult RecordLateCharge(int customerID, string status)
         {
             TagDebug.D(GetType(), " in Action " + "RecordLateCharge GET");
@@ -58,6 +61,7 @@ namespace WebApplication.Controllers
         /// <param name="numberRequest"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult RecordASpecificLateCharge(int numberRequest)
         {
             TagDebug.D(GetType(), " in Action " + "RecordASpecificLateCharge");
@@ -72,6 +76,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult CancelLateCharge(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelLateCharge ");
@@ -84,6 +89,7 @@ namespace WebApplication.Controllers
         /// <param name="number"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult CancelASpecificLateCharge(int transactionID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelASpecificLateCharge ");
@@ -92,11 +98,11 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult LateChargePayment(NumberRequestView numberRequest)
         {
             int customerID = (int)Session[CUSTOMER_SESSION];
-            int numberLatecharge = iLateChargesServices.GetNumberOfLateCharge(customerID);
-            string status = "";
+            int numberLatecharge = iLateChargesServices.GetNumberOfLateCharge(customerID); 
             if (IsEnoughForRecordlateCharge(numberLatecharge, numberRequest))
             {
                 ViewBag.LateChargePayment = iLateChargesServices.GetTotalLateChargePrice(customerID, numberRequest.number);

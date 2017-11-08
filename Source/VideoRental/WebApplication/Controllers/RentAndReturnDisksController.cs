@@ -32,6 +32,7 @@ namespace WebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Index()
         {
             TagDebug.D(GetType(), " in Action " + "RetalAndReturnManagement");
@@ -40,6 +41,7 @@ namespace WebApplication.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ShowAllDisk(string diskName, string status)
         {
             TagDebug.D(GetType(), " in Action " + "ShowAllDisk");
@@ -58,6 +60,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult SaveListDisk(int[] diskID)
         {
             TagDebug.D(GetType(), " in Action " + "SaveListDisk");
@@ -72,6 +75,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ShowAllCustomer(string customerName, string status)
         {
             TagDebug.D(GetType(), "in Action " + "ShowAllCustomer");
@@ -85,6 +89,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult PaymentDisk(int? id)
         {
             TagDebug.D(GetType(), " in Action " + "PaymentDisk" + id);
@@ -113,12 +118,13 @@ namespace WebApplication.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult WriteRentingDisk()
         {
             TagDebug.D(GetType(), " in Action " + "WriteRentingDisk");
             int[] diskID = (int[])Session[RENTING_SESSION];
             int customerID = (int)Session[CUSTOMER_SESSION];
-            int userID = 1; // test set default = 1
+            int userID = (int)Session[UserSession.SessionName]; // test set default = 1
             if (diskID.Length > 0 && customerID != 0)
             {
                 if (iRentAndReturnDiskService.CheckDiskCanBeRented(diskID, customerID)) 
@@ -138,6 +144,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ReturnDisk(string diskID)
         {
             if (diskID == null) diskID = "";
@@ -153,6 +160,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ReturnASpecificDisk(int id)
         {
             TagDebug.D(GetType(), " in Action " + "ReturnDisk GET");

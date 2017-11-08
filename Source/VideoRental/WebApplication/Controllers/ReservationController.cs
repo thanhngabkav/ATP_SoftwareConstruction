@@ -18,6 +18,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Index(string customerNameOrID)
         {
             TagDebug.D(GetType(), " in Action " + "ReservationManagement");
@@ -31,6 +32,7 @@ namespace WebApplication.Controllers
          * @return : 
          * */
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ShowTitles(string titleName)
         {
             TagDebug.D(GetType(), " in Action " + "ShowTitles");
@@ -38,6 +40,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult SaveTitle(int[] titleID)
         {
             TagDebug.D(GetType(), " in Action " + "SaveTitle");
@@ -47,6 +50,7 @@ namespace WebApplication.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ShowCustomers(string customerName, string reservationState)
         {
             TagDebug.D(GetType(), " in Action " + "ShowCustomers");
@@ -55,6 +59,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult AddReservation(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "AddReservation");
@@ -90,6 +95,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult ConfirmReservation(int titleID, int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "ConfirmReservation");
