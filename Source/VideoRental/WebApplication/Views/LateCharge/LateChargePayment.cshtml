@@ -1,10 +1,15 @@
-﻿
+﻿@model WebApplication.Models.NumberRequestView
+
 @{
     ViewBag.Title = "LateChargePayment";
 }
 
 <h2>LateChargePayment</h2>
-<p>
+<h1>
     Price: <strong>@ViewBag.LateChargePayment</strong>
+</h1>
+<p>
+    @Html.ActionLink("Hủy Bỏ", "Index")
+
+    @Html.ActionLink("Thanh Toán", "RecordASpecificLateCharge", new { numberRequest = @Model.number }, new {@class="btn btn-info"})
 </p>
-<

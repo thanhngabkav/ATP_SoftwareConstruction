@@ -1,4 +1,4 @@
-﻿@model DataAccess.Entities.DiskTitle
+﻿@model WebApplication.Models.DiskTitleModel
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <h4>DiskTitle</h4>
+        <h4>DiskTitleModel</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -33,11 +33,11 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Image)
+                @Html.DisplayNameFor(model => model.ImageLink)
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Image)
+                @Html.DisplayFor(model => model.ImageLink)
             </dd>
     
             <dt>
@@ -46,22 +46,6 @@
     
             <dd>
                 @Html.DisplayFor(model => model.Quantity)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.RentalPrice)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RentalPrice)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LateChargePerDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LateChargePerDate)
             </dd>
     
         </dl>

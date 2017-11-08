@@ -43,16 +43,18 @@ namespace WebApplication.Services
 
         /**
          * @return : Change status of  list disk to free
-         * 
          * */
         void ReturnDisks(int diskID);
 
         /**
-         * @return :List latecharge of customer
-         * 
+         * Find DiskTitle by diskTitleID
          * */
-        IList<TransactionHistory> ShowLateCharge(string customerID);
+        DiskTitle GetDiskTitleName(int diskTitleID);
 
-        DiskTitle getDiskTitleName(int diskTitleID);
+
+        /**
+         * Find DiskTitle by diskTitleID
+         * */
+        bool CheckDiskCanBeRented(int[] diskID, int customerID);
     }
 }

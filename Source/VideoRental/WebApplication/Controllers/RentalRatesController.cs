@@ -6,18 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DataAccess.Entities;
 using WebApplication.Services;
+using DataAccess.Entities;
 
 namespace WebApplication.Controllers
 {
     public class RentalRatesController : Controller
     {
-        private RentalRateService db;
+        private IRentalRate db;
 
         public RentalRatesController()
         {
-            this.db = new RentalRateService();
+            db = new RentalRateService();
         }
 
         // GET: RentalRates
@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
         // POST: RentalRates/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RentalRaateId,RentalPrice,LateCharge,RentalPeriod,CreatedDate,TitleID")] RentalRate rentalRate)
+        public ActionResult Create([Bind(Include = "RentalRateId,RentalPrice,LateCharge,RentalPeriod,CreatedDate,TitleID")] RentalRate rentalRate)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +59,5 @@ namespace WebApplication.Controllers
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", rentalRate.TitleID);
             return View(rentalRate);
         }
-
     }
 }

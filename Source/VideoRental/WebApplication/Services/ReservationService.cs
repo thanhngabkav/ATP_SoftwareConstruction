@@ -14,22 +14,24 @@ namespace WebApplication.Services
         ReservationDAO reservationDAO;
         CustomerDAO customerDAO;
         TitleDAO titleDAO;
+        DiskDAO diskDAO;
         public ReservationService()
         {
             this.reservationDAO = new ReservationDAO();
             this.customerDAO = new CustomerDAO();
             this.titleDAO = new TitleDAO();
+            this.diskDAO = new DiskDAO();
         }
 
-        public void AddReservation(string[] titleID, string customerID)
+        public void AddReservation(int[] titleID, int customerID)
         {
             TagDebug.D(GetType(), "in AddReservation Services");
-            foreach (string atitle in titleID)
+            foreach (int atitle in titleID)
             {
                 Reservation reservation = new Reservation
                 {
-                    CustomerID = Int32.Parse(customerID),
-                    TitleID = Int32.Parse(atitle),
+                    CustomerID = customerID,
+                    TitleID = atitle,
                     Status = ReservationStatus.IN_QUEUE,
                     ReservationDate = DateTime.Today
                 };
@@ -41,7 +43,37 @@ namespace WebApplication.Services
         {
             TagDebug.D(GetType(), "in CancelReservation Services");
             Reservation reservation = reservationDAO.GetReservation(titleID, customerID);
+            if (HasDiskForReservation(reservation))
+                ChangeStatusForOnHoldDiskToRenable(reservation);
             reservationDAO.RemoveReservation(reservation);
+        }
+
+        private bool HasDiskForReservation(Reservation reservation)
+        {
+            return reservation.Status == ReservationStatus.ON_HOLD;
+        }
+
+        private void ChangeStatusForOnHoldDiskToRenable(Reservation reservation)
+        {
+            IList<Disk> disks = diskDAO.GetAllDiskByTitleID( reservation.TitleID);
+            foreach (Disk disk in disks)
+                if (disk.Status == DiskStatus.BOOKED)
+                {
+                    disk.Status = DiskStatus.RENTABLE;
+                    diskDAO.UpdateDisk(disk);
+                    return;
+                }
+                    
+        }
+
+
+        public bool CheckReservationForExistence(int[] titleID, int customerID)
+        {
+            TagDebug.D(GetType(), "in CheckReservationForExistence Services");
+            foreach(int aTitle in titleID)
+                if (reservationDAO.GetReservation(aTitle, customerID) != null)
+                    return true;
+            return false;
         }
 
         public IList<CustomerView> GetCustomers(string customerName)
