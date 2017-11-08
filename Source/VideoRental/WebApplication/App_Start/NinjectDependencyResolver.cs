@@ -39,7 +39,13 @@ namespace WebApplication.App_Start
             //show information disk or title
             kernel.Bind<IDiskManagementService>().To<DiskManagementService>();
             kernel.Bind<ITitleManagementService>().To<TitleManagementService>();
-            
+            //
+            kernel.Bind<ICustomerService>().To<CustomerService>();
+            kernel.Bind<IDiskService>().To<DiskService>();
+            kernel.Bind<IDiskTitleService>().To<DiskTitleService>();
+            kernel.Bind<IRentalRate>().To<RentalRateService>();
+
+
         }
     }
 }
