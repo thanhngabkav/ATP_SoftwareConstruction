@@ -24,7 +24,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="transactionId"></param>
         /// <returns></returns>
-        public List<TransactionHistoryDetail> GetListTransactionDetailsByTransactionId(int transactionId)
+        public virtual List<TransactionHistoryDetail> GetListTransactionDetailsByTransactionId(int transactionId)
         {
             return dBContext.TransactionHistoryDetails.Where(x => x.TransactionID == transactionId).ToList();
         }
@@ -34,7 +34,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="transcationDetailID"></param>
         /// <returns></returns>
-        public TransactionHistoryDetail GetTransactionDetail(int transcationDetailID)
+        public virtual TransactionHistoryDetail GetTransactionDetail(int transcationDetailID)
         {
             return dBContext.TransactionHistoryDetails.Where(x => x.TransactionDetailID == transcationDetailID).SingleOrDefault();
         }
@@ -43,7 +43,7 @@ namespace DataAccess.DAO
         /// Update Transaction Detail
         /// </summary>
         /// <param name="detail"></param>
-        public void UpdateTransactionDetail(TransactionHistoryDetail detail)
+        public virtual void UpdateTransactionDetail(TransactionHistoryDetail detail)
         {
             dBContext.Entry(detail).State = EntityState.Modified;
             dBContext.SaveChanges();
@@ -54,7 +54,7 @@ namespace DataAccess.DAO
         /// Add Transaction Detail
         /// </summary>
         /// <param name="detail"></param>
-        public void AddTransactionDetail(TransactionHistoryDetail detail)
+        public virtual void AddTransactionDetail(TransactionHistoryDetail detail)
         {
             dBContext.Entry(detail).State = EntityState.Added;
             dBContext.SaveChanges();
@@ -65,7 +65,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="diskID"></param>
         /// <returns></returns>
-        public TransactionHistoryDetail getTransactionDetailFromLastRentedDate(int diskID)
+        public virtual TransactionHistoryDetail getTransactionDetailFromLastRentedDate(int diskID)
         {
             List<TransactionHistoryDetail> listDiskTransactionDetails = new List<TransactionHistoryDetail>();
             listDiskTransactionDetails = dBContext.TransactionHistoryDetails.Where(x => x.DiskID == diskID).ToList();

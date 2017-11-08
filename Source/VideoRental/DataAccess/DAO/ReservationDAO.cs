@@ -23,7 +23,7 @@ namespace DataAccess.DAO
         /// Add new reservation
         /// </summary>
         /// <param name="reservation"></param>
-        public void AddReservation(Reservation reservation)
+        public virtual void AddReservation(Reservation reservation)
         {
             dBContext.Reservations.Add(reservation);
             dBContext.SaveChanges();
@@ -34,7 +34,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public List<Reservation> GetReservations(int num)
+        public virtual List<Reservation> GetReservations(int num)
         {
             return dBContext.Reservations.Take(num).ToList();
         }
@@ -44,7 +44,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public Reservation GetReservationByTitleID(int titleID)
+        public virtual Reservation GetReservationByTitleID(int titleID)
         {
             return dBContext.Reservations.Where(x => x.TitleID == titleID).OrderBy(x=>x.ReservationDate).FirstOrDefault();
         }
@@ -55,7 +55,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public int GetNumberReservationByTitleID(int titleID)
+        public virtual int GetNumberReservationByTitleID(int titleID)
         {
             return dBContext.Reservations.Where(x => x.TitleID == titleID && x.Status == ReservationStatus.IN_QUEUE).Count();
         }
@@ -63,7 +63,7 @@ namespace DataAccess.DAO
         /// Remove a reservation from database
         /// </summary>
         /// <param name="reservation"></param>
-        public void RemoveReservation (Reservation reservation)
+        public virtual void RemoveReservation (Reservation reservation)
         {
             dBContext.Reservations.Remove(reservation);
             dBContext.SaveChanges();
@@ -75,7 +75,7 @@ namespace DataAccess.DAO
         /// <param name="customerId"></param>
         /// <param name="diskTitleId"></param>
         /// <returns></returns>
-        public Reservation GetReservation(int diskTitleId, int customerId)
+        public virtual Reservation GetReservation(int diskTitleId, int customerId)
         {
             return dBContext.Reservations.Where(x => x.CustomerID == customerId && x.TitleID == diskTitleId).FirstOrDefault();
         }
@@ -87,15 +87,20 @@ namespace DataAccess.DAO
         /// <param name="customerId"></param>
         /// <param name="diskTitleId"></param>
         /// <returns></returns>
-        public List<Reservation> GetReservation(int customerId)
+        public virtual List<Reservation> GetReservation(int customerId)
         {
             return dBContext.Reservations.Where(x => x.CustomerID == customerId).ToList();
         }
 
-        public void UpDateReservation(Reservation res)
+        public virtual void UpDateReservation(Reservation res)
         {
             dBContext.Entry(res).State = EntityState.Modified;
             dBContext.SaveChanges();
+        }
+
+        public virtual List<Reservation> GetListReservationByTitle(int titleId)
+        {
+            return dBContext.Reservations.Where(x => x.TitleID == titleId).ToList<Reservation>();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace DataAccess.DAO
         /// Add new Transaction into database (not include transaction details)
         /// </summary>
         /// <param name="transaction"></param>
-        public void AddnewTransaction(TransactionHistory transaction)
+        public virtual void AddnewTransaction(TransactionHistory transaction)
         {
             dBContext.TransactionHistories.Add(transaction);
             dBContext.SaveChanges();
@@ -36,7 +36,7 @@ namespace DataAccess.DAO
         /// Remove Transaction history from database (include transaction details)
         /// </summary>
         /// <param name="transaction"></param>
-        public void DeleteTransaction(TransactionHistory transaction)
+        public virtual void DeleteTransaction(TransactionHistory transaction)
         {
             dBContext.TransactionHistories.Remove(transaction);
             dBContext.SaveChanges();
@@ -46,7 +46,7 @@ namespace DataAccess.DAO
         /// Update transaction
         /// </summary>
         /// <param name="transaction"></param>
-        public void UpdateTransaction(TransactionHistory transaction)
+        public virtual void UpdateTransaction(TransactionHistory transaction)
         {
             dBContext.Entry(transaction).State = EntityState.Modified;
             dBContext.SaveChanges();
@@ -57,7 +57,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public List<TransactionHistory> GetAllCustomerTransactions(int customerId)
+        public virtual List<TransactionHistory> GetAllCustomerTransactions(int customerId)
         {
             return dBContext.TransactionHistories.Where(x => x.CustomerID == customerId).ToList();
         }
@@ -68,7 +68,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public List<TransactionHistory> GetCustomerLateChargeTransactions(int customerId)
+        public virtual List<TransactionHistory> GetCustomerLateChargeTransactions(int customerId)
         {
             return dBContext.TransactionHistories.Where(x => x.CustomerID == customerId && x.Status.Equals(TransactionStatus.DUE)).ToList();
         }
@@ -79,7 +79,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="transcationID"></param>
         /// <returns></returns>
-        public TransactionHistory GetTransaction(int transcationID)
+        public virtual TransactionHistory GetTransaction(int transcationID)
         {
             return dBContext.TransactionHistories.Where(x => x.TransactionHistoryID == transcationID).SingleOrDefault();
         }

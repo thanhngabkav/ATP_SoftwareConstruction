@@ -24,7 +24,7 @@ namespace DataAccess.DAO
         /// </summary>
         /// <param name="diskTitleId"></param>
         /// <returns></returns>
-        public RentalRate GetCurrentRentalRate(int diskTitleId)
+        public virtual RentalRate GetCurrentRentalRate(int diskTitleId)
         {
             DateTime currentDate = DateTime.Today;
             return dbContext.RentalRates.Where(x => x.TitleID == diskTitleId).OrderByDescending(x => x.CreatedDate).FirstOrDefault();
@@ -34,7 +34,7 @@ namespace DataAccess.DAO
         /// Add new Rentalrate into database
         /// </summary>
         /// <param name="rentalRate"></param>
-        public void AddNewRentalRate(RentalRate rentalRate)
+        public virtual void AddNewRentalRate(RentalRate rentalRate)
         {
             dbContext.RentalRates.Add(rentalRate);
             dbContext.SaveChanges();
@@ -44,7 +44,7 @@ namespace DataAccess.DAO
         /// Get All Rentalrates in database
         /// </summary>
         /// <returns></returns>
-        public List<RentalRate> GetAllRentalRates()
+        public virtual List<RentalRate> GetAllRentalRates()
         {
             return dbContext.RentalRates.ToList();
         }

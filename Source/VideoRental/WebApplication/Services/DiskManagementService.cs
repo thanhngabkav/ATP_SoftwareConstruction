@@ -13,11 +13,13 @@ namespace WebApplication.Services
         private DiskDAO diskDAO;
         private TitleDAO titleDAO;
         private RentalRateDAO rentalRateDAO;
+        private ReservationDAO reservationDAO;
         public DiskManagementService()
         {
             this.diskDAO = new DiskDAO();
             this.titleDAO = new TitleDAO();
             this.rentalRateDAO = new RentalRateDAO();
+            this.reservationDAO = new ReservationDAO();
         }
 
         public DiskStatusInfoModel GetDiskStatus(int diskId)
@@ -33,15 +35,13 @@ namespace WebApplication.Services
                 //if disk rented, set for whom and when over due
                 foreach (TransactionHistoryDetail transactionDetail in disk.TransactionHistoryDetails)
                 {
-                    if (transactionDetail.DateReturn == null)
-                    {
-                        TransactionHistory transaction = transactionDetail.TransactionHistory;
-                        diskStatusInfo.Whom = transaction.Customer;
-                        DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
-                        DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
-                        diskStatusInfo.DueTime = dateReturn;
-                    }
+                    TransactionHistory transaction = transactionDetail.TransactionHistory;
+                    diskStatusInfo.Whom = transaction.Customer;
+                    diskStatusInfo.CustomerName = transaction.Customer.LastName + " " + transaction.Customer.FirstName;
+                    DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
+                    RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
+                    DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
+                    diskStatusInfo.DueTime = dateReturn;
                 }
             }
             else
@@ -49,6 +49,17 @@ namespace WebApplication.Services
                 // if disk booked, who did book? => set for whom booked
                 if (disk.Status.Equals(DiskStatus.BOOKED))
                 {
+                    List<Reservation> reservations = reservationDAO.GetListReservationByTitle(disk.TitleID);
+                    foreach (var item in reservations)
+                    {
+                        //get first customer booked
+                        if (item.Status.Equals(ReservationStatus.ON_HOLD))
+                        {
+                            diskStatusInfo.Whom = item.Customer;
+                            diskStatusInfo.CustomerName = item.Customer.LastName + " " + item.Customer.FirstName;
+                            break;
+                        }
+                    }
                     diskStatusInfo.DueTime = null;
                 }
                 else // disk in stock, toWhom and when over due
