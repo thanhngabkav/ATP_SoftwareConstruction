@@ -21,7 +21,7 @@ namespace WebApplication.Services
          * @param userName : 
          * @return : Get All Late Charge Of A Customer, unless return to length = 0
          * */
-        IList<TransactionHistoryView> GetAllLateChargeOfCustomer(int customerID);
+        IList<TransactionHistoryViewModel> GetAllLateChargeOfCustomer(int customerID);
 
         /*
            * Record top n LateCharge 

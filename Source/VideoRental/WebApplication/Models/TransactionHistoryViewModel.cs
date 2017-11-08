@@ -5,9 +5,9 @@ using System.Web;
 
 namespace WebApplication.Models
 {
-    public class TransactionHistoryView
+    public class TransactionHistoryViewModel
     {
-        public TransactionHistoryView(int transactionHistoryID, DateTime createdDate, string status, int customerID, string customerName)
+        public TransactionHistoryViewModel(int transactionHistoryID, DateTime createdDate, string status, int customerID, string customerName)
         {
             TransactionHistoryID = transactionHistoryID;
             CreatedDate = createdDate;

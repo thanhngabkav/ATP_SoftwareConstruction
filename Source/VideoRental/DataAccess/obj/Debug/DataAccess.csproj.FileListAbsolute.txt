@@ -29,3 +29,16 @@ D:\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.M
 D:\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
 D:\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.dll
 D:\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.pdb
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.Migrations.Init.resources
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.dll
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\obj\Debug\DataAccess.pdb
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll.config
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.dll
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\DataAccess.pdb
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\PagedList.dll
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.xml
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\EntityFramework.SqlServerCompact.xml
+D:\abc\ATP_SoftwareConstruction\Source\VideoRental\DataAccess\bin\Debug\PagedList.xml

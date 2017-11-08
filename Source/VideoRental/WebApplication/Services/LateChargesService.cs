@@ -63,14 +63,14 @@ namespace WebApplication.Services
             return customerViews;
         }
 
-        public IList<TransactionHistoryView> GetAllLateChargeOfCustomer(int customerID)
+        public IList<TransactionHistoryViewModel> GetAllLateChargeOfCustomer(int customerID)
         {
             TagDebug.D(GetType(), "in GetAllLateChargeOfCustomer class");
 
             IList<TransactionHistory> transactions = transactionDao.GetCustomerLateChargeTransactions(customerID);
-            IList<TransactionHistoryView> transactionHistoryViews = new List<TransactionHistoryView>();
+            IList<TransactionHistoryViewModel> transactionHistoryViews = new List<TransactionHistoryViewModel>();
             foreach (TransactionHistory a in transactions)
-                transactionHistoryViews.Add(new TransactionHistoryView(a.TransactionHistoryID, a.CreatedDate, a.Status, a.CustomerID, a.Customer.FirstName));
+                transactionHistoryViews.Add(new TransactionHistoryViewModel(a.TransactionHistoryID, a.CreatedDate, a.Status, a.CustomerID, a.Customer.FirstName));
             return transactionHistoryViews;
         }
 
