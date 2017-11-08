@@ -1,0 +1,51 @@
+﻿@model WebApplication.Models.DiskStatusInfoModel
+
+@{
+    ViewBag.Title = "GetDiskStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetDiskStatus</h2>
+
+<div>
+    <h4>DiskStatusInfoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DiskID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiskID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DueTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

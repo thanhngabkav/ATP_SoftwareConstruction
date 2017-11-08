@@ -5,8 +5,7 @@
 }
 
 <h2>ShowLateCharge</h2>
-
-
+<h2 class="text-danger">@ViewBag.status</h2>
 <table class="table">
     <tr>
         <th>
@@ -40,7 +39,7 @@
         </td>
         <td>
             @Html.ActionLink("Ghi Nhận Trễ Hạn", "RecordLateCharge", new { customerID = item.customerID}) |
-            @Html.ActionLink("Xem Trễ Hạn", "CancelLateCharge", new { customerID = item.customerID}) |
+            @Html.ActionLink("Xem Trễ Hạn", "CancelLateCharge", new { customerID = item.customerID}) 
         </td>
     </tr>
 }

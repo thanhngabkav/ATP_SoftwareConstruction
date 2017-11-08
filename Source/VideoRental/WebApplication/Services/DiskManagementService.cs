@@ -13,10 +13,12 @@ namespace WebApplication.Services
         private DiskDAO diskDAO;
         private TitleDAO titleDAO;
         private RentalRateDAO rentalRateDAO;
+        private ReservationDAO reservationDAO;
         public DiskManagementService()
         {
             this.diskDAO = new DiskDAO();
             this.titleDAO = new TitleDAO();
+            this.reservationDAO = new ReservationDAO();
             this.rentalRateDAO = new RentalRateDAO();
         }
 
@@ -49,6 +51,16 @@ namespace WebApplication.Services
                 // if disk booked, who did book? => set for whom booked
                 if (disk.Status.Equals(DiskStatus.BOOKED))
                 {
+                    List<Reservation> reservations = reservationDAO.GetListReservationByTitle(disk.TitleID);
+                    foreach (var item in reservations)
+                    {
+                        //get first customer booked
+                        if (item.Status.Equals(ReservationStatus.ON_HOLD))
+                        {
+                            diskStatusInfo.Whom = item.Customer;
+                            break;
+                        }
+                    }
                     diskStatusInfo.DueTime = null;
                 }
                 else // disk in stock, toWhom and when over due

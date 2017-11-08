@@ -10,6 +10,7 @@ using DataAccess.Entities;
 
 namespace WebApp.Controllers
 {
+    [UserAuthActionFilter]
     public class AccountController : Controller
     {
         // GET: Account

@@ -15,6 +15,11 @@ namespace WebApplication.Controllers
         {
             this.statisticReportService = statisticReportService;
         }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
         // GET: StatisticReport
         public ActionResult Report_Title()
         {

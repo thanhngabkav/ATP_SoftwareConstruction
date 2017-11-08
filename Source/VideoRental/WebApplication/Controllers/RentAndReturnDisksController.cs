@@ -40,16 +40,17 @@ namespace WebApplication.Controllers
 
 
         [HttpGet]
-        public ActionResult ShowAllDisk(string diskName)
+        public ActionResult ShowAllDisk(string diskName, string status)
         {
             TagDebug.D(GetType(), " in Action " + "ShowAllDisk");
+            ViewBag.status = status;
             if (diskName == null) diskName = "";
             IList<Disk> disks = iRentAndReturnDiskService.GetDisks(diskName);
             IList<DiskView> diskViews = new List<DiskView>();
 
             foreach (Disk aDisk in disks)
             {
-                DiskTitle diskTitle = iRentAndReturnDiskService.getDiskTitleName(aDisk.TitleID);
+                DiskTitle diskTitle = iRentAndReturnDiskService.GetDiskTitleName(aDisk.TitleID);
 
                 diskViews.Add(new DiskView(aDisk.DiskID, diskTitle.Title, aDisk.PurchasePrice, "", aDisk.Status));
             }
@@ -71,9 +72,10 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowAllCustomer(string customerName)
+        public ActionResult ShowAllCustomer(string customerName, string status)
         {
             TagDebug.D(GetType(), "in Action " + "ShowAllCustomer");
+            ViewBag.status = status;
             if (customerName == null) customerName = "";
             IList<Customer> customers = iRentAndReturnDiskService.GetCustomers(customerName);
             IList<CustomerView> customerViews = new List<CustomerView>();
@@ -119,7 +121,10 @@ namespace WebApplication.Controllers
             int userID = 1; // test set default = 1
             if (diskID.Length > 0 && customerID != 0)
             {
-                iRentAndReturnDiskService.WriteRentalDisk(diskID, customerID, userID);
+                if (iRentAndReturnDiskService.CheckDiskCanBeRented(diskID, customerID)) 
+                    iRentAndReturnDiskService.WriteRentalDisk(diskID, customerID, userID);
+                else 
+                    return RedirectToAction("ShowAllCustomer", new { status = "Khách Hàng Này Không Đặt Đĩa Này"});
             }
             else
             {
@@ -129,7 +134,7 @@ namespace WebApplication.Controllers
                     TagDebug.D(GetType(), " customerID Null ");
                 // Handle Exeption
             }
-            return RedirectToAction("ShowAllDisk");
+            return RedirectToAction("ShowAllDisk", new { status = "Thanh Toán Thành Công" });
         }
 
         [HttpGet]
@@ -141,7 +146,7 @@ namespace WebApplication.Controllers
             IList<Disk> rentedDisk = iRentAndReturnDiskService.GetRentedDisks(diskID);
             foreach (Disk d in rentedDisk)
             {
-                DiskTitle t = iRentAndReturnDiskService.getDiskTitleName(d.TitleID);
+                DiskTitle t = iRentAndReturnDiskService.GetDiskTitleName(d.TitleID);
                 dv.Add(new DiskView(d.DiskID, t.Title, d.PurchasePrice, "", d.Status));
             }
             return View(dv);
@@ -161,19 +166,6 @@ namespace WebApplication.Controllers
                 // Handle Exeption
             }
             return RedirectToAction("ShowAllDisk");
-        }
-
-        [HttpGet]
-        public ActionResult ShowLateCharge(string customerID)
-        {
-            TagDebug.D(GetType(), " in Action " + "ShowLateCharge ");
-            if (customerID != null)
-                return View(iRentAndReturnDiskService.ShowLateCharge(customerID));
-            else
-            {
-                TagDebug.D(GetType(), " Customer ID is null ");
-            }
-            return View();// return to show late charege in showlatecharge.cshtml
         }
     }
 }

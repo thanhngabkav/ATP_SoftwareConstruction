@@ -5,14 +5,15 @@
 }
 
 <h2>ShowCustomers</h2>
+<h2 style="color:red">@ViewBag.IsReservationExist</h2>
 
 <div class="checkout-header _container " style=" margin-bottom: 20px;">
     <div class="checkout-header _progress-bar">
         <ol class="step-breadcrumb _list">
-            <li class="step-breadcrumb _item -current">
+            <li class="step-breadcrumb _item -past">
                 <span class="step-breadcrumb _text">1. Chọn Đĩa</span>
             </li>
-            <li class="step-breadcrumb _item">
+            <li class="step-breadcrumb _item -current">
                 <span class="step-breadcrumb _text">2. Chọn Khách Hàng</span>
             </li>
         </ol>

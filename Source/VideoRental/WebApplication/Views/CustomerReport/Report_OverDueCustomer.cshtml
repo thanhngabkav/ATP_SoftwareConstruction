@@ -1,64 +1,110 @@
 ﻿@model IEnumerable<WebApplication.Models.CustomerReportModel>
 
 @{
-    ViewBag.Title = "Report_OverDueCustomer";
+    ViewBag.Title = "Report_AllCustomer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Report_OverDueCustomer</h2>
+<h2>Báo cáo những khách hàng có đĩa quá hạn</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerID)
+            Mã khách hàng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerName)
+            Họ tên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            Địa chỉ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TotalDisk)
+            Tổng đĩa đang giữ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TotalFines)
+            Tổng tiền phạt
         </th>
-        <th></th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Address)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.TotalDisk)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.TotalFines)
+            </th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalDisk)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalFines)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+        if (item.DiskOverDues.Count > 0)
+        {
+            <tr>
+                <td></td>
+                <td colspan="5">
+                    Danh sách đĩa quá hạn:
+                </td>
 
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>Mã đĩa</td>
+                <td colspan="2">Tiêu đề</td>
+                <td>Ngày phải trả</td>
+            </tr>
+            foreach (var i in item.DiskOverDues)
+            {
+                <tr>
+                    <td colspan="2"></td>
+                    <td>@Html.DisplayFor(modelItem => i.DiskID)</td>
+                    <td colspan="2">@Html.DisplayFor(modelItem => i.TitleName)</td>
+                    <td>@Html.DisplayFor(modelItem => i.DateReturn)</td>
+                </tr>
+            }
+        }
+        if (item.LateCharges.Count > 0)
+        {
+            <tr>
+                <td></td>
+                <td colspan="5">
+                    Danh sách tiền phạt
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>Tiêu đề</td>
+                <td>Ngày trả</td>
+                <td>Ngày phải trả</td>
+                <td>Phí</td>
+            </tr>
+            foreach (var i in item.LateCharges)
+            {
+                <tr>
+                    <td colspan="2"></td>
+                    <td>@Html.DisplayFor(modelItem => i.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => i.DateActuallyReturn)</td>
+                    <td>@Html.DisplayFor(modelItem => i.DateReturn)</td>
+                    <td>@Html.DisplayFor(modelItem => i.Cost)</td>
+                </tr>
+            }
+        }
+
+
+    }
 </table>
+

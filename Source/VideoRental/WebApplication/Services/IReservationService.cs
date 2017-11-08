@@ -32,12 +32,18 @@ namespace WebApplication.Services
         * Add a reservation
         * @return : 
         * */
-        void AddReservation(string[] titleID, string customerID);
+        void AddReservation(int[] titleID, int customerID);
 
         /**
         * Cancel a reservation,change status disk to free
         * @return : 
         * */
         void CancelReservation(int titleID, int customerID);
+
+        /*
+         * Check Reservation Exist
+         *
+         */
+        bool CheckReservationForExistence(int[] titleID, int customerID);
     }
 }
