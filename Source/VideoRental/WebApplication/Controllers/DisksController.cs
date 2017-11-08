@@ -14,10 +14,16 @@ namespace WebApplication.Controllers
     public class DisksController : Controller
     {
         private DiskService db;
+        IDiskManagementService diskManagement;
 
         public DisksController()
         {
             this.db = new DiskService();
+        }
+
+        public DisksController(IDiskManagementService diskManagement)
+        {
+            this.diskManagement = diskManagement;
         }
 
         // GET: Disks
@@ -109,6 +115,11 @@ namespace WebApplication.Controllers
             Disk disk = db.GetDiskById(id);
             db.DeleteDisk(disk);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetDiskStatus(int diskId)
+        {
+            return View(diskManagement.GetDiskStatus(diskId));
         }
     }
 }

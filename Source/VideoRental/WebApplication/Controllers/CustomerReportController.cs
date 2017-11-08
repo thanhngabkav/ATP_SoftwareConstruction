@@ -16,7 +16,10 @@ namespace WebApplication.Controllers
         {
             this.customerReportService = customerReportService;
         }
-
+        public ActionResult Index()
+        {
+            return View();
+        }
         // GET: All Customer Report
         public ActionResult Report_AllCustomer()
         {

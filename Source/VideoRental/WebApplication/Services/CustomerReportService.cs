@@ -40,7 +40,7 @@ namespace WebApplication.Services
                 CustomerReportModel customerReportModel = new CustomerReportModel();
                 //Set information for each customer rp model
                 int cusID = customer.CustomerID;
-                string cusName = customer.FirstName + " " + customer.LastName;
+                string cusName = customer.LastName + " " + customer.FirstName;
                 string address = customer.Address;
                 string phone = customer.PhoneNumber;
                 int totalDisk = 0;
@@ -59,35 +59,41 @@ namespace WebApplication.Services
                         RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
                         DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
                         //get list over due disk
-                        if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
+                        if (transactionDetail.Status == null)
                         {
-                            totalDisk++;
-                            // check disk over due
-                            if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                            if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
                             {
-                                DiskOverDueModel diskOverDue = new DiskOverDueModel();
-                                diskOverDue.DiskID = disk.DiskID;
-                                diskOverDue.TitleName = title.Title;
-                                diskOverDue.DateReturn = dateReturn;
-                                diskOverDues.Add(diskOverDue);
+                                totalDisk++;
+                                // check disk over due
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                {
+                                    DiskOverDueModel diskOverDue = new DiskOverDueModel();
+                                    diskOverDue.DiskID = disk.DiskID;
+                                    diskOverDue.TitleName = title.Title;
+                                    diskOverDue.DateReturn = dateReturn;
+                                    diskOverDues.Add(diskOverDue);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))//có nợ
+                            {
+                                LateCharge lateCharge = new LateCharge();
+                                lateCharge.DiskID = disk.DiskID;
+                                lateCharge.Title = title.Title;
+                                //Ngày phải trả
+                                lateCharge.DateReturn = dateReturn;
+                                //Ngày trả thực tế
+                                lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
+                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                //add late charge in list
+                                lateCharges.Add(lateCharge);
+                                //
+                                totalFines += lateCharge.Cost;
                             }
                         }
                         //check late charge
-                        if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))
-                        {
-                            LateCharge lateCharge = new LateCharge();
-                            lateCharge.DiskID = disk.DiskID;
-                            lateCharge.Title = title.Title;
-                            //Ngày phải trả
-                            lateCharge.DateReturn = dateReturn;
-                            //Ngày trả thực tế
-                            lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
-                            lateCharge.Cost = curentRentalRate.LateCharge;
-                            //add late charge in list
-                            lateCharges.Add(lateCharge);
-                            //
-                            totalFines += lateCharge.Cost;
-                        }
                     }   
                 }
                 // set properties for customer rp model
@@ -115,7 +121,7 @@ namespace WebApplication.Services
                 CustomerReportModel customerReportModel = new CustomerReportModel();
                 //Set information for each customer rp model
                 int cusID = customer.CustomerID;
-                string cusName = customer.FirstName + " " + customer.LastName;
+                string cusName = customer.LastName + " " + customer.FirstName;
                 string address = customer.Address;
                 string phone = customer.PhoneNumber;
                 int totalDisk = 0;
@@ -134,35 +140,41 @@ namespace WebApplication.Services
                         RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
                         DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
                         //get list over due disk
-                        if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
+                        if (transactionDetail.Status == null)
                         {
-                            totalDisk++;
-                            // check disk over due
-                            if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                            if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
                             {
-                                DiskOverDueModel diskOverDue = new DiskOverDueModel();
-                                diskOverDue.DiskID = disk.DiskID;
-                                diskOverDue.TitleName = title.Title;
-                                diskOverDue.DateReturn = dateReturn;
-                                diskOverDues.Add(diskOverDue);
+                                totalDisk++;
+                                // check disk over due
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                {
+                                    DiskOverDueModel diskOverDue = new DiskOverDueModel();
+                                    diskOverDue.DiskID = disk.DiskID;
+                                    diskOverDue.TitleName = title.Title;
+                                    diskOverDue.DateReturn = dateReturn;
+                                    diskOverDues.Add(diskOverDue);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))
+                            {
+                                LateCharge lateCharge = new LateCharge();
+                                lateCharge.DiskID = disk.DiskID;
+                                lateCharge.Title = title.Title;
+                                //Ngày phải trả
+                                lateCharge.DateReturn = dateReturn;
+                                //Ngày trả thực tế
+                                lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
+                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                //add late charge in list
+                                lateCharges.Add(lateCharge);
+                                //
+                                totalFines += lateCharge.Cost;
                             }
                         }
                         //check late charge
-                        if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))
-                        {
-                            LateCharge lateCharge = new LateCharge();
-                            lateCharge.DiskID = disk.DiskID;
-                            lateCharge.Title = title.Title;
-                            //Ngày phải trả
-                            lateCharge.DateReturn = dateReturn;
-                            //Ngày trả thực tế
-                            lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
-                            lateCharge.Cost = curentRentalRate.LateCharge;
-                            //add late charge in list
-                            lateCharges.Add(lateCharge);
-                            //
-                            totalFines += lateCharge.Cost;
-                        }
                     }
                 }
                 // set properties for customer rp model
@@ -177,6 +189,7 @@ namespace WebApplication.Services
                 //add in result list
                 listResult.Add(customerReportModel);
             }
+
             return listResult;
         }
 
@@ -190,7 +203,7 @@ namespace WebApplication.Services
                 CustomerReportModel customerReportModel = new CustomerReportModel();
                 //Set information for each customer rp model
                 int cusID = customer.CustomerID;
-                string cusName = customer.FirstName + " " + customer.LastName;
+                string cusName = customer.LastName + " " + customer.FirstName;
                 string address = customer.Address;
                 string phone = customer.PhoneNumber;
                 int totalDisk = 0;
@@ -209,35 +222,41 @@ namespace WebApplication.Services
                         RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
                         DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
                         //get list over due disk
-                        if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
+                        if (transactionDetail.Status == null)
                         {
-                            totalDisk++;
-                            // check disk over due
-                            if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                            if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
                             {
-                                DiskOverDueModel diskOverDue = new DiskOverDueModel();
-                                diskOverDue.DiskID = disk.DiskID;
-                                diskOverDue.TitleName = title.Title;
-                                diskOverDue.DateReturn = dateReturn;
-                                diskOverDues.Add(diskOverDue);
+                                totalDisk++;
+                                // check disk over due
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                {
+                                    DiskOverDueModel diskOverDue = new DiskOverDueModel();
+                                    diskOverDue.DiskID = disk.DiskID;
+                                    diskOverDue.TitleName = title.Title;
+                                    diskOverDue.DateReturn = dateReturn;
+                                    diskOverDues.Add(diskOverDue);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))
+                            {
+                                LateCharge lateCharge = new LateCharge();
+                                lateCharge.DiskID = disk.DiskID;
+                                lateCharge.Title = title.Title;
+                                //Ngày phải trả
+                                lateCharge.DateReturn = dateReturn;
+                                //Ngày trả thực tế
+                                lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
+                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                //add late charge in list
+                                lateCharges.Add(lateCharge);
+                                //
+                                totalFines += lateCharge.Cost;
                             }
                         }
                         //check late charge
-                        if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))
-                        {
-                            LateCharge lateCharge = new LateCharge();
-                            lateCharge.DiskID = disk.DiskID;
-                            lateCharge.Title = title.Title;
-                            //Ngày phải trả
-                            lateCharge.DateReturn = dateReturn;
-                            //Ngày trả thực tế
-                            lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
-                            lateCharge.Cost = curentRentalRate.LateCharge;
-                            //add late charge in list
-                            lateCharges.Add(lateCharge);
-                            //
-                            totalFines += lateCharge.Cost;
-                        }
                     }
                 }
                 // set properties for customer rp model
