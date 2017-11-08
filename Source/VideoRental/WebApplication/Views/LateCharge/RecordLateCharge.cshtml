@@ -7,12 +7,12 @@
 <h2>RecordLateCharge</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("LateChargePayment", "LateCharge", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>@ViewBag.Success</h4>
+        <h4>@ViewBag.status</h4>
         <h4>Số lượng trễ hạn còn lại là @ViewBag.numberLateCharge </h4>
 
         <hr />

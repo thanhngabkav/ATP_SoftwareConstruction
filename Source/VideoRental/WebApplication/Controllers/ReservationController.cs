@@ -10,6 +10,7 @@ namespace WebApplication.Controllers
         private const string LIST_TITLE_SESSION = "listtitle";
 
         IReservationService iReservation;
+      
 
         public ReservationController(IReservationService iReservation)
         {
@@ -17,7 +18,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult ReservationManagement(string customerNameOrID)
+        public ActionResult Index(string customerNameOrID)
         {
             TagDebug.D(GetType(), " in Action " + "ReservationManagement");
             return View(iReservation.GetReservation(customerNameOrID));
@@ -37,7 +38,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveTitle(string[] titleID)
+        public ActionResult SaveTitle(int[] titleID)
         {
             TagDebug.D(GetType(), " in Action " + "SaveTitle");
             Session[LIST_TITLE_SESSION] = titleID;
@@ -46,31 +47,46 @@ namespace WebApplication.Controllers
 
 
         [HttpGet]
-        public ActionResult ShowCustomers(string customerName)
+        public ActionResult ShowCustomers(string customerName, string reservationState)
         {
             TagDebug.D(GetType(), " in Action " + "ShowCustomers");
+            ViewBag.IsReservationExist = reservationState;
             return View(iReservation.GetCustomers(customerName));
         }
 
         [HttpGet]
-        public ActionResult AddReservation(string customerID)
+        public ActionResult AddReservation(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "AddReservation");
-            string[] titleID = (string[])Session[LIST_TITLE_SESSION];
-
-            if (titleID.Length > 0 && customerID != null)
+            int[] titleID = (int[])Session[LIST_TITLE_SESSION];
+            string reservationState = "";
+            if (titleID.Length > 0 && customerID > 0)
             {
-                iReservation.AddReservation(titleID, customerID);
+                if (IsReservationExist(titleID, customerID))
+                {
+                    reservationState = "Khách hàng đã đặt đĩa đó rồi nhé!";
+                  
+                } else
+                {
+                    iReservation.AddReservation(titleID, customerID);
+                    reservationState = "Đặt Thành Công";
+                }
+                
             }
             else
             {
                 if (titleID.Length <= 0)
                     TagDebug.D(GetType(), " List of Title Name < 0 " + "");
-                if (customerID != null)
+                if (customerID != 0)
                     TagDebug.D(GetType(), " customerID Null " + "");
                 // Handle NULL POINTER
             }
-            return View();
+            return RedirectToAction("ShowTitles", new { reservationState = reservationState});
+        }
+
+        private bool IsReservationExist(int[] titleID, int customerID)
+        {
+            return iReservation.CheckReservationForExistence(titleID, customerID);
         }
 
         [HttpGet]

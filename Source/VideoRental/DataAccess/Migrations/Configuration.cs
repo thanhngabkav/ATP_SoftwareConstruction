@@ -142,7 +142,7 @@
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
-                    LastRentedDate = DateTime.Now,
+                    LastRentedDate = new DateTime(2017, 09, 09),
                     UpdatedUser = 1 //manager
                 },
                 //disk 1, title 2 (disk id is 4)
@@ -179,7 +179,7 @@
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
-                    LastRentedDate = DateTime.Now,
+                    LastRentedDate = new DateTime(2017, 09, 09),
                     UpdatedUser = 1 //manager
                 }
             );
@@ -257,7 +257,7 @@
                 new TransactionHistoryDetail
                 {
                     TransactionDetailID = 1,
-                    DiskID = 2,
+                    DiskID = 3,
                     TransactionID = 1,
                 },
 
@@ -265,7 +265,7 @@
                 new TransactionHistoryDetail
                 {
                     TransactionDetailID = 2,
-                    DiskID = 5,
+                    DiskID = 6,
                     TransactionID = 1,
                 }
             );
