@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using WebApp.Models;
-using WebApp.Services;
+using WebApplication.Models;
+using WebApplication.Services;
 using DataAccess.Entities;
 
 namespace WebApp.Controllers
@@ -44,7 +44,7 @@ namespace WebApp.Controllers
             {
                 UserService userService = new UserService();
                 User user = userService.getUserByUserName(loginModel.Username);
-                UserSession userSession = new UserSession { UserID = user.UserID + "", UserName = user.UserName, PreviusURL = "/Account/Login" };
+                UserSession userSession = new UserSession { UserID = user.UserID + "", UserName = user.UserName, PreviusURL = "/Account/Login", UserRole = user.Role };
                 Session.Add(UserSession.SessionName, userSession);
                 FormsAuthentication.SetAuthCookie(user.UserName, loginModel.Remember);
                 if (loginModel.Remember)
@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                     userCookies.Expires = authTicket.Expiration;
                     Response.Cookies.Add(userCookies);
                 }
-                return Redirect("/Manager");
+                return Redirect("/Home");
             }
             else
             {
@@ -68,6 +68,7 @@ namespace WebApp.Controllers
         {
             FormsAuthentication.SignOut();
             Request.Cookies.Clear();
+            Session[UserSession.SessionName] = null;
             Session.Clear();
             return Redirect("/Home");
         }

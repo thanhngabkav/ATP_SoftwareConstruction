@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using WebApp.Models;
-using WebApp.Services;
+using WebApplication.Models;
+using WebApplication.Services;
 using DataAccess.Entities;
 
-namespace WebApp.Services
+namespace WebApplication.Services
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class ServerResourceActionFilter : ActionFilterAttribute

@@ -36,7 +36,7 @@
                     UserID = 1,
                     UserName = "manager",
                     //password is manager and have encoded by sha256 algorithm
-                    Password = "6ee4a469cd4e91053847f5d3fcb61dbcc91e8f0ef10be7748da4c4a1ba382d17",
+                    Password = "OwJt7Ix43MiTfXo4sZFecCo4EpPU0JeYixCB7n29PVs=",
                     Address = "Hồ Chí Minh",
                     PhoneNumber = "096281084",
                     Email = "manager01@gmail.com",
@@ -48,7 +48,7 @@
                     UserID = 2,
                     UserName = "clerk",
                     //password is clerk and have encoded by sha256 algorithm
-                    Password = "c40dc72b0228e5850d8b173ff861a48acfb4a15b37b2849cbb6584bbadbc7907",
+                    Password = "9XWtGS9d30jR4GFlOT7WeCBzhF94dwv7VufImcINPF0=",
                     Address = "Hồ Chí Minh",
                     PhoneNumber = "0985468764",
                     Email = "clerk01@gmail.com",
@@ -142,6 +142,7 @@
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
+                    LastRentedDate = DateTime.Now,
                     UpdatedUser = 1 //manager
                 },
                 //disk 1, title 2 (disk id is 4)
@@ -178,6 +179,7 @@
                     RentedTime = 0,
                     DateCreate = DateTime.Now,
                     DateUpdate = DateTime.Now,
+                    LastRentedDate = DateTime.Now,
                     UpdatedUser = 1 //manager
                 }
             );

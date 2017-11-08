@@ -10,6 +10,11 @@ namespace WebApplication.Controllers
     public class TitleManagementController : Controller
     {
         ITitleManagementService titleManagementService;
+
+        public TitleManagementController(ITitleManagementService titleManagementService)
+        {
+            this.titleManagementService = titleManagementService;
+        }
         // GET: TitleManagement
         public ActionResult GetTitleInfomation(int id)
         {

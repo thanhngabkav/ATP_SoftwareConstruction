@@ -15,7 +15,7 @@ namespace WebApplication.Services
         TranSactionDAO transactionDao;
         TransactionDetailsDAO transactionDetailsDao;
         CustomerDAO customerDao;
-
+        IList<int> diskIDs;
         public LateChargesService()
         {
             this.transactionDao = new TranSactionDAO();
@@ -59,9 +59,7 @@ namespace WebApplication.Services
             IList<Customer> customers = customerDao.GetListLateFeeCustomers();
             IList<CustomerView> customerViews = new List<CustomerView>();
             foreach (Customer c in customers)
-            {
                 customerViews.Add(new CustomerView(c.CustomerID, c.FirstName, c.LastName, c.Address));
-            }
             return customerViews;
         }
 
@@ -81,18 +79,21 @@ namespace WebApplication.Services
             TagDebug.D(GetType(), "in RecordLateCharge class");
             // need find TransactionDetail by transactionHistoryDetailID
             IList<TransactionHistory> transactionHistories = transactionDao.GetCustomerLateChargeTransactions(customerId);
-
+            diskIDs = new List<int>();
             int numb = numberLateCharges;
             foreach (TransactionHistory hi in transactionHistories)
             {
                 List<TransactionHistoryDetail> transactionHistoryDetails = transactionDetailsDao.GetListTransactionDetailsByTransactionId(hi.TransactionHistoryID);
                 foreach (TransactionHistoryDetail de in transactionHistoryDetails)
                 {
-                    if(numb-- > 0)
-                    {
-                        de.Status = TransactionStatus.PAID;
-                        transactionDetailsDao.UpdateTransactionDetail(de);
-                    }
+
+                    if (de.Status == TransactionDetailStatus.DUE)
+                        if (numb-- > 0)
+                        {
+                            diskIDs.Add(de.DiskID);
+                            de.Status = TransactionStatus.PAID;
+                            transactionDetailsDao.UpdateTransactionDetail(de);
+                        }
                 }
                 if (numb < 0)
                     break;
@@ -101,7 +102,6 @@ namespace WebApplication.Services
                     hi.Status = TransactionStatus.PAID;
                     transactionDao.UpdateTransaction(hi);
                 }
-
             }
         }
 
@@ -121,11 +121,38 @@ namespace WebApplication.Services
                 foreach (TransactionHistoryDetail de in transactionHistoryDetails)
                 {
                     if (de.Status == null) break;
-                    if (de.Status == TransactionDetailStatus.DUE) ;
-                    number++;
+                    if (de.Status == TransactionDetailStatus.DUE)
+                        number++;
                 }
             }
             return number;
+        }
+
+        public float GetTotalLateChargePrice(int customerId, int numberLateCharges)
+        {
+            TagDebug.D(GetType(), "in GetTotalLateChargePrice class");
+
+            float totalLateCharge = 0;
+            // need find TransactionDetail by transactionHistoryDetailID
+            IList<TransactionHistory> transactionHistories = transactionDao.GetCustomerLateChargeTransactions(customerId);
+            diskIDs = new List<int>();
+            int numb = numberLateCharges;
+            foreach (TransactionHistory hi in transactionHistories)
+            {
+                List<TransactionHistoryDetail> transactionHistoryDetails = transactionDetailsDao.GetListTransactionDetailsByTransactionId(hi.TransactionHistoryID);
+                foreach (TransactionHistoryDetail de in transactionHistoryDetails)
+                {
+
+                    if (de.Status == TransactionDetailStatus.DUE)
+                        if (numb-- > 0)
+                        {
+                            float lateChargePrice = new RentalRateDAO().GetCurrentRentalRate(
+                                new DiskDAO().GetDiskById(de.DiskID).TitleID).LateCharge;
+                            totalLateCharge += lateChargePrice;
+                        }
+                }
+            }
+            return totalLateCharge;
         }
     }
 }

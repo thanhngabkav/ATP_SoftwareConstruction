@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApp.Models
+namespace WebApplication.Models
 {
     public class UserSession
     {
@@ -11,5 +11,6 @@ namespace WebApp.Models
         public string UserID { set; get; }
         public string UserName { set; get; }
         public string PreviusURL { set; get; }
+        public string UserRole { set; get; }
     }
 }

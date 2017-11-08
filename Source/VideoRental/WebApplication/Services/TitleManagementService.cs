@@ -20,7 +20,7 @@ namespace WebApplication.Services
         {
             DiskTitle title = titleDAO.GetTitleById(titleID);
             TitleInfoModel result = new TitleInfoModel();
-            result.TitleID = title.TitleID;
+            result.TitleID = titleID;
             result.Title = title.Title;
             result.Quantity = title.Quantity;
             result.ImageLink = title.ImageLink;
