@@ -10,7 +10,7 @@ namespace WebApplication.Models
         public int DiskID { set; get; }
         public string Title { set; get; }
         public string Status { set; get; }
-        public Customer Whom { set; get; }
+        public CustomerModel Whom { set; get; }
         public DateTime? DueTime { set; get; }
     }
 }

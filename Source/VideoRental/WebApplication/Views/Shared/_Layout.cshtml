@@ -15,9 +15,7 @@
 
     <style type="text/css">
         .sub-navbar {
-            margin-top: 5px;
-            margin-left: 50px;
-            padding:10px;
+            margin-left: 100px;
             color:#fff;
         }
         .sub-navbar:hover{
@@ -60,9 +58,10 @@
                         }
                         if (userSession.UserRole.Equals(DataAccess.Utilities.UserRole.Manager))
                         {
-                            <ul class="nav navbar-nav sub-navbar"><li>Manager Taks 1</li></ul>
-                            <ul class="nav navbar-nav sub-navbar"><li>Manager Taks 2</li></ul>
-                            <ul class="nav navbar-nav sub-navbar"><li>Manager Taks 3</li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li> <a href="~/Customer">Customer</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="~/Disk">Disk</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="~/DiskTitle">Disk Title</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="~/RentalRates">Rental Rate</a></li></ul>
                         }
 
                         <ul class="nav navbar-nav navbar-right user-info"><li> <span>Welcome @userSession.UserName</span></li></ul>

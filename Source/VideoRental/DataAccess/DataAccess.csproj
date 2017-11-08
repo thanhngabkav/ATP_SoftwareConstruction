@@ -74,8 +74,15 @@
     <Compile Include="Entities\TransactionHistory.cs" />
     <Compile Include="Entities\TransactionHistoryDetail.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201711061456254_Init.cs" />
+    <Compile Include="Migrations\201711061456254_Init.Designer.cs">
+      <DependentUpon>201711061456254_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DiskStatus.cs" />
+    <Compile Include="Utilities\ReservationStatus.cs" />
+    <Compile Include="Utilities\TagDebug.cs" />
     <Compile Include="Utilities\TransactionDetailStatus.cs" />
     <Compile Include="Utilities\TransactionStatus.cs" />
     <Compile Include="Utilities\UserRole.cs" />
@@ -117,6 +124,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711061456254_Init.resx">
+      <DependentUpon>201711061456254_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DataAccess.DBContext;
 using DataAccess.Entities;
 using WebApplication.Services;
 
