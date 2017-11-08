@@ -6,28 +6,28 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DataAccess.Entities;
 using WebApplication.Services;
+using DataAccess.Entities;
 
 namespace WebApplication.Controllers
 {
-    public class DisksController : Controller
+    public class DiskController : Controller
     {
-        private DiskService db;
+        private IDiskService db;
 
-        public DisksController()
+        public DiskController()
         {
-            this.db = new DiskService();
+            db = new DiskService();
         }
 
-        // GET: Disks
+        // GET: Disk
         public ActionResult Index()
         {
             var disks = db.GetAllDisks();
             return View(disks.ToList());
         }
 
-        // GET: Disks/Details/5
+        // GET: Disk/Details
         public ActionResult Details(int id)
         {
             Disk disk = db.GetDiskById(id);
@@ -38,18 +38,18 @@ namespace WebApplication.Controllers
             return View(disk);
         }
 
-        // GET: Disks/Create
+        // GET: Disk/Create
         public ActionResult Create()
         {
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName");
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title");
+            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName");
             return View();
         }
 
-        // POST: Disks/Create
+        // POST: Disk/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,RentalPeriod,DateUpdate,DateCreate,CreatedUser")] Disk disk)
+        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate,UpdatedUser")] Disk disk)
         {
             if (ModelState.IsValid)
             {
@@ -57,12 +57,12 @@ namespace WebApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", disk.CreatedUser);
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
+            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
             return View(disk);
         }
 
-        // GET: Disks/Edit/5
+        // GET: Disk/Edit
         public ActionResult Edit(int id)
         {
             Disk disk = db.GetDiskById(id);
@@ -70,27 +70,27 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", disk.CreatedUser);
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
+            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
             return View(disk);
         }
 
-        // POST: Disks/Edit/5
+        // POST: Disk/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,RentalPeriod,DateUpdate,DateCreate,CreatedUser")] Disk disk)
+        public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate,UpdatedUser")] Disk disk)
         {
             if (ModelState.IsValid)
             {
                 db.UpdateDisk(disk);
                 return RedirectToAction("Index");
             }
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", disk.CreatedUser);
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
+            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
             return View(disk);
         }
 
-        // GET: Disks/Delete/5
+        // GET: Disk/Delete
         public ActionResult Delete(int id)
         {
             Disk disk = db.GetDiskById(id);
@@ -101,7 +101,7 @@ namespace WebApplication.Controllers
             return View(disk);
         }
 
-        // POST: Disks/Delete/5
+        // POST: Disk/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

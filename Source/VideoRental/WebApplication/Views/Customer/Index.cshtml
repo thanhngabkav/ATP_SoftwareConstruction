@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataAccess.Entities.Customer>
+﻿@model IEnumerable<WebApplication.Models.CustomerModel>
 
 @{
     Layout = null;
@@ -17,12 +17,6 @@
     </p>
     <table class="table">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Created_User.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated_User.UserName)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -44,17 +38,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateUpdate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedUser)
+            </th>
             <th></th>
         </tr>
     
     @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created_User.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated_User.UserName)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -75,6 +66,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateUpdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedUser)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.CustomerID }) |

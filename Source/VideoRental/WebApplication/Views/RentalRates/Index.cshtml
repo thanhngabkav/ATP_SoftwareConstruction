@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataAccess.Entities.RentalRate>
+﻿@model IEnumerable<WebApplication.Models.RentalRateModel>
 
 @{
     Layout = null;
@@ -18,9 +18,6 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DiskTitle.Title)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.RentalPrice)
             </th>
             <th>
@@ -32,14 +29,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TitleID)
+            </th>
             <th></th>
         </tr>
     
     @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiskTitle.Title)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentalPrice)
             </td>
@@ -53,9 +50,12 @@
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.RentalRaateId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.RentalRaateId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.RentalRaateId })
+                @Html.DisplayFor(modelItem => item.TitleID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.RentalRateId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.RentalRateId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.RentalRateId })
             </td>
         </tr>
     }
