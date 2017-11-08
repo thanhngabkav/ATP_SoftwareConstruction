@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DataAccess.DBContext;
 using DataAccess.Entities;
 using WebApplication.Services;
 
@@ -13,7 +14,7 @@ namespace WebApplication.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerService db;
+        private ICustomerService db;
 
         public CustomerController()
         {
@@ -41,7 +42,6 @@ namespace WebApplication.Controllers
         // GET: Customer/Create
         public ActionResult Create()
         {
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName");
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName");
             return View();
         }
@@ -49,7 +49,7 @@ namespace WebApplication.Controllers
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,CreatedUser,UpdatedUser")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,UpdatedUser")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,6 @@ namespace WebApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", customer.CreatedUser);
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
             return View(customer);
         }
@@ -70,7 +69,6 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", customer.CreatedUser);
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
             return View(customer);
         }
@@ -78,14 +76,13 @@ namespace WebApplication.Controllers
         // POST: Customer/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,CreatedUser,UpdatedUser")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,UpdatedUser")] Customer customer)
         {
             if (ModelState.IsValid)
             {
                 db.UpdateCustomer(customer);
                 return RedirectToAction("Index");
             }
-            //ViewBag.CreatedUser = new SelectList(db.Users, "UserID", "UserName", customer.CreatedUser);
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
             return View(customer);
         }

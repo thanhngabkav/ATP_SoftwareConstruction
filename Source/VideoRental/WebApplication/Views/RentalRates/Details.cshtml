@@ -1,4 +1,4 @@
-﻿@model DataAccess.Entities.RentalRate
+﻿@model WebApplication.Models.RentalRateModel
 
 @{
     Layout = null;
@@ -13,17 +13,9 @@
 </head>
 <body>
     <div>
-        <h4>RentalRate</h4>
+        <h4>RentalRateModel</h4>
         <hr />
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.DiskTitle.Title)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DiskTitle.Title)
-            </dd>
-    
             <dt>
                 @Html.DisplayNameFor(model => model.RentalPrice)
             </dt>
@@ -56,10 +48,18 @@
                 @Html.DisplayFor(model => model.CreatedDate)
             </dd>
     
+            <dt>
+                @Html.DisplayNameFor(model => model.TitleID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TitleID)
+            </dd>
+    
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.RentalRaateId }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.RentalRateId }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
 </body>

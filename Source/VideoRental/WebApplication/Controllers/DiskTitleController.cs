@@ -6,18 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DataAccess.Entities;
 using WebApplication.Services;
+using DataAccess.Entities;
 
 namespace WebApplication.Controllers
 {
     public class DiskTitleController : Controller
     {
-        private DiskTitleService db;
+        private IDiskTitleService db;
 
         public DiskTitleController()
         {
-            this.db = new DiskTitleService();
+            db = new DiskTitleService();
         }
 
         // GET: DiskTitle
@@ -46,13 +46,14 @@ namespace WebApplication.Controllers
         // POST: DiskTitle/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TitleID,Title,Tags,Image,Quantity,RentalPrice,LateChargePerDate")] DiskTitle diskTitle)
+        public ActionResult Create([Bind(Include = "TitleID,Title,Tags,ImageLink,Quantity")] DiskTitle diskTitle)
         {
             if (ModelState.IsValid)
             {
                 db.AddNewTitle(diskTitle);
                 return RedirectToAction("Index");
             }
+
             return View(diskTitle);
         }
 
