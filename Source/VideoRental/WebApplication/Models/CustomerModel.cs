@@ -11,8 +11,8 @@ namespace WebApplication.Models
     {
         public CustomerModel()
         {
-            this.TransactionHistorys = new List<TransactionHistory>();
-            this.Reservations = new List<Reservation>();
+            this.TransactionHistorys = new List<TransactionHistoryModel>();
+            this.Reservations = new List<ReservationModel>();
         }
 
         [Key]
@@ -44,10 +44,10 @@ namespace WebApplication.Models
         public int UpdatedUser { get; set; }
 
         [ForeignKey("UpdatedUser")]
-        public virtual User Updated_User { set; get; }
+        public virtual UserModel Updated_User { set; get; }
 
-        public virtual ICollection<TransactionHistory> TransactionHistorys { set; get; }
+        public virtual ICollection<TransactionHistoryModel> TransactionHistorys { set; get; }
 
-        public virtual ICollection<Reservation> Reservations { set; get; }
+        public virtual ICollection<ReservationModel> Reservations { set; get; }
     }
 }

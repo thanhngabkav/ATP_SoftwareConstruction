@@ -36,7 +36,7 @@ namespace WebApplication.Services
                     if (transactionDetail.DateReturn == null)
                     {
                         TransactionHistory transaction = transactionDetail.TransactionHistory;
-                        diskStatusInfo.Whom = transaction.Customer;
+                     //   diskStatusInfo.Whom = transaction.Customer;
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
                         RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
                         DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);

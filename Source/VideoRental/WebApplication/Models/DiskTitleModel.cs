@@ -12,7 +12,7 @@ namespace WebApplication.Models
         public DiskTitleModel()
         {
             this.Disks = new List<DiskModel>();
-            this.Reservations = new List<Reservation>();
+            this.Reservations = new List<ReservationModel>();
             this.RentalRates = new List<RentalRateModel>();
         }
         [Key]
@@ -30,7 +30,7 @@ namespace WebApplication.Models
 
         public virtual ICollection<DiskModel> Disks { set; get; }
 
-        public virtual ICollection<Reservation> Reservations { set; get; }
+        public virtual ICollection<ReservationModel> Reservations { set; get; }
 
         public virtual ICollection<RentalRateModel> RentalRates { set; get; }
     }

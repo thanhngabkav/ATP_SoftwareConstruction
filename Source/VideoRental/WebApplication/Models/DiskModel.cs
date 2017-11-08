@@ -11,7 +11,7 @@ namespace WebApplication.Models
     {
         public DiskModel()
         {
-            this.TransactionHistoryDetails = new List<TransactionHistoryDetail>();
+            this.TransactionHistoryDetails = new List<TransactionHistoryDetailModel>();
         }
 
         [Key]
@@ -37,11 +37,11 @@ namespace WebApplication.Models
         public int UpdatedUser { set; get; }
 
         [ForeignKey("UpdatedUser")]
-        public virtual User Update_User { set; get; }
+        public virtual UserModel Update_User { set; get; }
 
         [ForeignKey("TitleID")]
         public virtual DiskTitleModel DiskTitle { set; get; }
 
-        public virtual ICollection<TransactionHistoryDetail> TransactionHistoryDetails { set; get; }
+        public virtual ICollection<TransactionHistoryDetailModel> TransactionHistoryDetails { set; get; }
     }
 }

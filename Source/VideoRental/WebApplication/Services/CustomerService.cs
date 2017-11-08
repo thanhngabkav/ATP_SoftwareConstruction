@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DataAccess.Entities;
 using DataAccess.DAO;
+using WebApplication.Models;
 
 namespace WebApplication.Services
 {
@@ -14,6 +15,7 @@ namespace WebApplication.Services
         public CustomerService()
         {
             this.customerDAO = new CustomerDAO();
+
         }
 
         public void AddNewCustomer(Customer customer)
