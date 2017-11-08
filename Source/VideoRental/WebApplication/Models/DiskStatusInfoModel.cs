@@ -11,6 +11,7 @@ namespace WebApplication.Models
         public string Title { set; get; }
         public string Status { set; get; }
         public Customer Whom { set; get; }
+        public string CustomerName { set; get; }
         public DateTime? DueTime { set; get; }
     }
 }

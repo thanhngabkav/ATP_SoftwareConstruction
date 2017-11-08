@@ -97,5 +97,10 @@ namespace DataAccess.DAO
             dBContext.Entry(res).State = EntityState.Modified;
             dBContext.SaveChanges();
         }
+
+        public List<Reservation> GetListReservationByTitle(int titleId)
+        {
+            return dBContext.Reservations.Where(x => x.TitleID == titleId).ToList<Reservation>();
+        }
     }
 }
