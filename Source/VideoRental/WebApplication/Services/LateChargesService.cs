@@ -105,12 +105,6 @@ namespace WebApplication.Services
             }
         }
 
-        public IList<TransactionHistory> ShowLateCharge(string customerID)
-        {
-            // not use
-            throw new NotImplementedException();
-        }
-
         public int GetNumberOfLateCharge(int customerID)
         {
             int number = 0;
