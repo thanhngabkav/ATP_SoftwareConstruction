@@ -18,7 +18,7 @@ namespace WebApplication.Services
          * @param loginModel : LoginModel
          * @return bool : true if login info is correct and false if not
          * */
-        public bool login(LoginModel loginModel)
+        public virtual bool login(LoginModel loginModel)
         {
             UserDAO userDAO = new UserDAO();
             SHA2Service sha2 = new SHA2Service();

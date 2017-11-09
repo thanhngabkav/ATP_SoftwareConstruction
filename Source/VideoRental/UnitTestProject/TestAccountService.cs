@@ -22,15 +22,18 @@ namespace UnitTestProject
         public void TestLoginFail()
         {
             AccountService accountService = new AccountService();
-            var mockUserDAO = new Mock<UserDAO>();
+            Mock<UserDAO> mockUserDAO = new Mock<UserDAO>();
             LoginModel loginModel = new LoginModel { Username = "wrong user name", Password = "fake" };
-            User fakeUser = null;
+            User fakeUser = new User();
             //Mock data access layer
-            mockUserDAO.Setup(x => x.getUserByUserName(loginModel.Username)).Returns(fakeUser);
-
+            mockUserDAO.Setup(x => x.getUserByUserName(It.IsAny<String>())).Returns(fakeUser);
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.getUserByUserName(loginModel.Username);
+            Assert.IsNotNull(user);
             bool expectedResult = false;
             bool actualResult = accountService.login(loginModel);
             Assert.AreEqual(expectedResult, actualResult);
+            mockUserDAO.Verify(x => x.getUserByUserName(It.IsAny<String>()), Times.AtLeastOnce);
             
         }
 

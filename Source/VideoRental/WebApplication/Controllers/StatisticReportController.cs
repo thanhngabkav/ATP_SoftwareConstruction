@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.Services;
 using WebApplication.Models;
+using DataAccess.Utilities;
 namespace WebApplication.Controllers
 {
     public class StatisticReportController : Controller
@@ -16,6 +17,7 @@ namespace WebApplication.Controllers
             this.statisticReportService = statisticReportService;
         }
         // GET: StatisticReport
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Report_Title()
         {
             List<TitleReportModel> listResult = statisticReportService.Report_Title();

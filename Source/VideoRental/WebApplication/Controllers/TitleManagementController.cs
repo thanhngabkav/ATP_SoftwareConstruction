@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,7 @@ namespace WebApplication.Controllers
             this.titleManagementService = titleManagementService;
         }
         // GET: TitleManagement
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult GetTitleInfomation(int id)
         {
             TitleInfoModel titleModel = titleManagementService.GetInfomationTitle(id);

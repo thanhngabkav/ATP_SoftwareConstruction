@@ -72,7 +72,7 @@
                     <td colspan="2"></td>
                     <td>@Html.DisplayFor(modelItem => i.DiskID)</td>
                     <td colspan="2">@Html.DisplayFor(modelItem => i.TitleName)</td>
-                    <td>@Html.DisplayFor(modelItem => i.DateReturn)</td>
+                    <td>@Convert.ToDateTime(i.DateReturn).ToString("dd/MM/yyyy")</td>
                 </tr>
             }
         }
