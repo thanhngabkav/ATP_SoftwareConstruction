@@ -13,6 +13,13 @@ namespace WebApp.Controllers
     [UserAuthActionFilter]
     public class AccountController : Controller
     {
+        IAccountService accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            this.accountService = accountService;
+        }
+
         // GET: Account
         /**
          * Show user's information
@@ -40,8 +47,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
-            AccountService accountService = new AccountService();
-            if (ModelState.IsValid && loginModel.Username != null && accountService.login(loginModel))
+            if (ModelState.IsValid && loginModel.Username != null && accountService.Login(loginModel))
             {
                 UserService userService = new UserService();
                 User user = userService.getUserByUserName(loginModel.Username);
