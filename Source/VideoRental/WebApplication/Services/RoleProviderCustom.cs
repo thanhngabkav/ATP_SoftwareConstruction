@@ -51,7 +51,10 @@ namespace WebApplication.Services
                 if (user.Role.Equals(UserRole.Clerk))
                     userRole.Add(UserRole.Clerk);
                 if (user.Role.Equals(UserRole.Manager))
+                {
+                    userRole.Add(UserRole.Clerk);
                     userRole.Add(UserRole.Manager);
+                }
                 return userRole.ToArray();
             }
             return new string[] { };
