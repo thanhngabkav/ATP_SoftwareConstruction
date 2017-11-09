@@ -33,7 +33,9 @@ namespace UnitTestProject
             bool expectedResult = false;
             bool actualResult = accountService.login(loginModel);
             Assert.AreEqual(expectedResult, actualResult);
-            mockUserDAO.Verify(x => x.getUserByUserName(It.IsAny<String>()), Times.AtLeastOnce);         
+            mockUserDAO.Verify(x => x.getUserByUserName(It.IsAny<String>()), Times.AtLeastOnce);
+            
         }
+
     }
 }
