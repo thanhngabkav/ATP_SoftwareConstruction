@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using DataAccess.DAO;
 using DataAccess.Entities;
+using DataAccess.Utilities;
 namespace WebApplication.Services
 {
     public class RoleProviderCustom : RoleProvider
@@ -46,7 +47,15 @@ namespace WebApplication.Services
             User user = userService.getUserByUserName(username);
             if (user != null)
             {
-                return new string[] { user.Role };
+                List<String> userRole = new List<string>();
+                if (user.Role.Equals(UserRole.Clerk))
+                    userRole.Add(UserRole.Clerk);
+                if (user.Role.Equals(UserRole.Manager))
+                {
+                    userRole.Add(UserRole.Clerk);
+                    userRole.Add(UserRole.Manager);
+                }
+                return userRole.ToArray();
             }
             return new string[] { };
         }

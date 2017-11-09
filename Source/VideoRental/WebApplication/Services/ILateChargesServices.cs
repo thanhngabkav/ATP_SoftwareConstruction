@@ -30,12 +30,6 @@ namespace WebApplication.Services
         void RecordLateCharge(int customerId, int numberLateCharges);
 
         /**
-         * @return :List latecharge of customer
-         * 
-         * */
-        IList<TransactionHistory> ShowLateCharge(string customerID);
-
-        /**
          * Change status of transactionHistoryDetailID to free or something else 
          * @return :
          * 
