@@ -11,10 +11,14 @@ using DataAccess.Utilities;
 
 namespace WebApplication.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService
     {
-       
-        public bool Login(LoginModel loginModel)
+        /**
+         * Check login info
+         * @param loginModel : LoginModel
+         * @return bool : true if login info is correct and false if not
+         * */
+        public virtual bool login(LoginModel loginModel)
         {
             UserDAO userDAO = new UserDAO();
             SHA2Service sha2 = new SHA2Service();

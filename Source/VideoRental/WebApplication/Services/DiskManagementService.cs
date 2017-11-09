@@ -65,6 +65,7 @@ namespace WebApplication.Services
                 else // disk in stock, toWhom and when over due
                 {
                     diskStatusInfo.Whom = null;
+                    diskStatusInfo.CustomerName = null;
                     diskStatusInfo.DueTime = null;
                 }
             }
