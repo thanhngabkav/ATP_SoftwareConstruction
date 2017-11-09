@@ -41,7 +41,7 @@ namespace WebApp.Controllers
         public ActionResult Login(LoginModel loginModel)
         {
             AccountService accountService = new AccountService();
-            if (ModelState.IsValid && loginModel.Username != null && accountService.login(loginModel))
+            if (ModelState.IsValid && loginModel.Username != null && accountService.Login(loginModel))
             {
                 UserService userService = new UserService();
                 User user = userService.getUserByUserName(loginModel.Username);
