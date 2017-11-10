@@ -8,6 +8,7 @@ using DataAccess.Utilities;
 using WebApplication.Models;
 namespace WebApplication.Services
 {
+
     /// <summary>
     /// Customer report service
     /// </summary>
