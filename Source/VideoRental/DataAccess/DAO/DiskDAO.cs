@@ -85,7 +85,7 @@ namespace DataAccess.DAO
         /// <returns></returns>
         public virtual List<Disk> FindDisks(String id)
         {
-            return dBContext.Disks.Where(x => x.DiskID.ToString().Contains(id)).ToList();
+            return dBContext.Disks.Where(x => x.DiskID.ToString().Contains(id) && x.Status != DiskStatus.RENTED).ToList();
         }
 
         /// <summary>

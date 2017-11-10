@@ -76,7 +76,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = UserRole.Manager)]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult CancelLateCharge(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelLateCharge ");
@@ -89,7 +89,7 @@ namespace WebApplication.Controllers
         /// <param name="number"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = UserRole.Clerk)]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult CancelASpecificLateCharge(int transactionID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelASpecificLateCharge ");

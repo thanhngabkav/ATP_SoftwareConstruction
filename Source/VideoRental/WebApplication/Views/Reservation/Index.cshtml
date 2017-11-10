@@ -4,7 +4,9 @@
     ViewBag.Title = "ReservationManagement";
 }
 
-<h2>ReservationManagement</h2>
+<h2>Quản Lí Đặt Trước</h2>
+<h2 class="text-danger text-center">@ViewBag.status</h2>
+
 <div class="form-group">
     @Html.ActionLink("Đặt Đĩa", "ShowTitles", null, new { @class = "btn btn-info" })
 </div>
