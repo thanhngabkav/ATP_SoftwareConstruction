@@ -14,10 +14,12 @@ namespace WebApplication.Controllers
     public class RentalRatesController : Controller
     {
         private IRentalRate db;
+        private IDiskTitleService dbDiskTitle;
 
-        public RentalRatesController()
+        public RentalRatesController(IRentalRate rentalRateService, IDiskTitleService dbDiskTitle)
         {
-            db = new RentalRateService();
+            this.db = rentalRateService;
+            this.dbDiskTitle = dbDiskTitle;
         }
 
         // GET: RentalRates
@@ -41,7 +43,7 @@ namespace WebApplication.Controllers
         // GET: RentalRates/Create
         public ActionResult Create()
         {
-            //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title");
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
             return View();
         }
 
@@ -52,12 +54,16 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                rentalRate.CreatedDate = DateTime.Now;
+                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
                 db.AddNewRentalRate(rentalRate);
-                return RedirectToAction("Index");
+                ViewBag.ok = "Thêm thành công";
+                return View("Success");
             }
 
             //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", rentalRate.TitleID);
-            return View(rentalRate);
+            ViewBag.ok = "Thêm không thành công";
+            return View("Failure");
         }
     }
 }

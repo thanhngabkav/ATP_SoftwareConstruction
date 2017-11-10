@@ -1,58 +1,51 @@
-﻿@model WebApplication.Models.DiskTitleModel
+﻿@model DataAccess.Entities.DiskTitle
 
 @{
-    Layout = null;
+    ViewBag.Title = "Details";
 }
 
-<!DOCTYPE html>
+<h2>Thông tin chi tiết của tiêu đề đĩa</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>DiskTitleModel</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Tags)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Tags)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ImageLink)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ImageLink)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Quantity)
-            </dd>
-    
-        </dl>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageLink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+    </dl>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a class="btn btn-primary" href="/DiskTitle/Index">Quay lại</a>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.TitleID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</div>
+

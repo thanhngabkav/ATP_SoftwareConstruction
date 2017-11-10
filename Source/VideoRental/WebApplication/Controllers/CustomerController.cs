@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DataAccess.DBContext;
 using DataAccess.Entities;
 using WebApplication.Services;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
@@ -16,9 +17,9 @@ namespace WebApplication.Controllers
     {
         private ICustomerService db;
 
-        public CustomerController()
+        public CustomerController(ICustomerService customerService)
         {
-            db = new CustomerService();
+            this.db = customerService;
         }
 
         // GET: Customer
@@ -42,23 +43,26 @@ namespace WebApplication.Controllers
         // GET: Customer/Create
         public ActionResult Create()
         {
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName");
             return View();
         }
 
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,UpdatedUser")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                UserSession userSession = (UserSession)Session[UserSession.SessionName];
+                customer.UpdatedUser = Int32.Parse(userSession.UserID);
+                customer.DateCreate = DateTime.Now;
+                customer.DateUpdate = DateTime.Now;
                 db.AddNewCustomer(customer);
-                return RedirectToAction("Index");
+                ViewBag.ok = "Thêm thành công";
+                return View("Success");
             }
-
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
-            return View(customer);
+            ViewBag.ok = "Thêm không thành công";
+            return View("Failure");
         }
 
         // GET: Customer/Edit
@@ -69,22 +73,26 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
             return View(customer);
         }
 
         // POST: Customer/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate,UpdatedUser")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                UserSession userSession = (UserSession)Session[UserSession.SessionName];
+                customer.UpdatedUser = Int32.Parse(userSession.UserID);
+                customer.DateUpdate = DateTime.Now;
                 db.UpdateCustomer(customer);
-                return RedirectToAction("Index");
+                ViewBag.ok = "Cập nhật thành công";
+                return View("Success");
             }
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
-            return View(customer);
+            ViewBag.ok = "Cập nhật không thành công";
+            return View("Failure");
         }
 
         // GET: Customer/Delete
@@ -105,7 +113,10 @@ namespace WebApplication.Controllers
         {
             Customer customer = db.GetCustomerById(id);
             db.DeleteCustomer(customer);
-            return RedirectToAction("Index");
+            ViewBag.ok = "Xóa thành công";
+            return RedirectToAction("Success");
         }
+
+       
     }
 }

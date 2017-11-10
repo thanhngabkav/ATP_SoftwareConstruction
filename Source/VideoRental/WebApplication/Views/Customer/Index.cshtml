@@ -1,83 +1,67 @@
-﻿@model IEnumerable<WebApplication.Models.CustomerModel>
+﻿@model IEnumerable<DataAccess.Entities.Customer>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
+<p>
+    <a class="btn btn-primary" href="/Customer/Create">Thêm Khách Hàng</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateUpdate)
+        </th>
+        <th></th>
+    </tr>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateUpdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUser)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateUpdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUser)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.CustomerID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.CustomerID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.CustomerID })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @Convert.ToDateTime(item.DateCreate).ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @Convert.ToDateTime(item.DateUpdate).ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @Html.ActionLink("Cập nhật", "Edit", new { id=item.CustomerID }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.CustomerID }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.CustomerID })
+        </td>
+    </tr>
+}
+
+</table>

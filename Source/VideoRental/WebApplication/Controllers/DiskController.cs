@@ -8,16 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.Services;
 using DataAccess.Entities;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
     public class DiskController : Controller
     {
+        private IDiskManagementService diskManagement;
         private IDiskService db;
+        private IDiskTitleService dbDiskTitle;
+        private DStatus diskStatus;
 
-        public DiskController()
+        public DiskController(IDiskManagementService diskManagement, IDiskService diskService, IDiskTitleService dbDiskTitle, DStatus diskStatus)
         {
-            db = new DiskService();
+            this.diskManagement = diskManagement;
+            this.db = diskService;
+            this.dbDiskTitle = dbDiskTitle;
+            this.diskStatus = diskStatus;
         }
 
         // GET: Disk
@@ -41,25 +48,35 @@ namespace WebApplication.Controllers
         // GET: Disk/Create
         public ActionResult Create()
         {
-            //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title");
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName");
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
             return View();
         }
 
         // POST: Disk/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate,UpdatedUser")] Disk disk)
+        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
         {
-            if (ModelState.IsValid)
+            bool flag = true;
+            if (flag)
             {
-                db.AddNewDisk(disk);
-                return RedirectToAction("Index");
-            }
+                flag = false;
+                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+                disk.Status = "RENTABLE";
+                UserSession userSession = (UserSession)Session[UserSession.SessionName];
+                disk.UpdatedUser = Int32.Parse(userSession.UserID);
+                disk.DateCreate = DateTime.Now;
+                disk.DateUpdate = DateTime.Now;
+                disk.RentedTime = 0;
+                disk.LastRentedDate = null;
 
-            //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
-            return View(disk);
+                db.AddNewDisk(disk);
+                ViewBag.ok = "Thêm thành công";
+                return View("Success");
+            }
+            ViewBag.ok = "Thêm không thành công";
+            return View("Failure");
+            
         }
 
         // GET: Disk/Edit
@@ -70,24 +87,46 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+            List<SelectListItem> listItems = new List<SelectListItem>();
+           listItems.Add(new SelectListItem
+           {
+               Text = "RENTABLE",
+               Value = "RENTABLE"
+           });
+           listItems.Add(new SelectListItem
+           {
+               Text = "BOOKED",
+               Value = "BOOKED"
+           });
+           listItems.Add(new SelectListItem
+           {
+               Text = "RENTED",
+               Value = "RENTED"
+           });
+           ViewBag.ListStatus = new SelectList(listItems, "Text", "Value");
             return View(disk);
         }
 
         // POST: Disk/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate,UpdatedUser")] Disk disk)
+        public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
         {
-            if (ModelState.IsValid)
+            bool flag = true;
+            if (flag)
             {
+                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+                UserSession userSession = (UserSession)Session[UserSession.SessionName];
+                disk.UpdatedUser = Int32.Parse(userSession.UserID);
+                disk.DateUpdate = DateTime.Now;
+                String status = disk.Status;
                 db.UpdateDisk(disk);
-                return RedirectToAction("Index");
+                ViewBag.ok = "Cập nhật thành công";
+                return View("Success");
             }
-            //ViewBag.TitleID = new SelectList(db.DiskTitles, "TitleID", "Title", disk.TitleID);
-            //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", disk.UpdatedUser);
-            return View(disk);
+            ViewBag.ok = "Cập nhật không thành công";
+            return View("Failure");
         }
 
         // GET: Disk/Delete
@@ -108,7 +147,8 @@ namespace WebApplication.Controllers
         {
             Disk disk = db.GetDiskById(id);
             db.DeleteDisk(disk);
-            return RedirectToAction("Index");
+            ViewBag.ok = "Xóa thành công";
+            return View("Success");
         }
     }
 }

@@ -15,9 +15,9 @@ namespace WebApplication.Controllers
     {
         private IDiskTitleService db;
 
-        public DiskTitleController()
+        public DiskTitleController(IDiskTitleService diskTitleService)
         {
-            db = new DiskTitleService();
+            this.db = diskTitleService;
         }
 
         // GET: DiskTitle
@@ -51,10 +51,11 @@ namespace WebApplication.Controllers
             if (ModelState.IsValid)
             {
                 db.AddNewTitle(diskTitle);
-                return RedirectToAction("Index");
+                ViewBag.ok = "Thêm thành công";
+                return View("Success");
             }
-
-            return View(diskTitle);
+            ViewBag.ok = "Thêm không thành công";
+            return View("Failure");
         }
 
         // GET: DiskTitle/Delete
@@ -75,7 +76,8 @@ namespace WebApplication.Controllers
         {
             DiskTitle diskTitle = db.GetTitleById(id);
             db.DeleteTitle(diskTitle);
-            return RedirectToAction("Index");
+            ViewBag.ok = "Xóa thành công";
+            return View("Success");
         }
     }
 }

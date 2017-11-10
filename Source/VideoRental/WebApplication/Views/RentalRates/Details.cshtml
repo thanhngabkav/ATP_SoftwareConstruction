@@ -1,66 +1,57 @@
-﻿@model WebApplication.Models.RentalRateModel
+﻿@model DataAccess.Entities.RentalRate
 
 @{
-    Layout = null;
+    ViewBag.Title = "Details";
 }
 
-<!DOCTYPE html>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DiskTitle.Title)
+        </dt>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>RentalRateModel</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.RentalPrice)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RentalPrice)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LateCharge)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LateCharge)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.RentalPeriod)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RentalPeriod)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TitleID)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TitleID)
-            </dd>
-    
-        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.DiskTitle.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LateCharge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LateCharge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalPeriod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalPeriod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+    </dl>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a class="btn btn-primary" href="/DiskTitle/Index">Quay lại</a>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.RentalRateId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</div>
+

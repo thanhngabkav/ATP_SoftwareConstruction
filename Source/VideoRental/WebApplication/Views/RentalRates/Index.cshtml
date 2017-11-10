@@ -1,65 +1,53 @@
-﻿@model IEnumerable<WebApplication.Models.RentalRateModel>
+﻿@model IEnumerable<DataAccess.Entities.RentalRate>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
+<p>
+    <a class="btn btn-primary" href="/RentalRates/Create">Thêm Giá Thuê Và Thời Gian Thuê</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DiskTitle.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LateCharge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalPeriod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th></th>
+    </tr>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LateCharge)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalPeriod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TitleID)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LateCharge)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalPeriod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitleID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.RentalRateId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.RentalRateId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.RentalRateId })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiskTitle.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LateCharge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalPeriod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.RentalRateId }) 
+        </td>
+    </tr>
+}
+
+</table>

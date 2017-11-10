@@ -1,90 +1,76 @@
-﻿@model WebApplication.Models.DiskModel
+﻿@model DataAccess.Entities.Disk
 
 @{
-    Layout = null;
+    ViewBag.Title = "Details";
 }
 
-<!DOCTYPE html>
+<h2>Thông tin chi tiết của đĩa</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>DiskModel</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.TitleID)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TitleID)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Status)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Status)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.PurchasePrice)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.PurchasePrice)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.RentedTime)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RentedTime)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LastRentedDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LastRentedDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateUpdate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateUpdate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCreate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateCreate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedUser)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedUser)
-            </dd>
-    
-        </dl>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiskTitle.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiskTitle.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchasePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastRentedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastRentedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUpdate)
+        </dt>
+
+        <dd>
+            @Convert.ToDateTime(Model.DateUpdate).ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </dt>
+
+        <dd>
+            @Convert.ToDateTime(Model.DateCreate).ToString("dd/MM/yyyy")
+        </dd>
+
+    </dl>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a class="btn btn-primary" href="/Disk/Index">Quay lại</a>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.DiskID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</div>
+
