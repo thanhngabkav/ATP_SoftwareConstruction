@@ -16,6 +16,10 @@ namespace WebApplication.Services
         {
             this.titleDAO = new TitleDAO();
         }
+        public TitleManagementService(TitleDAO titleDAO)
+        {
+            this.titleDAO = titleDAO;
+        }
         public TitleInfoModel GetInfomationTitle(int titleID)
         {
             DiskTitle title = titleDAO.GetTitleById(titleID);

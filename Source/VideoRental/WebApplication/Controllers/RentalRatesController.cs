@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.Services;
 using DataAccess.Entities;
+using DataAccess.Utilities;
 
 namespace WebApplication.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: RentalRates
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Index()
         {
             var rentalRates = db.GetAllRentalRates();
@@ -30,6 +32,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: RentalRates/Details/5
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Details(int id)
         {
             RentalRate rentalRate = db.GetCurrentRentalRate(id);
@@ -41,6 +44,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: RentalRates/Create
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Create()
         {
             ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
@@ -50,6 +54,7 @@ namespace WebApplication.Controllers
         // POST: RentalRates/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Create([Bind(Include = "RentalRateId,RentalPrice,LateCharge,RentalPeriod,CreatedDate,TitleID")] RentalRate rentalRate)
         {
             if (ModelState.IsValid)
