@@ -22,6 +22,11 @@ namespace WebApplication.Services
             this.reservationDAO = new ReservationDAO();
         }
 
+        public DiskManagementService(DiskDAO diskDAO)
+        {
+            this.diskDAO = diskDAO;
+        }
+
         public DiskStatusInfoModel GetDiskStatus(int diskId)
         {
             DiskStatusInfoModel diskStatusInfo = new DiskStatusInfoModel();

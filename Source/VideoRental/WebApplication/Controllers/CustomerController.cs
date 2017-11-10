@@ -10,6 +10,7 @@ using DataAccess.DBContext;
 using DataAccess.Entities;
 using WebApplication.Services;
 using WebApplication.Models;
+using DataAccess.Utilities;
 
 namespace WebApplication.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Customer
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Index()
         {
             var customers = db.GetAllCustomer();
@@ -30,6 +32,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Customer/Details
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Details(int id)
         {
             Customer customer = db.GetCustomerById(id);
@@ -41,6 +44,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Customer/Create
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +53,7 @@ namespace WebApplication.Controllers
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Create([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -66,6 +71,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Customer/Edit
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Edit(int id)
         {
             Customer customer = db.GetCustomerById(id);
@@ -79,6 +85,7 @@ namespace WebApplication.Controllers
         // POST: Customer/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Edit([Bind(Include = "CustomerID,FirstName,LastName,Address,PhoneNumber,DateOfBirth,DateCreate,DateUpdate")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -96,6 +103,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Customer/Delete
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Delete(int id)
         {
             Customer customer = db.GetCustomerById(id);
@@ -109,12 +117,13 @@ namespace WebApplication.Controllers
         // POST: Customer/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.GetCustomerById(id);
             db.DeleteCustomer(customer);
             ViewBag.ok = "Xóa thành công";
-            return RedirectToAction("Success");
+            return View("Success");
         }
 
        
