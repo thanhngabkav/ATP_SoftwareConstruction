@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,20 +19,21 @@ namespace WebApplication.Controllers
         }
 
         // GET: All Customer Report
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Report_AllCustomer()
         {
             List<CustomerReportModel> listResult = new List<CustomerReportModel>();
             listResult =  customerReportService.Report_AllCustomer();
             return View(listResult);
         }
-
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Report_OverDueCustomer()
         {
             List<CustomerReportModel> listResult = new List<CustomerReportModel>();
             listResult = customerReportService.Report_OverDueCustomer();
             return View(listResult);
         }
-
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Report_LateFeeCustomer()
         {
             List<CustomerReportModel> listResult = new List<CustomerReportModel>();
