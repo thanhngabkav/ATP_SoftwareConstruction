@@ -4,7 +4,7 @@
     ViewBag.Title = "CancelLateCharge";
 }
 
-<h2>CancelLateCharge</h2>
+<h2>Hủy Trễ Hạn</h2>
 
 <table class="table">
     <tr>
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.CustomerName)
         </td>
         <td>
-            @Html.ActionLink("cancel", "CancelASpecificLateCharge", new { transactionID = item.TransactionHistoryID })
+            @Html.ActionLink("Hủy", "CancelASpecificLateCharge", new { transactionID = item.TransactionHistoryID })
         </td>
     </tr>
 }

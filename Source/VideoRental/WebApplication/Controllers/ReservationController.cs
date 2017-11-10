@@ -19,9 +19,10 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Authorize(Roles = UserRole.Clerk)]
-        public ActionResult Index(string customerNameOrID)
+        public ActionResult Index(string customerNameOrID, string status)
         {
             TagDebug.D(GetType(), " in Action " + "ReservationManagement");
+            ViewBag.status = status;
             return View(iReservation.GetReservation(customerNameOrID));
         }
 
@@ -99,9 +100,11 @@ namespace WebApplication.Controllers
         public ActionResult ConfirmReservation(int titleID, int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "ConfirmReservation");
+            string status = "";
             if (titleID != 0 && customerID != 0)
             {
                 iReservation.CancelReservation(titleID, customerID);
+                status = "Hủy Đặt Thành Công";
             }
             else
             {
@@ -110,9 +113,10 @@ namespace WebApplication.Controllers
                 if (customerID != 0)
                     TagDebug.D(GetType(), " customerID Null ");
                 // Handle Exeption
+                status = "Hủy Đặt Không Thành";
             }
 
-            return RedirectToAction("ReservationManagement");
+            return RedirectToAction("Index", new { status = status});
         }
     }
 }

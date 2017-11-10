@@ -3,7 +3,8 @@
     ViewBag.Title = "RetalAndReturnManagement";
 }
 
-<h2>RetalAndReturnManagement</h2>
-
+<h2>Quản Lí Đặt Thuê Đĩa</h2>
+<h2 class="text-danger">@ViewBag.status</h2>
 @Html.ActionLink("Thuê Đĩa", "ShowAllDisk", null, new { @class = "btn btn-info" })
 @Html.ActionLink("Trả Đĩa", "ReturnDisk", null, new { @class = "btn btn-info" })
+@Html.ActionLink("Xem Trễ Hạn", "ShowLateCharge", null, new { @class = "btn btn-info" })

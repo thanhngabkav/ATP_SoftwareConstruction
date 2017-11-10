@@ -4,11 +4,11 @@
     ViewBag.Title = "ReturnDisk";
 }
 
-<h2>ReturnDisk</h2>
+<h2>Trả Đĩa</h2>
 
 <form class="form-group" method="get">
     <div class="form-inline">
-        <label for="usr">DiskID:</label>
+        <label for="usr">Tìm Theo Mã Đĩa</label>
         <input type="text" class="form-control" name="diskID">
         <input type="submit" class="btn btn-success" value="Search" />
     </div>
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Return Disk", "ReturnASpecificDisk", new { id=item.DiskID })
+            @Html.ActionLink("Trả Đĩa", "ReturnASpecificDisk", new { id=item.DiskID })
         </td>
     </tr>
 }

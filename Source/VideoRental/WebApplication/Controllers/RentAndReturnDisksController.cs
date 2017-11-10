@@ -33,9 +33,10 @@ namespace WebApplication.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = UserRole.Clerk)]
-        public ActionResult Index()
+        public ActionResult Index(string status)
         {
             TagDebug.D(GetType(), " in Action " + "RetalAndReturnManagement");
+            ViewBag.status = status;
             return View();
         }
 
@@ -124,7 +125,7 @@ namespace WebApplication.Controllers
             TagDebug.D(GetType(), " in Action " + "WriteRentingDisk");
             int[] diskID = (int[])Session[RENTING_SESSION];
             int customerID = (int)Session[CUSTOMER_SESSION];
-            int userID = (int)Session[UserSession.SessionName]; // test set default = 1
+            int userID = Int32.Parse((string)Session[UserSession.SessionName]); // test set default = 1
             if (diskID.Length > 0 && customerID != 0)
             {
                 if (iRentAndReturnDiskService.CheckDiskCanBeRented(diskID, customerID)) 
@@ -164,16 +165,26 @@ namespace WebApplication.Controllers
         public ActionResult ReturnASpecificDisk(int id)
         {
             TagDebug.D(GetType(), " in Action " + "ReturnDisk GET");
+            string status = "";
             if (id > 0)
             {
                 iRentAndReturnDiskService.ReturnDisks(id);
+                status = "Trả Đĩa Thành Công";
             }
             else
             {
                 TagDebug.D(GetType(), " diskID is Null");
+                status = "Trả Đĩa Thành Công";
                 // Handle Exeption
             }
-            return RedirectToAction("ShowAllDisk");
+            return RedirectToAction("Index", new { status = status });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
+        public ActionResult ShowLateCharge()
+        {
+            return RedirectToAction("Index", "LateCharge", "");
         }
     }
 }
