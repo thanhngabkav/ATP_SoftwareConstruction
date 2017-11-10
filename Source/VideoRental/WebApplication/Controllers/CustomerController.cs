@@ -114,7 +114,7 @@ namespace WebApplication.Controllers
             Customer customer = db.GetCustomerById(id);
             db.DeleteCustomer(customer);
             ViewBag.ok = "Xóa thành công";
-            return RedirectToAction("Success");
+            return View("Success");
         }
 
        
