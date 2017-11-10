@@ -17,14 +17,12 @@ namespace WebApplication.Controllers
         private IDiskManagementService diskManagement;
         private IDiskService db;
         private IDiskTitleService dbDiskTitle;
-        private DStatus diskStatus;
 
-        public DiskController(IDiskManagementService diskManagement, IDiskService diskService, IDiskTitleService dbDiskTitle, DStatus diskStatus)
+        public DiskController(IDiskManagementService diskManagement, IDiskService diskService, IDiskTitleService dbDiskTitle)
         {
             this.diskManagement = diskManagement;
             this.db = diskService;
             this.dbDiskTitle = dbDiskTitle;
-            this.diskStatus = diskStatus;
         }
 
         // GET: Disk
