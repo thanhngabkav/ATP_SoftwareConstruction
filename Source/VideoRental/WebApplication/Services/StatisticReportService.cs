@@ -20,6 +20,11 @@ namespace WebApplication.Services
             this.titleDAO = new TitleDAO();
             this.reservationDAO = new ReservationDAO();
         }
+        public StatisticReportService(TitleDAO titleDAO, DiskDAO diskDAO)
+        {
+            this.titleDAO = titleDAO;
+            this.diskDAO = diskDAO;
+        }
 
         public List<TitleReportModel> Report_Title()
         {

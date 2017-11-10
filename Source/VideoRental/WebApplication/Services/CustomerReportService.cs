@@ -29,6 +29,15 @@ namespace WebApplication.Services
             this.titleDAO = new TitleDAO();
             this.rentalRateDAO = new RentalRateDAO();
         }
+        public CustomerReportService(CustomerDAO customerDAO) 
+        {
+            this.customerDAO  = customerDAO;
+            this.tranSactionDAO = new TranSactionDAO();
+            this.transactionDetailsDAO = new TransactionDetailsDAO();
+            this.diskDAO = new DiskDAO();
+            this.titleDAO = new TitleDAO();
+            this.rentalRateDAO = new RentalRateDAO();
+        }
 
         public List<CustomerReportModel> Report_AllCustomer()
         {
