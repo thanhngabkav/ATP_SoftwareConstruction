@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using WebApplication.Services;
 using DataAccess.Entities;
 using WebApplication.Models;
-
+using DataAccess.Utilities;
 namespace WebApplication.Controllers
 {
     public class DiskController : Controller
@@ -17,17 +17,17 @@ namespace WebApplication.Controllers
         private IDiskManagementService diskManagement;
         private IDiskService db;
         private IDiskTitleService dbDiskTitle;
-        private DStatus diskStatus;
 
-        public DiskController(IDiskManagementService diskManagement, IDiskService diskService, IDiskTitleService dbDiskTitle, DStatus diskStatus)
+
+        public DiskController(IDiskManagementService diskManagement, IDiskService diskService, IDiskTitleService dbDiskTitle)
         {
             this.diskManagement = diskManagement;
             this.db = diskService;
             this.dbDiskTitle = dbDiskTitle;
-            this.diskStatus = diskStatus;
         }
 
         // GET: Disk
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Index()
         {
             var disks = db.GetAllDisks();
@@ -46,6 +46,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Disk/Create
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Create()
         {
             ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
@@ -55,6 +56,7 @@ namespace WebApplication.Controllers
         // POST: Disk/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
         {
             bool flag = true;
@@ -80,6 +82,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Disk/Edit
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Edit(int id)
         {
             Disk disk = db.GetDiskById(id);
@@ -111,6 +114,7 @@ namespace WebApplication.Controllers
         // POST: Disk/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
         {
             bool flag = true;
@@ -130,6 +134,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Disk/Delete
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult Delete(int id)
         {
             Disk disk = db.GetDiskById(id);
@@ -143,6 +148,7 @@ namespace WebApplication.Controllers
         // POST: Disk/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRole.Manager)]
         public ActionResult DeleteConfirmed(int id)
         {
             Disk disk = db.GetDiskById(id);
