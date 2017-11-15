@@ -114,7 +114,7 @@ namespace WebApplication.Services
                 List<TransactionHistoryDetail> transactionHistoryDetails = transactionDetailsDao.GetListTransactionDetailsByTransactionId(hi.TransactionHistoryID);
                 foreach (TransactionHistoryDetail de in transactionHistoryDetails)
                 {
-                    if (de.Status == null) break;
+                    if (de.Status == null) continue;
                     if (de.Status == TransactionDetailStatus.DUE)
                         number++;
                 }

@@ -14,6 +14,9 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     
     <style type="text/css">
+        .body-content{
+            padding-top:15px;
+        }
         .sub-navbar {
             margin-top: 5px;
             margin-left: 50px;
@@ -65,9 +68,13 @@
                                 @*@Html.ActionLink(" VIDEO RENTAL STORE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
                         </div>
                         <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav sub-navbar"><li><a href="/RentAndReturnDisks" style="padding:0px">Thuê Mượn Đĩa</a> </li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="/RentAndReturnDisks" style="padding:0px">Trả Mượn Đĩa</a> </li></ul>
                             <ul class="nav navbar-nav sub-navbar"><li><a href="/Reservation" style="padding:0px">Đặt Thuê Đĩa</a></li></ul>
                             <ul class="nav navbar-nav sub-navbar"><li><a href="/LateCharge" style="padding:0px">Trễ Hạn</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="/Customer" style="padding:0px">Khách hàng</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="/Disk" style="padding:0px">Đĩa</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="/DiskTitle" style="padding:0px">Tiêu đề</a></li></ul>
+
                             <ul class="nav navbar-nav navbar-right user-info"><li> <span>Welcome @userSession.UserName</span></li></ul>
                             <ul class="nav navbar-nav navbar-right" style="margin-right:-250px;"><li><a href="/Account/Logout">Logout</a></li></ul>
                         </div>
@@ -95,6 +102,7 @@
                             <ul class="nav navbar-nav sub-navbar"><li><a href="/RentAndReturnDisks" style="padding:0px; color:white">Thuê Mượn Đĩa</a> </li></ul>
                             <ul class="nav navbar-nav sub-navbar"><li><a href="/Reservation" style="padding:0px; color:white">Đặt Thuê Đĩa</a></li></ul>
                             <ul class="nav navbar-nav sub-navbar"><li><a href="/LateCharge" style="padding:0px; color:white">Trễ Hạn</a></li></ul>
+                            <ul class="nav navbar-nav sub-navbar"><li><a href="/Customer" style="padding:0px; color:white">Khách hàng</a></li></ul>
                             <ul class="nav navbar-nav navbar-right user-info"><li> <span>Welcome @userSession.UserName</span></li></ul>
                             <ul class="nav navbar-nav navbar-right" style="margin-right:-250px"><li><a href="/Account/Logout">Logout</a></li></ul>
                         </div>
@@ -143,32 +151,30 @@
                             <!-- Main Menu -->
                             <div class="side-menu-container" style="padding-top:50px">
                                 <ul class="nav navbar-nav">
-                                    <li class="active"><a href="#"><span class="glyphicon glyphicon-send"></span> Link</a></li>
-                                    <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
-                                    <li class="active"><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link</a></li>
-                                    @*<!-- Dropdown-->
+                                    <li class="active"><a href="/DiskTitle"><span class="glyphicon glyphicon-send"></span> Quản lý tiêu đề</a></li>
+                                    <li class="active"><a href="/Disk"><span class="glyphicon glyphicon-plane"></span>Quản lý đĩa</a></li>
+                                    <li class="active"><a href="/RentalRates"><span class="glyphicon glyphicon-cloud"></span>Quản lý giá thuê</a></li>
+                                    <!-- Dropdown-->
                                     <li class="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#dropdown-lvl1">
-                                            <span class="glyphicon glyphicon-user"></span> Sub Level <span class="caret"></span>
+                                            <span class="glyphicon glyphicon-user"></span>Thống kê<span class="caret"></span>
                                         </a>
                                         <!-- Dropdown level 1 -->
                                         <div id="dropdown-lvl1" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-                                                    <li><a href="#">Link</a></li>
-                                                    <li><a href="#">Link</a></li>
-                                                    <li><a href="#">Link</a></li>
+                                                    <li><a href="/StatisticReport/Report_Title">Báo cáo tiêu đề</a></li>
                                                     <!-- Dropdown level 2 -->
                                                     <li class="panel panel-default" id="dropdown">
                                                         <a data-toggle="collapse" href="#dropdown-lvl2">
-                                                            <span class="glyphicon glyphicon-off"></span> Sub Level <span class="caret"></span>
+                                                            <span ></span>Báo cáo khách hàng<span class="caret"></span>
                                                         </a>
                                                         <div id="dropdown-lvl2" class="panel-collapse collapse">
                                                             <div class="panel-body">
                                                                 <ul class="nav navbar-nav">
-                                                                    <li><a href="#">Link</a></li>
-                                                                    <li><a href="#">Link</a></li>
-                                                                    <li><a href="#">Link</a></li>
+                                                                    <li><a href="/CustomerReport/Report_AllCustomer">Tất cả khách hàng</a></li>
+                                                                    <li><a href="/CustomerReport/Report_OverDueCustomer">Có đĩa trễ hạn</a></li>
+                                                                    <li><a href="/CustomerReport/Report_LateFeeCustomer">Có nợ trễ hạn</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -176,8 +182,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </li>*@
-                                    <li class="active"><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
+                                    </li>
+                                   <!--<li class="active"><a href="/StatisticReport"><span class="glyphicon glyphicon-signal"></span>Thống Kê</a></li>--> 
                                 </ul>
                             </div><!-- /.navbar-collapse -->
                         </nav>

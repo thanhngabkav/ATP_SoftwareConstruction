@@ -102,7 +102,7 @@ namespace WebApplication.Services
                 IList<Reservation> reservations = reservationDAO.GetReservation(aCustomer.CustomerID);
                 foreach (Reservation aReservation in reservations)
                 {
-                    reservationViews.Add(new ReservationView(aReservation.TitleID, aReservation.DiskTitle.Title, aCustomer.CustomerID, aCustomer.FirstName + " " + aCustomer.LastName, aReservation.ReservationDate));
+                    reservationViews.Add(new ReservationView(aReservation.TitleID, aReservation.DiskTitle.Title, aCustomer.CustomerID, aCustomer.FirstName + " " + aCustomer.LastName, aReservation.ReservationDate, aReservation.Status));
                 }
             }
             return reservationViews;

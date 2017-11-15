@@ -29,7 +29,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: DiskTitle/Details
-        [Authorize(Roles = UserRole.Manager)]
+        [Authorize(Roles = UserRole.Clerk)]
         public ActionResult Details(int id)
         {
             DiskTitle diskTitle = db.GetTitleById(id);

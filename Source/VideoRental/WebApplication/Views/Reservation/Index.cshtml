@@ -35,6 +35,9 @@
         <th>
             @Html.DisplayNameFor(model => model.dateReservate)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
         <th></th>
     </tr>
 
@@ -54,6 +57,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.dateReservate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
             @Html.ActionLink("Hủy Đặt Trước", "ConfirmReservation", new { titleID = item.titleID, customerID = item.customerID }, new { @class="btn btn-warning" })

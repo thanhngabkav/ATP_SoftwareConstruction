@@ -27,7 +27,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @{ 
+                string content = item.Title;
+            }
+            @Html.ActionLink(content, "Details", new { id = item.TitleID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Tags)
@@ -40,8 +43,12 @@
         </td>
         <td>
         <td>
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.TitleID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.TitleID })
+            @Html.ActionLink("Xóa", "Delete", new { id=item.TitleID }) |
+            @{
+                string link = "/TitleManagement/GetTitleInfomation/" + item.TitleID;
+            }
+
+            <a href=@link>Chi tiết trạng thái</a>
         </td>
     </tr>
 }

@@ -125,7 +125,8 @@ namespace WebApplication.Controllers
             TagDebug.D(GetType(), " in Action " + "WriteRentingDisk");
             int[] diskID = (int[])Session[RENTING_SESSION];
             int customerID = (int)Session[CUSTOMER_SESSION];
-            int userID = Int32.Parse((string)Session[UserSession.SessionName]); // test set default = 1
+            UserSession userSession = (UserSession)Session[UserSession.SessionName];
+            int userID = Int32.Parse(userSession.UserID); // test set default = 1
             if (diskID.Length > 0 && customerID != 0)
             {
                 if (iRentAndReturnDiskService.CheckDiskCanBeRented(diskID, customerID)) 

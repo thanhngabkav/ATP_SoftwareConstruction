@@ -47,7 +47,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
-
             if (ModelState.IsValid && loginModel.Username != null && accountService.Login(loginModel))
             {
                 UserService userService = new UserService();

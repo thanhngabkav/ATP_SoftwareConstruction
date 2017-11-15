@@ -33,7 +33,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.DiskTitle.Title)
+            @{ 
+                string content = item.DiskTitle.Title;
+            }
+            @Html.ActionLink(content, "Details", new { id = item.DiskID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
@@ -52,8 +55,11 @@
         </td>
         <td>
             @Html.ActionLink("Cập nhật", "Edit", new { id=item.DiskID }) |
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.DiskID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.DiskID })
+            @Html.ActionLink("Xóa", "Delete", new { id=item.DiskID }) |
+            @{ 
+                string linkDetail = "/DiskManagement/GetDiskStatus/" + item.DiskID;
+            }
+            <a href=@linkDetail>Chi tiết trạng thái</a>
         </td>
     </tr>
 }
