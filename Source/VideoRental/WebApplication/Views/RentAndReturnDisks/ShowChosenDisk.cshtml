@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebApplication.Models.DiskView>
+
+@{
+    ViewBag.Title = "ShowRentingDisk";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DiskID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiskTitleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prices)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiskID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiskTitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prices)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+    </tr>
+}
+
+</table>

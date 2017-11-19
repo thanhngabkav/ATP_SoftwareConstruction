@@ -26,5 +26,6 @@ namespace WebApplication.Models
         public string image { set; get; }
         [Display(Name = "Quantity")]
         public int quantity { set; get; }
+        public bool IsChosen = false;
     }
 }

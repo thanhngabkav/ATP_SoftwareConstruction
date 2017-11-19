@@ -22,7 +22,7 @@
 <form class="form-group" method="get">
     <div class="form-inline">
         <label for="usr">DiskID:</label>
-        <input type="text" class="form-control" name="titleName">
+        <input type="text" class="form-control" name="titleName" value=@ViewBag.titleName>
         <input type="submit" class="btn btn-success" value="Search" />
     </div>
 </form>
@@ -45,45 +45,43 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.titleID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.titleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tag)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.quantity)
-        </td>
-        <td>
-            <div class="btn btn-default disk" id=@item.titleID>Đặt Trước</div>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.titleID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.titleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @*<div class="btn btn-default disk" id=@item.titleID>Đặt Trước</div>*@
+                @if (item.IsChosen)
+                {
+                    @Html.ActionLink("Hủy Đặt Trước", "ShowTitles", "Reservation", new { diskName = ViewBag.diskName, titleIDs = item.titleID }, new { @class = "btn btn-warning disk" });
+                }
+                else
+                {
+                    @Html.ActionLink("Đặt Trước", "ShowTitles", "Reservation", new { diskName = ViewBag.diskName, titleIDs = item.titleID }, new { @class = "btn btn-default disk" });
+                }
+            </td>
+        </tr>
+    }
 </table>
 
 <form method="POST" action="/Reservation/SaveTitle" class="form-group" id="form-titleID">
     <input class="btn btn-success form-control" type="submit" value="Đặt" />
 </form>
-<script>
-    var data = "";
-    $(".disk").click(function () {
-        data = $(this).attr('id');
-        if ($(this).text() == 'Đặt Trước') {
-            $(this).html('Hủy');
-            $(this).toggleClass('btn-default btn-warning');
-            $("#form-titleID").append("<input type='text' name='titleID'  value='" + data + "'/>");
-        } else {
-            $(this).toggleClass('btn-warning btn-default');
-            $(this).html('Đặt Trước');
-            $("input[value='" + data + "']").remove();
-        }
-    });
-</script>
+<div class="form-group">
+    <h3>Những Tiêu Đề Đã Chọn</h3>
+    @Html.Action("ShowChosenTitle")
+</div>
 <style>
     .checkout-header {
         left: 0;

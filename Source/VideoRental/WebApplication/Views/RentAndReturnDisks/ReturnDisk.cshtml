@@ -29,27 +29,52 @@
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
+        <th>Ngày trả Đĩa</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiskID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiskTitleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prices)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Trả Đĩa", "ReturnASpecificDisk", new { id=item.DiskID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiskID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiskTitleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prices)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @*<input type="date" onchange="changeURI()" class="datepicker form-control" placeholder="dd/mm/yyyy" name="returnDate" id="returnDate">*@
+                <input type="date" onchange="changeURI()" class="datepicker form-control" placeholder="dd/mm/yyyy" name="returnDate" id="returnDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+            </td>
+
+            <td>
+                @*  @Html.ActionLink("Trả Đĩa", "ReturnASpecificDisk", new { id = item.DiskID})*@
+
+                <a href=@Url.Action("ReturnASpecificDisk", "RentAndReturnDisks", new { id = item.DiskID , returnDate ="xxx"}) id="lnk">Trả Đĩa</a>
+            </td>
+        </tr>
+    }
 
 </table>
+<script>
+    function getTextBoxContent() {
+        return document.getElementById('returnDate').value;
+    }
+    //$(document).ready(function () {
+    //    $('.datepicker').datepicker({
+    //        format: 'dd/mm/yyyy'
+    //    });
+    //});
+   function changeURI(){
+        var fakedUri = $("#lnk").prop("href");
+        var uri = fakedUri.replace("xxx", $("#returnDate").val());
+        $('#lnk').attr('href', uri);
+    };
+</script>

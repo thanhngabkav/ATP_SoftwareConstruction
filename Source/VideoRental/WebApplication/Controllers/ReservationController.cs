@@ -1,16 +1,20 @@
-﻿using DataAccess.Utilities;
+﻿using DataAccess.Entities;
+using DataAccess.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using WebApplication.Models;
 using WebApplication.Services;
 namespace WebApplication.Controllers
 {
     public class ReservationController : Controller
     {
         private const string CUSTOMER_ID_SESSION = "customer";
-        private const string LIST_TITLE_SESSION = "listtitle";
+        private const string TITLE_CHOSEN_SESSION = "titlerentedsession";
 
         IReservationService iReservation;
-      
+
 
         public ReservationController(IReservationService iReservation)
         {
@@ -34,18 +38,44 @@ namespace WebApplication.Controllers
          * */
         [HttpGet]
         [Authorize(Roles = UserRole.Clerk)]
-        public ActionResult ShowTitles(string titleName)
+        public ActionResult ShowTitles(string titleName, string titleIDs)
         {
             TagDebug.D(GetType(), " in Action " + "ShowTitles");
-            return View(iReservation.GetTitles(titleName));
+            ViewBag.titleName = titleName;
+            IList<TitleView> listTitleName = iReservation.GetTitles(titleName);
+            if (titleIDs !=null)
+            {
+                int titleID = Int32.Parse(titleIDs);
+                if (Session[TITLE_CHOSEN_SESSION] == null)
+                {
+                    Session[TITLE_CHOSEN_SESSION] = new List<Int32>
+                {
+                    titleID
+                };
+                }
+                else
+                {
+                    List<Int32> chosenTitle = (List<Int32>)Session[TITLE_CHOSEN_SESSION];
+                    if (chosenTitle.Any(x => x == titleID))
+                        chosenTitle.Remove(chosenTitle.SingleOrDefault(x => x == titleID));
+                    else
+                        chosenTitle.Add(titleID);
+                    Session[TITLE_CHOSEN_SESSION] = chosenTitle;
+                }
+            }
+            List<Int32> rentedList = (List<Int32>)Session[TITLE_CHOSEN_SESSION];
+            if (rentedList != null)
+                foreach (int data in rentedList)
+                    if (listTitleName.Any(x => x.titleID == data))
+                        listTitleName.Where(x => x.titleID == data).First().IsChosen = !listTitleName.Where(x => x.titleID == data).First().IsChosen;
+            return View(listTitleName);
         }
 
         [HttpPost]
         [Authorize(Roles = UserRole.Clerk)]
-        public ActionResult SaveTitle(int[] titleID)
+        public ActionResult SaveTitle()
         {
             TagDebug.D(GetType(), " in Action " + "SaveTitle");
-            Session[LIST_TITLE_SESSION] = titleID;
             return RedirectToAction("ShowCustomers");
         }
 
@@ -64,20 +94,21 @@ namespace WebApplication.Controllers
         public ActionResult AddReservation(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "AddReservation");
-            int[] titleID = (int[])Session[LIST_TITLE_SESSION];
+            int[] titleID = ((List<Int32>)Session[TITLE_CHOSEN_SESSION]).ToArray();
             string reservationState = "";
             if (titleID.Length > 0 && customerID > 0)
             {
                 if (IsReservationExist(titleID, customerID))
                 {
                     reservationState = "Khách hàng đã đặt đĩa đó rồi nhé!";
-                  
-                } else
+                }
+                else
                 {
                     iReservation.AddReservation(titleID, customerID);
                     reservationState = "Đặt Thành Công";
+                    Session[TITLE_CHOSEN_SESSION] = null;
                 }
-                
+
             }
             else
             {
@@ -87,7 +118,7 @@ namespace WebApplication.Controllers
                     TagDebug.D(GetType(), " customerID Null " + "");
                 // Handle NULL POINTER
             }
-            return RedirectToAction("ShowTitles", new { reservationState = reservationState});
+            return RedirectToAction("ShowTitles", new { reservationState = reservationState });
         }
 
         private bool IsReservationExist(int[] titleID, int customerID)
@@ -116,7 +147,28 @@ namespace WebApplication.Controllers
                 status = "Hủy Đặt Không Thành";
             }
 
-            return RedirectToAction("Index", new { status = status});
+            return RedirectToAction("Index", new { status = status });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = UserRole.Clerk)]
+        public ActionResult ShowChosenTitle()
+        {
+            IList<Int32> titleChosen = (IList<Int32>)Session[TITLE_CHOSEN_SESSION];
+            if (titleChosen == null) return new EmptyResult();
+            if (titleChosen.Count > 0)
+            {
+
+                IList<TitleView> titleViews = new List<TitleView>();
+               foreach(int title in titleChosen)
+                {
+                    DiskTitle Atitle = iReservation.GetATitle(title);
+                    titleViews.Add(new TitleView(Atitle.TitleID, Atitle.Title,Atitle.Tags, Atitle.ImageLink, Atitle.Quantity));
+                }
+                return PartialView(titleViews);
+            }
+            return null;
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace WebApplication.Models
             this.Prices = prices;
             this.ImageUrl = imageUrl;
             this.Status = status;
+            IsChosen = false;
         }
 
         [Display(Name ="Disk ID")]
@@ -28,5 +29,6 @@ namespace WebApplication.Models
         public string ImageUrl { set; get; }
 
         public string Status { set; get; }
+        public bool IsChosen { set; get; }
     }
 }

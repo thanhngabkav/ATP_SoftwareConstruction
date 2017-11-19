@@ -18,6 +18,12 @@ namespace WebApplication.Services
 
         /**
          * @param no param
+         * @return : Get List of Disk contain diskName ~ %like%
+         * */
+        Disk GetADisk(int diskID);
+
+        /**
+         * @param no param
          * @return : Get List of Disk contain customer ~ %like%
          * */
         IList<Customer> GetCustomers(string customer);
@@ -44,7 +50,7 @@ namespace WebApplication.Services
         /**
          * @return : Change status of  list disk to free
          * */
-        void ReturnDisks(int diskID);
+        void ReturnDisks(int diskID, string returnDay);
 
         /**
          * Find DiskTitle by diskTitleID
@@ -56,5 +62,10 @@ namespace WebApplication.Services
          * Find DiskTitle by diskTitleID
          * */
         bool CheckDiskCanBeRented(int[] diskID, int customerID);
+
+        /*
+        * True if customer Has LateCharge
+        */
+        bool CheckCustomerLateCharge(int customerId);
     }
 }

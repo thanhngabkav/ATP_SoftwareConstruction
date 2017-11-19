@@ -6,12 +6,14 @@ using DataAccess.Entities;
 using DataAccess.DAO;
 using WebApplication.Models;
 using DataAccess.Utilities;
+using System.Globalization;
 
 namespace WebApplication.Services
 {
-
+   
     public class RentAndReturnDiskService : IRentAndReturnDiskService
     {
+        private bool hasLateCharge = false;
         CustomerDAO customerDao;
         DiskDAO diskDao;
         TitleDAO titleDAO;
@@ -60,10 +62,19 @@ namespace WebApplication.Services
             return diskDao.GetRentedDisks(diskID);
         }
 
-        public void ReturnDisks(int diskID)
+        public void ReturnDisks(int diskID, string returnDay)
         {
             TagDebug.D(GetType(), "in ReturnDisks");
-            DateTime today = DateTime.Today;
+            DateTime today;
+            try
+            {
+                today = DateTime.Parse(returnDay);
+            }
+            catch (Exception e)
+            {
+                today = DateTime.Today;
+            }
+
             ReturnASpecificDisk(today, diskID);
         }
 
@@ -72,6 +83,7 @@ namespace WebApplication.Services
             TagDebug.D(GetType(), "in ReturnASpecificDisk");
             Disk disk = diskDao.GetDiskById(aDisk);
             UpdateDiskStatus(disk, today);
+            UpdateDateReturnTransaction(disk, today);
             UpdateLateCharge(disk, today);
 
         }
@@ -87,6 +99,13 @@ namespace WebApplication.Services
             else
                 disk.Status = DiskStatus.RENTABLE;
             diskDao.UpdateDisk(disk);
+        }
+
+        private void UpdateDateReturnTransaction(Disk disk, DateTime today)
+        {
+            TransactionHistoryDetail transactionDetail = transactionDetailsDAO.getTransactionDetailFromLastRentedDate(disk.DiskID);
+            transactionDetail.DateReturn = today;
+            transactionDetailsDAO.UpdateTransactionDetail(transactionDetail);
         }
 
         private bool HasReservationForTitle(Disk disk)
@@ -199,7 +218,7 @@ namespace WebApplication.Services
         private void AddOneTransactionDetail(int aDiskID, int transactionID)
         {
             TransactionHistoryDetail transactionHistoryDetail = new TransactionHistoryDetail();
-            transactionHistoryDetail.DateReturn = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
+            transactionHistoryDetail.DateReturn = null;
             transactionHistoryDetail.DiskID = aDiskID;
             transactionHistoryDetail.TransactionID = transactionID;
             transactionDetailsDAO.AddTransactionDetail(transactionHistoryDetail);
@@ -232,9 +251,15 @@ namespace WebApplication.Services
             return diskDao.GetDiskById(disk).Status == DiskStatus.BOOKED;
         }
 
+        public bool CheckCustomerLateCharge(int customerId)
+        {
+            return tranSactionDAO.CheckCustomerLateCharge(customerId);
+        }
 
-
-
+        public Disk GetADisk(int diskID)
+        {
+            return diskDao.GetDiskById(diskID);
+        }
 
     }
 }

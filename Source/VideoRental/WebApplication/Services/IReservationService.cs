@@ -26,7 +26,10 @@ namespace WebApplication.Services
          * @return : Get All Title
          * */
         IList<TitleView> GetTitles(string titleName);
-
+        /**
+        * @return : Get Title by ID
+        * */
+        DiskTitle GetATitle(int titleID);
 
         /**
         * Add a reservation

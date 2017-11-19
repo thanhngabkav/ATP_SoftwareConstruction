@@ -20,7 +20,7 @@ namespace WebApplication.Controllers
             this.iLateChargesServices = iLateChargesServices;
         }
 
-        
+
         private const string CUSTOMER_SESSION = "currentCustomerID";
 
         // Show customer has late charge
@@ -67,7 +67,7 @@ namespace WebApplication.Controllers
             TagDebug.D(GetType(), " in Action " + "RecordASpecificLateCharge");
             int customerID = (int)Session[CUSTOMER_SESSION];
             iLateChargesServices.RecordLateCharge(customerID, numberRequest);
-            return RedirectToAction("RecordLateCharge", new { customerID =customerID, status ="Ghi Nhận trễ hạn thành công"});
+            return RedirectToAction("RecordLateCharge", new { customerID = customerID, status = "Ghi Nhận trễ hạn thành công" });
         }
 
         private bool IsEnoughForRecordlateCharge(int numberLatecharge, NumberRequestView numberRequest)
@@ -94,7 +94,7 @@ namespace WebApplication.Controllers
         {
             TagDebug.D(GetType(), " in Action " + "CancelASpecificLateCharge ");
             iLateChargesServices.CancelLateCharge(transactionID);
-            return RedirectToAction("Index", new { status = "Hủy Trễ Hạn Thành Công"});
+            return RedirectToAction("Index", new { status = "Hủy Trễ Hạn Thành Công" });
         }
 
         [HttpPost]
@@ -102,7 +102,7 @@ namespace WebApplication.Controllers
         public ActionResult LateChargePayment(NumberRequestView numberRequest)
         {
             int customerID = (int)Session[CUSTOMER_SESSION];
-            int numberLatecharge = iLateChargesServices.GetNumberOfLateCharge(customerID); 
+            int numberLatecharge = iLateChargesServices.GetNumberOfLateCharge(customerID);
             if (IsEnoughForRecordlateCharge(numberLatecharge, numberRequest))
             {
                 ViewBag.LateChargePayment = iLateChargesServices.GetTotalLateChargePrice(customerID, numberRequest.number);

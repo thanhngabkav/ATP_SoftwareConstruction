@@ -118,5 +118,10 @@ namespace WebApplication.Services
                 titleViews.Add(new TitleView(title.TitleID, title.Title, title.Tags, title.ImageLink, title.Quantity));
             return titleViews;
         }
+
+        public DiskTitle GetATitle(int titleID)
+        {
+            return titleDAO.GetTitleById(titleID);
+        }
     }
 }

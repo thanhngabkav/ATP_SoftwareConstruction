@@ -22,7 +22,7 @@
 <form class="form-group" method="get">
     <div class="form-inline">
         <label for="usr">Tìm Theo Mã Đĩa </label>
-        <input type="text" class="form-control" name="diskName">
+        <input type="text" class="form-control" name="diskName" value=@ViewBag.diskName>
         <input type="submit" class="btn btn-success" value="Search" />
     </div>
 </form>
@@ -62,10 +62,16 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <div class="btn btn-default disk" id=@item.DiskID>Thuê</div>
-                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                @*<div class="btn btn-default disk" id=@item.DiskID>Thuê</div>*@
+                @if (item.IsChosen)
+                {
+                    @Html.ActionLink("Hủy Thuê", "ShowAllDisk", "RentAndReturnDisks", new { diskName = ViewBag.diskName, ma = item.DiskID }, new { @class = "btn btn-warning disk" });
+                }
+                else
+                {
+                    @Html.ActionLink("Thuê", "ShowAllDisk", "RentAndReturnDisks", new { diskName = ViewBag.diskName, ma = item.DiskID }, new { @class = "btn btn-default disk" });
+                }
+
             </td>
         </tr>
     }
@@ -74,20 +80,12 @@
 <form method="POST" action="/RentAndReturnDisks/SaveListDisk" class="form-group" id="form-diskid">
     <input class="btn btn-success form-control" type="submit" value="Thuê" />
 </form>
+<div class="form-group">
+    <h3>Những Đĩa Đã Chọn</h3>
+    @Html.Action("ShowChosenDisk")
+</div>
 <script>
-    var data = "";
-    $(".disk").click(function () {
-        data = $(this).attr('id');
-        if ($(this).text() == 'Thuê') {
-            $(this).html('Hủy');
-            $(this).toggleClass('btn-default btn-warning');
-            $("#form-diskid").append("<input type='text' name='diskID'  value='" + data + "'/>");
-        } else {
-            $(this).toggleClass('btn-warning btn-default');
-            $(this).html('Thuê');
-            $("input[value='" + data + "']").remove();
-        }
-    });
+
 </script>
 <style>
     .checkout-header {

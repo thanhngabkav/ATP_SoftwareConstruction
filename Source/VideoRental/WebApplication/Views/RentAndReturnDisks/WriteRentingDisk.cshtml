@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "WriteRentingDisk";
+}
+
+<h2 class="text text-danger">@ViewBag.status</h2>
+<h3>Bạn có trễ hạn, Có muốn thanh toán không</h3>
+<table>
+    <tr>
+        <td style="padding:10px">@Html.ActionLink("Quay Về", "Index")</td>
+        <td style="padding:20px">@Html.ActionLink("Thanh Toán Trễ Hạn", "RecordLateCharge", "LateCharge", new { customerID = ViewBag.customerID }, new { @class = "btn btn-success" })</td>
+    </tr>
+</table>
