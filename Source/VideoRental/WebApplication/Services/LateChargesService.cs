@@ -81,7 +81,7 @@ namespace WebApplication.Services
                     TransactionHistoryID = a.TransactionHistoryID
                 });
             }
-                
+
             return transactionHistoryViews;
         }
 
@@ -152,12 +152,14 @@ namespace WebApplication.Services
                         if (numb-- > 0)
                         {
                             float lateChargePrice = new RentalRateDAO().GetNearestRentalRate(
-                                new DiskDAO().GetDiskById(de.DiskID).TitleID,hi.CreatedDate).LateCharge;
+                                new DiskDAO().GetDiskById(de.DiskID).TitleID, hi.CreatedDate).LateCharge;
                             totalLateCharge += lateChargePrice;
                         }
                 }
             }
             return totalLateCharge;
         }
+
+        
     }
 }

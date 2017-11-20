@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using DataAccess.DAO;
+using DataAccess.Entities;
 using DataAccess.Utilities;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,90 @@ namespace WebApplication.Controllers
         public ActionResult CancelLateCharge(int customerID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelLateCharge ");
-            return View(iLateChargesServices.GetAllLateChargeOfCustomer(customerID));
+            return View(Report_OverDueCustomer(customerID));
+        }
+        private List<CustomerReportModel> Report_OverDueCustomer(int customerID)
+        {
+            TransactionDetailsDAO transactionDetailsDAO = new TransactionDetailsDAO();
+            CustomerDAO customerDAO = new CustomerDAO();
+            DiskDAO diskDAO = new DiskDAO();
+            TitleDAO titleDAO = new TitleDAO();
+            RentalRateDAO rentalRateDAO = new RentalRateDAO();
+
+            Customer customer = customerDAO.GetCustomerById(customerID);
+            List<CustomerReportModel> listResult = new List<CustomerReportModel>();
+
+            CustomerReportModel customerReportModel = new CustomerReportModel();
+            //Set information for each customer rp model
+            int cusID = customer.CustomerID;
+            string cusName = customer.LastName + " " + customer.FirstName;
+            string address = customer.Address;
+            string phone = customer.PhoneNumber;
+            int totalDisk = 0;
+            float totalFines = 0;
+            //list disk over due
+            List<DiskOverDueModel> diskOverDues = new List<DiskOverDueModel>();
+            //list late charge 
+            List<LateCharge> lateCharges = new List<LateCharge>();
+            foreach (TransactionHistory transaction in customer.TransactionHistorys)
+            {
+                List<TransactionHistoryDetail> transactionDetails = transactionDetailsDAO.GetListTransactionDetailsByTransactionId(transaction.TransactionHistoryID);
+                foreach (TransactionHistoryDetail transactionDetail in transactionDetails)
+                {
+                    Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
+                    DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
+                    RentalRate nearestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID, transaction.CreatedDate);
+                    DateTime dateReturn = (transaction.CreatedDate).AddDays(nearestRentalRate.RentalPeriod);
+                    //get list over due disk
+                    if (transactionDetail.Status == null)
+                    {
+                        if (transactionDetail.DateReturn.Equals(null))// disk wasn't return. Total disk currently has out ++
+                        {
+                            totalDisk++;
+                            // check disk over due
+                            if ((DateTime.Now - transaction.CreatedDate).TotalDays > nearestRentalRate.RentalPeriod)
+                            {
+                                DiskOverDueModel diskOverDue = new DiskOverDueModel();
+                                diskOverDue.DiskID = disk.DiskID;
+                                diskOverDue.TitleName = title.Title;
+                                diskOverDue.DateReturn = dateReturn;
+                                diskOverDues.Add(diskOverDue);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (transactionDetail.Status.Equals(TransactionDetailStatus.DUE))//có nợ
+                        {
+                            LateCharge lateCharge = new LateCharge();
+                            lateCharge.DiskID = disk.DiskID;
+                            lateCharge.Title = title.Title;
+                            //Ngày phải trả
+                            lateCharge.DateReturn = dateReturn;
+                            //Ngày trả thực tế
+                            lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
+                            lateCharge.Cost = nearestRentalRate.LateCharge;
+                            //add late charge in list
+                            lateCharges.Add(lateCharge);
+                            //
+                            totalFines += lateCharge.Cost;
+                        }
+                    }
+                    //check late charge
+                }
+            }
+            // set properties for customer rp model
+            customerReportModel.CustomerID = cusID;
+            customerReportModel.CustomerName = cusName;
+            customerReportModel.Address = address;
+            customerReportModel.PhoneNumber = phone;
+            customerReportModel.DiskOverDues = diskOverDues;
+            customerReportModel.TotalDisk = totalDisk;
+            customerReportModel.LateCharges = lateCharges;
+            customerReportModel.TotalFines = totalFines;
+            //add in result list
+            listResult.Add(customerReportModel);
+            return listResult;
         }
 
         /// <summary>
@@ -93,7 +177,9 @@ namespace WebApplication.Controllers
         public ActionResult CancelASpecificLateCharge(int transactionID)
         {
             TagDebug.D(GetType(), " in Action " + "CancelASpecificLateCharge ");
-            iLateChargesServices.CancelLateCharge(transactionID);
+            IList<TransactionHistoryView> lateCharge =  iLateChargesServices.GetAllLateChargeOfCustomer(transactionID);
+            foreach(TransactionHistoryView trans in lateCharge)
+               iLateChargesServices.CancelLateCharge(trans.TransactionHistoryID);
             return RedirectToAction("Index", new { status = "Hủy Trễ Hạn Thành Công" });
         }
 
