@@ -83,5 +83,15 @@ namespace DataAccess.DAO
         {
             return dBContext.TransactionHistories.Where(x => x.TransactionHistoryID == transcationID).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Get TransactionHistory by transaction history id
+        /// </summary>
+        /// <param name="transcationID"></param>
+        /// <returns></returns>
+        public virtual bool CheckCustomerLateCharge(int customerID)
+        {
+            return dBContext.TransactionHistories.Any(x => x.CustomerID == customerID && x.Status == TransactionStatus.DUE);
+        }
     }
 }
