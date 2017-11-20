@@ -18,16 +18,16 @@ namespace WebApplication.Models
             IsChosen = false;
         }
 
-        [Display(Name ="Disk ID")]
+        [Display(Name ="Mã Đĩa")]
         public int DiskID { set; get; }
-        [Display(Name = "Title")]
+        [Display(Name = "Tiêu Đề")]
         public string DiskTitleName { set; get; }
 
-
+        [Display(Name = "Giá Thuê Đĩa")]
         public float Prices { set; get; } // PurchasePrice
 
         public string ImageUrl { set; get; }
-
+        [Display(Name = "Trạng Thái")]
         public string Status { set; get; }
         public bool IsChosen { set; get; }
     }

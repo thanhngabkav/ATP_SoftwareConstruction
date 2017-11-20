@@ -118,7 +118,7 @@ namespace WebApplication.Controllers
                     TagDebug.D(GetType(), " customerID Null " + "");
                 // Handle NULL POINTER
             }
-            return RedirectToAction("ShowTitles", new { reservationState = reservationState });
+            return RedirectToAction("Index", new { status = reservationState });
         }
 
         private bool IsReservationExist(int[] titleID, int customerID)

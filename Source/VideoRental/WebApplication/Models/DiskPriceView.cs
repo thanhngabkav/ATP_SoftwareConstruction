@@ -14,11 +14,11 @@ namespace WebApplication.Models
             this.diskTitleName = diskTitleName;
             this.price = price;
         }
-        [Display(Name = "Disk ID")]
+        [Display(Name = "Mã Đĩa")]
         public int diskID { set; get; }
-        [Display(Name = "Title")]
+        [Display(Name = "Tiều Đề")]
         public string diskTitleName { set; get; }
-        [Display(Name = "Price")]
+        [Display(Name = "Giá")]
         public float price { set; get; }
     }
 }

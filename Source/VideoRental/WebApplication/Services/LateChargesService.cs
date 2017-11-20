@@ -70,7 +70,18 @@ namespace WebApplication.Services
             IList<TransactionHistory> transactions = transactionDao.GetCustomerLateChargeTransactions(customerID);
             IList<TransactionHistoryView> transactionHistoryViews = new List<TransactionHistoryView>();
             foreach (TransactionHistory a in transactions)
-                transactionHistoryViews.Add(new TransactionHistoryView(a.TransactionHistoryID, a.CreatedDate, a.Status, a.CustomerID, a.Customer.FirstName));
+            {
+                transactionHistoryViews.Add(new TransactionHistoryView()
+                {
+                    CreatedDate = a.CreatedDate,
+                    CustomerID = a.CustomerID,
+                    Status = a.Status,
+                    CustomerName = a.Customer.FirstName,
+                    NumberLateCharge = GetNumberOfLateCharge(a.CustomerID),
+                    TransactionHistoryID = a.TransactionHistoryID
+                });
+            }
+                
             return transactionHistoryViews;
         }
 

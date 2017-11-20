@@ -17,17 +17,17 @@ namespace WebApplication.Models
             this.dateReservate = dateReservate;
             this.Status = status;
         }
-        [Display(Name ="Title ID")]
+        [Display(Name ="Mã Tiêu Đề")]
         public int titleID { set; get; }
-        [Display(Name = "Title Name")]
+        [Display(Name = "Tên Tiêu Đề")]
         public string diskNameTitle { set; get; }
-        [Display(Name = "Customer ID")]
+        [Display(Name = "Mã Khách Hàng")]
         public int customerID { set; get; }
-        [Display(Name = "Customer Name")]
+        [Display(Name = "Tên Khách Hàng")]
         public string customerName { set; get; }
-        [Display(Name ="Date Reservation")]
+        [Display(Name ="Ngày Đặt Trước")]
         public DateTime dateReservate { set; get; }
-        [Display(Name = "Status")]
+        [Display(Name = "Trạng Thái")]
         public string Status { set; get; }
 
     }

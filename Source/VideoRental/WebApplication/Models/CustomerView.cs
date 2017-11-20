@@ -16,13 +16,13 @@ namespace WebApplication.Models
             this.address = address;
         }
 
-        [Display(Name ="Customer ID")]
+        [Display(Name ="Mã Khách Hàng")]
         public int customerID { set; get; }
-        [Display(Name = "First Name")]
+        [Display(Name = "Tên")]
         public string customerFirstName { set; get; }
-        [Display(Name = "Last Name")]
+        [Display(Name = "Họ")]
         public string customerLastName { set; get; }
-        [Display(Name = "Address")]
+        [Display(Name = "Địa Chỉ")]
         public string address { set; get; } 
     }
 }
