@@ -144,6 +144,7 @@ namespace WebApplication.Controllers
                             //Ngày trả thực tế
                             lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
                             lateCharge.Cost = nearestRentalRate.LateCharge;
+                            lateCharge.transactionDetailID = transactionDetail.TransactionDetailID;
                             //add late charge in list
                             lateCharges.Add(lateCharge);
                             //
@@ -180,6 +181,7 @@ namespace WebApplication.Controllers
             IList<TransactionHistoryView> lateCharge =  iLateChargesServices.GetAllLateChargeOfCustomer(transactionID);
             foreach(TransactionHistoryView trans in lateCharge)
                iLateChargesServices.CancelLateCharge(trans.TransactionHistoryID);
+
             return RedirectToAction("Index", new { status = "Hủy Trễ Hạn Thành Công" });
         }
 

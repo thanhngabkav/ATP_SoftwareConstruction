@@ -10,6 +10,7 @@ namespace WebApplication.Models
     /// </summary>
     public class LateCharge
     {
+        public int transactionDetailID { set; get; }
         public int DiskID { get; set; }
         public string Title { get; set; }
         //Ngày phải trả
