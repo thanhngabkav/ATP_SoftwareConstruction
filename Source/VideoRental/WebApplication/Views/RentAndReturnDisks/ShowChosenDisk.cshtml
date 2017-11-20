@@ -12,12 +12,6 @@
         <th>
             @Html.DisplayNameFor(model => model.DiskTitleName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Prices)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -27,12 +21,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DiskTitleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prices)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
         </td>
     </tr>
 }

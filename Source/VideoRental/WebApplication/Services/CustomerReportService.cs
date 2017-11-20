@@ -65,8 +65,8 @@ namespace WebApplication.Services
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
-                        DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
+                        RentalRate nerarestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID,transaction.CreatedDate);
+                        DateTime dateReturn = (transaction.CreatedDate).AddDays(nerarestRentalRate.RentalPeriod);
                         //get list over due disk
                         if (transactionDetail.Status == null)
                         {
@@ -74,7 +74,7 @@ namespace WebApplication.Services
                             {
                                 totalDisk++;
                                 // check disk over due
-                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > nerarestRentalRate.RentalPeriod)
                                 {
                                     DiskOverDueModel diskOverDue = new DiskOverDueModel();
                                     diskOverDue.DiskID = disk.DiskID;
@@ -95,7 +95,7 @@ namespace WebApplication.Services
                                 lateCharge.DateReturn = dateReturn;
                                 //Ngày trả thực tế
                                 lateCharge.DateActuallyReturn = (DateTime) transactionDetail.DateReturn;
-                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                lateCharge.Cost = nerarestRentalRate.LateCharge;
                                 //add late charge in list
                                 lateCharges.Add(lateCharge);
                                 //
@@ -146,8 +146,8 @@ namespace WebApplication.Services
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
-                        DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
+                        RentalRate nearestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID,transaction.CreatedDate);
+                        DateTime dateReturn = (transaction.CreatedDate).AddDays(nearestRentalRate.RentalPeriod);
                         //get list over due disk
                         if (transactionDetail.Status == null)
                         {
@@ -155,7 +155,7 @@ namespace WebApplication.Services
                             {
                                 totalDisk++;
                                 // check disk over due
-                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > nearestRentalRate.RentalPeriod)
                                 {
                                     DiskOverDueModel diskOverDue = new DiskOverDueModel();
                                     diskOverDue.DiskID = disk.DiskID;
@@ -176,7 +176,7 @@ namespace WebApplication.Services
                                 lateCharge.DateReturn = dateReturn;
                                 //Ngày trả thực tế
                                 lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
-                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                lateCharge.Cost = nearestRentalRate.LateCharge;
                                 //add late charge in list
                                 lateCharges.Add(lateCharge);
                                 //
@@ -227,8 +227,8 @@ namespace WebApplication.Services
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
-                        DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
+                        RentalRate nearestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID,transaction.CreatedDate);
+                        DateTime dateReturn = (transaction.CreatedDate).AddDays(nearestRentalRate.RentalPeriod);
                         //get list over due disk
                         if (transactionDetail.Status == null)
                         {
@@ -236,7 +236,7 @@ namespace WebApplication.Services
                             {
                                 totalDisk++;
                                 // check disk over due
-                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod)
+                                if ((DateTime.Now - transaction.CreatedDate).TotalDays > nearestRentalRate.RentalPeriod)
                                 {
                                     DiskOverDueModel diskOverDue = new DiskOverDueModel();
                                     diskOverDue.DiskID = disk.DiskID;
@@ -257,7 +257,7 @@ namespace WebApplication.Services
                                 lateCharge.DateReturn = dateReturn;
                                 //Ngày trả thực tế
                                 lateCharge.DateActuallyReturn = transactionDetail.DateReturn.Value;
-                                lateCharge.Cost = curentRentalRate.LateCharge;
+                                lateCharge.Cost = nearestRentalRate.LateCharge;
                                 //add late charge in list
                                 lateCharges.Add(lateCharge);
                                 //

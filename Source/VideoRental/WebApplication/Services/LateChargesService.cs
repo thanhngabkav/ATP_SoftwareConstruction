@@ -140,8 +140,8 @@ namespace WebApplication.Services
                     if (de.Status == TransactionDetailStatus.DUE)
                         if (numb-- > 0)
                         {
-                            float lateChargePrice = new RentalRateDAO().GetCurrentRentalRate(
-                                new DiskDAO().GetDiskById(de.DiskID).TitleID).LateCharge;
+                            float lateChargePrice = new RentalRateDAO().GetNearestRentalRate(
+                                new DiskDAO().GetDiskById(de.DiskID).TitleID,hi.CreatedDate).LateCharge;
                             totalLateCharge += lateChargePrice;
                         }
                 }

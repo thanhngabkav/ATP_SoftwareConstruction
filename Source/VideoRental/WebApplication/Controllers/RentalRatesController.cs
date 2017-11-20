@@ -57,10 +57,43 @@ namespace WebApplication.Controllers
         [Authorize(Roles = UserRole.Manager)]
         public ActionResult Create([Bind(Include = "RentalRateId,RentalPrice,LateCharge,RentalPeriod,CreatedDate,TitleID")] RentalRate rentalRate)
         {
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
             if (ModelState.IsValid)
             {
                 rentalRate.CreatedDate = DateTime.Now;
-                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+                // Check Rental Price
+                if (rentalRate.RentalPrice < 0.0)
+                {
+                    ViewBag.rentalPrice = "Rental Rate is not valid";
+                    return View(rentalRate);
+                }
+                else
+                {
+                    ViewBag.rentalPrice = "";
+                }
+
+                // Check Late Charge
+                if (rentalRate.LateCharge < 0.0)
+                {
+                    ViewBag.lateCharge = "Late Charge is not valid";
+                    return View(rentalRate);
+                }
+                else
+                {
+                    ViewBag.lateCharge = "";
+                }
+
+                // Check Rental Period
+                if (rentalRate.RentalPeriod < 1)
+                {
+                    ViewBag.rentalPeriod = "Rental Period is not valid";
+                    return View(rentalRate);
+                }
+                else
+                {
+                    ViewBag.rentalPeriod = "";
+                }
+
                 db.AddNewRentalRate(rentalRate);
                 ViewBag.ok = "Thêm thành công";
                 return View("Success");

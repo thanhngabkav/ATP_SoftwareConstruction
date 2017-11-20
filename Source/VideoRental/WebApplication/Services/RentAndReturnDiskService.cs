@@ -126,8 +126,10 @@ namespace WebApplication.Services
         private void UpdateLateCharge(Disk disk, DateTime today)
         {
             TagDebug.D(GetType(), "in UpdateLateCharge");
+            TransactionHistoryDetail transactionHistoryDetail = transactionDetailsDAO.getTransactionDetailFromLastRentedDate(disk.DiskID);
+            TransactionHistory transaction = transactionHistoryDetail.TransactionHistory;
             DateTime lastRented = disk.LastRentedDate.Value;     // conver DateTime? to DateTime
-            RentalRate rentedTime = rentalRateDAO.GetCurrentRentalRate(disk.TitleID);
+            RentalRate rentedTime = rentalRateDAO.GetNearestRentalRate(disk.TitleID,transaction.CreatedDate);
             int rangeDay = today.Subtract(lastRented).Days;
             if (IsLateCharge(rangeDay, rentedTime.RentalPeriod))
                 AddSpecificLateCharge(disk);

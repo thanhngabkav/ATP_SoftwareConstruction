@@ -31,6 +31,23 @@ namespace DataAccess.DAO
         }
 
         /// <summary>
+        /// Get Nearest RentalRate 
+        /// </summary>
+        /// <param name="diskTitleId"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public virtual RentalRate GetNearestRentalRate(int diskTitleId, DateTime date)
+        {
+            List<RentalRate> titleRentalRates = dbContext.RentalRates.Where(x => x.TitleID == diskTitleId).OrderByDescending(x => x.CreatedDate).ToList();
+            foreach(RentalRate rentalRate in titleRentalRates)
+            {
+                if (date > rentalRate.CreatedDate)
+                    return rentalRate;
+            }
+            return titleRentalRates[0];
+        }
+
+        /// <summary>
         /// Add new Rentalrate into database
         /// </summary>
         /// <param name="rentalRate"></param>

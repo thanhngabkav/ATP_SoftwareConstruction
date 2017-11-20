@@ -7,6 +7,7 @@
 <p>
     <a class="btn btn-primary" href="/Customer/Create">Thêm Khách Hàng</a>
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -31,37 +32,45 @@
             @Html.DisplayNameFor(model => model.DateUpdate)
         </th>
         <th></th>
+        <th></th>
+        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
-        </td>
-        <td>
-            @Convert.ToDateTime(item.DateCreate).ToString("dd/MM/yyyy")
-        </td>
-        <td>
-            @Convert.ToDateTime(item.DateUpdate).ToString("dd/MM/yyyy")
-        </td>
-        <td>
-            @Html.ActionLink("Cập nhật", "Edit", new { id=item.CustomerID }) |
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.CustomerID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.CustomerID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Convert.ToDateTime(item.DateCreate).ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Convert.ToDateTime(item.DateUpdate).ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật thông tin", "Edit", new { id = item.CustomerID })
+            </td>
+            <td>
+                @Html.ActionLink("Thông tin chi tiết", "Details", new { id = item.CustomerID })
+            </td>
+            <td>
+                @Html.ActionLink("Xóa thông tin", "Delete", new { id = item.CustomerID })
+            </td>
+        </tr>
+    }
 
 </table>
+

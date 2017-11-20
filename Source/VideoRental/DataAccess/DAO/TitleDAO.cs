@@ -55,6 +55,7 @@ namespace DataAccess.DAO
         public virtual void DeleteTitle(DiskTitle title)
         {
             dBContext.DiskTitles.Remove(title);
+            dBContext.SaveChanges();
         }
 
         /// <summary>

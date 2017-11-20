@@ -21,6 +21,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
         </th>
+        <th>
+            
+        </th>
+        <th>
+           
+        </th>
         <th></th>
     </tr>
 
@@ -43,11 +49,13 @@
         </td>
         <td>
         <td>
-            @Html.ActionLink("Xóa", "Delete", new { id=item.TitleID }) |
+            @Html.ActionLink("Xóa tiêu đề", "Delete", new { id=item.TitleID }) 
+            
+        </td>
+        <td>
             @{
                 string link = "/TitleManagement/GetTitleInfomation/" + item.TitleID;
             }
-
             <a href=@link>Chi tiết trạng thái</a>
         </td>
     </tr>

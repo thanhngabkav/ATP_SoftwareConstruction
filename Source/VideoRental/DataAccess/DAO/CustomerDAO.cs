@@ -139,9 +139,9 @@ namespace DataAccess.DAO
                     {
                         Disk disk = diskDAO.GetDiskById(transactionDetail.DiskID);
                         DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                        RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
+                        RentalRate nearestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID,transaction.CreatedDate);
                         //disk is not returned on time
-                        if (transactionDetail.DateReturn.Equals(null) && (DateTime.Now - transaction.CreatedDate).TotalDays > curentRentalRate.RentalPeriod )
+                        if (transactionDetail.DateReturn.Equals(null) && (DateTime.Now - transaction.CreatedDate).TotalDays > nearestRentalRate.RentalPeriod )
                         {
                             isOverDue = true;
                             break;

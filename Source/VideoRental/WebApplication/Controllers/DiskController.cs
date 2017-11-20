@@ -58,13 +58,34 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = UserRole.Manager)]
-        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
+        public ActionResult Create([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk, int Number)
         {
-            bool flag = true;
-            if (flag)
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+            // Check Number
+            if (!CheckNumber(Number))
             {
-                flag = false;
-                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+                ViewBag.number = "Number is not valid";
+                return View(disk);
+            }
+            else
+            {
+                ViewBag.number = "";
+            }
+            
+            bool flag = false;
+            for (int i = 0; i < Number; i++)
+            {
+                // Check PurchasePrice
+                if (!CheckPurchasePrice(disk.PurchasePrice))
+                {
+                    ViewBag.purchasePrice = "Purchase Price is not valid";
+                    return View(disk);
+                }
+                else
+                {
+                    ViewBag.purchasePrice = "";
+                }
+                
                 disk.Status = "RENTABLE";
                 UserSession userSession = (UserSession)Session[UserSession.SessionName];
                 disk.UpdatedUser = Int32.Parse(userSession.UserID);
@@ -72,14 +93,17 @@ namespace WebApplication.Controllers
                 disk.DateUpdate = DateTime.Now;
                 disk.RentedTime = 0;
                 disk.LastRentedDate = null;
-
                 db.AddNewDisk(disk);
+                flag = true;
+            }
+            if (flag)
+            {
                 ViewBag.ok = "Thêm thành công";
                 return View("Success");
             }
+
             ViewBag.ok = "Thêm không thành công";
             return View("Failure");
-            
         }
 
         // GET: Disk/Edit
@@ -118,14 +142,43 @@ namespace WebApplication.Controllers
         [Authorize(Roles = UserRole.Manager)]
         public ActionResult Edit([Bind(Include = "DiskID,TitleID,Status,PurchasePrice,RentedTime,LastRentedDate,DateUpdate,DateCreate")] Disk disk)
         {
+            ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "RENTABLE",
+                Value = "RENTABLE"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "BOOKED",
+                Value = "BOOKED"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "RENTED",
+                Value = "RENTED"
+            });
+            ViewBag.ListStatus = new SelectList(listItems, "Text", "Value");
+
             bool flag = true;
             if (flag)
             {
-                ViewBag.TitleID = new SelectList(dbDiskTitle.GetAllTitles(), "TitleID", "Title");
                 UserSession userSession = (UserSession)Session[UserSession.SessionName];
                 disk.UpdatedUser = Int32.Parse(userSession.UserID);
                 disk.DateUpdate = DateTime.Now;
-                String status = disk.Status;
+
+                // Check PurchasePrice
+                if (!CheckPurchasePrice(disk.PurchasePrice))
+                {
+                    ViewBag.purchasePrice = "Purchase Price is not valid";
+                    return View(disk);
+                }
+                else
+                {
+                    ViewBag.purchasePrice = "";
+                }
+
                 db.UpdateDisk(disk);
                 ViewBag.ok = "Cập nhật thành công";
                 return View("Success");
@@ -156,6 +209,24 @@ namespace WebApplication.Controllers
             db.DeleteDisk(disk);
             ViewBag.ok = "Xóa thành công";
             return View("Success");
+        }
+
+        // Check Purchase Price
+        private bool CheckPurchasePrice(float num)
+        {
+            if (num <= 0)
+                return false;
+            else
+                return true;
+        }
+
+        // Check Number
+        private bool CheckNumber(int num)
+        {
+            if (num <= 0)
+                return false;
+            else
+                return true;
         }
     }
 }

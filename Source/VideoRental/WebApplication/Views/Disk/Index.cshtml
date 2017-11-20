@@ -28,6 +28,8 @@
             @Html.DisplayNameFor(model => model.DateCreate)
         </th>
         <th></th>
+        <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -54,9 +56,13 @@
             @Convert.ToDateTime(item.DateCreate).ToString("dd/MM/yyyy")
         </td>
         <td>
-            @Html.ActionLink("Cập nhật", "Edit", new { id=item.DiskID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.DiskID }) |
-            @{ 
+            @Html.ActionLink("Cập nhật thông tin", "Edit", new { id=item.DiskID })             
+        </td>
+        <td>
+            @Html.ActionLink("Xóa đĩa", "Delete", new { id = item.DiskID }) 
+        </td>
+        <td>
+            @{
                 string linkDetail = "/DiskManagement/GetDiskStatus/" + item.DiskID;
             }
             <a href=@linkDetail>Chi tiết trạng thái</a>

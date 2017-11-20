@@ -53,10 +53,13 @@ namespace WebApplication.Controllers
             if (diskName == null) diskName = "";
             IList<Disk> disks = iRentAndReturnDiskService.GetDisks(diskName);
             IList<DiskView> diskViews = new List<DiskView>();
+           
             foreach (Disk aDisk in disks)
             {
-                DiskTitle diskTitle = iRentAndReturnDiskService.GetDiskTitleName(aDisk.TitleID);
-                diskViews.Add(new DiskView(aDisk.DiskID, diskTitle.Title, aDisk.PurchasePrice, "", aDisk.Status));
+               int[] diskID = new int[] {aDisk.DiskID};
+               IList<DiskPriceView> diskPriceViews = iRentAndReturnDiskService.GetPriceEachDisk(diskID);
+               DiskTitle diskTitle = iRentAndReturnDiskService.GetDiskTitleName(aDisk.TitleID);
+               diskViews.Add(new DiskView(aDisk.DiskID, diskTitle.Title, diskPriceViews[0].price, "", aDisk.Status));
             }
 
             int id = 0;

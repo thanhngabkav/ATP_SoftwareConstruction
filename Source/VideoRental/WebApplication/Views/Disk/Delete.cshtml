@@ -67,12 +67,15 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Xóa" class="btn btn-danger" />
-            <a class="btn btn-primary" href="/Disk/Index">Hủy</a>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+                <a class="btn btn-primary" href="/Disk/Index">Quay lại</a>
+            </div>
         </div>
     }
 </div>

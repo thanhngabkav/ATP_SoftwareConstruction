@@ -55,6 +55,7 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                diskTitle.Quantity = 0;
                 db.AddNewTitle(diskTitle);
                 ViewBag.ok = "Thêm thành công";
                 return View("Success");

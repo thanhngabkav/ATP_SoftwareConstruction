@@ -11,6 +11,7 @@ using DataAccess.Entities;
 using WebApplication.Services;
 using WebApplication.Models;
 using DataAccess.Utilities;
+using System.Text.RegularExpressions;
 
 namespace WebApplication.Controllers
 {
@@ -60,14 +61,47 @@ namespace WebApplication.Controllers
             {
                 UserSession userSession = (UserSession)Session[UserSession.SessionName];
                 customer.UpdatedUser = Int32.Parse(userSession.UserID);
+
+                //check firstName
+                if (!CheckFirstName(customer.FirstName))
+                {
+                    ViewBag.firstName = "First Name is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.firstName = "";
+                }
+
+                // check lastName
+                if (!CheckLastName(customer.LastName))
+                {
+                    ViewBag.lastName = "Last Name is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.lastName = "";
+                }
+
+                // check date of birth
+                if (!CheckDateOfBirth(customer.DateOfBirth))
+                {
+                    ViewBag.birth = "Date Of Birth is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.birth = "";
+                }
+
                 customer.DateCreate = DateTime.Now;
                 customer.DateUpdate = DateTime.Now;
                 db.AddNewCustomer(customer);
                 ViewBag.ok = "Thêm thành công";
                 return View("Success");
             }
-            ViewBag.ok = "Thêm không thành công";
-            return View("Failure");
+            return View(customer);
         }
 
         // GET: Customer/Edit
@@ -92,14 +126,47 @@ namespace WebApplication.Controllers
             {
                 UserSession userSession = (UserSession)Session[UserSession.SessionName];
                 customer.UpdatedUser = Int32.Parse(userSession.UserID);
+
+                //check firstName
+                if (!CheckFirstName(customer.FirstName))
+                {
+                    ViewBag.firstName = "First Name is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.firstName = "";
+                }
+
+                // check lastName
+                if (!CheckLastName(customer.LastName))
+                {
+                    ViewBag.lastName = "Last Name is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.lastName = "";
+                }
+
+                // check date of birth
+                if (!CheckDateOfBirth(customer.DateOfBirth))
+                {
+                    ViewBag.birth = "Date Of Birth is not valid";
+                    return View(customer);
+                }
+                else
+                {
+                    ViewBag.birth = "";
+                }
+
                 customer.DateUpdate = DateTime.Now;
                 db.UpdateCustomer(customer);
                 ViewBag.ok = "Cập nhật thành công";
                 return View("Success");
             }
             //ViewBag.UpdatedUser = new SelectList(db.Users, "UserID", "UserName", customer.UpdatedUser);
-            ViewBag.ok = "Cập nhật không thành công";
-            return View("Failure");
+            return View(customer);
         }
 
         // GET: Customer/Delete
@@ -126,6 +193,50 @@ namespace WebApplication.Controllers
             return View("Success");
         }
 
-       
+        // Check FirstName
+        private bool CheckFirstName(string firstName)
+        {
+            bool match = true;
+            match = Regex.IsMatch(firstName, "[^a-zA-Z ]");
+            ViewBag.firstName = firstName;
+            ViewBag.match = match;
+            if (match)
+                return false;
+            else
+                return true;
+        }
+
+        // Check FirstName
+        private bool CheckLastName(string lastName)
+        {
+            bool match = true;
+            match = Regex.IsMatch(lastName, "[^a-zA-Z ]");
+            if (match)
+                return false;
+            else
+                return true;
+        }
+
+        // Check Date Of Birth
+        private bool CheckDateOfBirth(DateTime dateTime)
+        {
+            DateTime now = DateTime.Now;
+            int now_day = now.Day;
+            int now_month = now.Month;
+            int now_year = now.Year;
+
+            // Request
+            int sam_day = dateTime.Day;
+            int sam_month = dateTime.Month;
+            int sam_year = dateTime.Year;
+
+            if (sam_year > now_year)
+                return false;
+            if (sam_year == now_year && sam_month > now_month)
+                return false;
+            if (sam_year == now_year && sam_month == now_month && sam_day >= now_day)
+                return false;
+            return true;
+        }
     }
 }

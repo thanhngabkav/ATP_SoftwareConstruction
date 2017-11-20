@@ -44,8 +44,8 @@ namespace WebApplication.Services
                     diskStatusInfo.Whom = transaction.Customer;
                     diskStatusInfo.CustomerName = transaction.Customer.LastName + " " + transaction.Customer.FirstName;
                     DiskTitle title = titleDAO.GetTitleById(disk.TitleID);
-                    RentalRate curentRentalRate = rentalRateDAO.GetCurrentRentalRate(title.TitleID);
-                    DateTime dateReturn = (transaction.CreatedDate).AddDays(curentRentalRate.RentalPeriod);
+                    RentalRate nearestRentalRate = rentalRateDAO.GetNearestRentalRate(title.TitleID,transaction.CreatedDate);
+                    DateTime dateReturn = (transaction.CreatedDate).AddDays(nearestRentalRate.RentalPeriod);
                     diskStatusInfo.DueTime = dateReturn;
                 }
             }
