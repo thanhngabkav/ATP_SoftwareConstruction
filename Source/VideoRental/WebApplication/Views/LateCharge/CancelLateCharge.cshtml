@@ -50,9 +50,6 @@
             <th>
                 @Html.DisplayFor(modelItem => item.TotalFines)
             </th>
-            <td>
-                @Html.ActionLink("Hủy", "CancelASpecificLateCharge", new { transactionID = item.CustomerID })
-            </td>
         </tr>
 
         if (item.DiskOverDues.Count > 0)
@@ -104,6 +101,9 @@
                     <td>@Html.DisplayFor(modelItem => i.DateActuallyReturn)</td>
                     <td>@Html.DisplayFor(modelItem => i.DateReturn)</td>
                     <td>@Html.DisplayFor(modelItem => i.Cost)</td>
+                    <td>
+                        @Html.ActionLink("Hủy", "CancelASpecificLateCharge", new { transactionID = i.transactionDetailID })
+                    </td>
                 </tr>
             }
         }

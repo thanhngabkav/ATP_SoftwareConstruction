@@ -32,25 +32,28 @@ namespace WebApplication.Services
         }
 
 
-        public void CancelLateCharge(int transactionHistoryID)
+        public void CancelLateCharge(int transactionDetailID)
         {
             TagDebug.D(GetType(), "in CancelLateCharge class");
-            TransactionHistory transactionHistory = transactionDao.GetTransaction(transactionHistoryID);
-            transactionHistory.Status = TransactionStatus.CANCELED;
-            transactionDao.UpdateTransaction(transactionHistory);
+            TransactionHistoryDetail transactionDetail = transactionDetailsDao.GetTransactionDetail(transactionDetailID);
+            transactionDetail.Status = TransactionStatus.CANCELED;
+            transactionDetailsDao.UpdateTransactionDetail(transactionDetail);
 
-            UpdateCancelTransactionDetail(transactionHistory);
+            UpdateCancelTransaction(transactionDetail);
         }
 
-        private void UpdateCancelTransactionDetail(TransactionHistory transactionHistory)
+        private void UpdateCancelTransaction(TransactionHistoryDetail transactionDetail)
         {
-            IList<TransactionHistoryDetail> details = transactionDetailsDao.GetListTransactionDetailsByTransactionId(transactionHistory.TransactionHistoryID);
-            foreach (TransactionHistoryDetail aDetail in details)
-            {
-                aDetail.Status = TransactionDetailStatus.PAID;
-                transactionDetailsDao.UpdateTransactionDetail(aDetail);
-            }
 
+            IList<TransactionHistoryDetail> trans = transactionDetailsDao.GetListTransactionDetailsByTransactionId(transactionDetail.TransactionID);
+            foreach (TransactionHistoryDetail aDetail in trans)
+            {
+                if (aDetail.Status == TransactionDetailStatus.DUE)
+                    return;
+            }
+            TransactionHistory tran = transactionDao.GetTransaction(transactionDetail.TransactionID);
+            tran.Status = TransactionStatus.CANCELED;
+            transactionDao.UpdateTransaction(tran);
         }
 
         public IList<CustomerView> FindCustomersHasLateCharge()
